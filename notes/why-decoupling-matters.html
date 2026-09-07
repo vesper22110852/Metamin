@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Why polarization decoupling should be understood as a design problem in nanophotonics.">
+  <meta name="theme-color" content="#f4f3ef">
+  <meta property="og:title" content="Why Polarization Decoupling Is a Design Problem — Metamin">
+  <meta property="og:type" content="article">
+  <title>Why Polarization Decoupling Is a Design Problem — Metamin</title>
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/site.css">
+  <script src="../assets/site.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="site-shell nav-wrap">
+      <a class="brand" href="../index.html" aria-label="Metamin home"><span class="brand-mark" aria-hidden="true"></span><span>metamin</span></a>
+      <button class="menu-button" type="button" aria-label="Open navigation" aria-expanded="false" data-menu-button><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h18M3 12h18M3 17h18" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button>
+      <nav class="site-nav" aria-label="Primary navigation" data-navigation>
+        <a href="../research.html">Research</a>
+        <a href="../notes.html" aria-current="page">Notes</a>
+        <a href="../publications.html">Publications</a>
+        <a href="../about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <header class="site-shell article-header">
+      <a class="back-link" href="../notes.html">← All notes</a>
+      <div class="meta-row"><span>Research note 001</span><span>7 min read</span><span>September 2026</span></div>
+      <h1>Why polarization decoupling is a design problem.</h1>
+      <p class="article-deck">Different outputs are easy. Independently useful outputs are not. The distinction changes how we formulate a polarization-selective metasurface.</p>
+    </header>
+
+    <div class="site-shell article-layout">
+      <aside class="article-aside">
+        <strong>Topics</strong><br>
+        Polarization<br>
+        Structural color<br>
+        Cavity design<br>
+        Robustness
+        <a href="../research/polarization-decoupled-cavity.html">Related research →</a>
+      </aside>
+
+      <article class="article-body">
+        <p>Suppose an anisotropic meta-atom produces one spectrum under x-polarized illumination and another under y-polarized illumination. It is tempting to call this independent polarization control. Usually, it is not.</p>
+        <p>Both spectra may still be functions of the same geometric parameters. Changing a radius to move one resonance can pull the other response with it. The outputs are different, but the design variables remain coupled.</p>
+
+        <h2>Difference is not decoupling</h2>
+        <p>For two polarization channels, let the measured responses be <em>R</em><sub>x</sub>(λ, <strong>p</strong>) and <em>R</em><sub>y</sub>(λ, <strong>p</strong>), where <strong>p</strong> contains the geometry. Distinct spectra at one geometry tell us only that <em>R</em><sub>x</sub> ≠ <em>R</em><sub>y</sub>. They say little about how those spectra move through the design space.</p>
+        <p>The more useful question is differential: when a parameter changes, which response follows? A practically decoupled design seeks a region where one channel has strong, structured sensitivity while the other is comparatively invariant.</p>
+
+        <blockquote>A pair of different spectra is an observation. A controlled difference in sensitivity is a design capability.</blockquote>
+
+        <h2>Why invariance can be valuable</h2>
+        <p>Optimization discussions often treat sensitivity as inherently desirable. Yet an insensitive channel can be the more valuable one. It can become a reference, a stable label, or a locked information layer while the other channel carries tunable content.</p>
+        <p>This reframes robustness. The goal is not necessarily to make the whole device insensitive. It may be to distribute sensitivity deliberately: high in the channel intended for modulation, low in the channel intended for stability.</p>
+
+        <h2>Test the neighborhood, not the hero geometry</h2>
+        <p>A single optimized unit cell cannot establish decoupling. The claim lives in a neighborhood of parameter space. At minimum, the evidence should show:</p>
+        <ul>
+          <li>a two-dimensional sweep over the relevant lateral dimensions;</li>
+          <li>the evolution between the polarization basis states, not only the endpoints;</li>
+          <li>a perceptually or physically meaningful response metric;</li>
+          <li>field distributions that support a mechanism rather than merely decorate the spectrum; and</li>
+          <li>perturbations along dimensions not used to produce the headline result.</li>
+        </ul>
+        <p>This standard is stricter than exhibiting two colors. It is also far more transferable. Once the mechanism is understood as a distribution of sensitivity across modes, the idea can be carried into encoding, sensing, multiplexing, and inverse design.</p>
+
+        <h2>The broader design lesson</h2>
+        <p>Nanophotonic design is frequently framed as maximizing a response. Many useful devices instead require controlling relationships between responses: one should move, another should remain fixed; one should be narrowband, another broadband; one should be sensitive to the environment, another to geometry.</p>
+        <p>Those are not secondary constraints. They are the architecture of the problem. Writing them explicitly is often the first step from parameter tuning toward genuine optical design.</p>
+
+        <h2>Related work</h2>
+        <p>This note is motivated by our first-author study of a meta-mirror-assisted structural color cavity. Read the <a href="../research/polarization-decoupled-cavity.html">research story</a> or the <a href="https://doi.org/10.1088/2040-8986/ae90be" target="_blank" rel="noreferrer">published article ↗</a>.</p>
+      </article>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-shell">
+      <div class="footer-grid"><p class="footer-title">Good design begins with the right invariants.</p><div class="footer-links"><a href="../notes.html">All notes</a><a href="../research.html">Research</a></div></div>
+      <div class="footer-bottom"><span>© <span data-current-year>2026</span> Seokmin Kim / Metamin</span><span>Research note 001</span></div>
+    </div>
+  </footer>
+</body>
+</html>
+

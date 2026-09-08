@@ -203,6 +203,10 @@ h1, h2, h3 { font-weight: 500; }
 }
 .footer-inner a { display: inline-flex; min-height: 44px; align-items: center; gap: 5px; text-decoration: none; }
 .footer-inner a:hover { text-decoration: underline; }
+.cv-row { display: flex; align-items: center; flex-wrap: wrap; gap: 16px; }
+.cv-download { display: inline-flex; align-items: center; gap: 25px; min-height: 46px; padding: 10px 18px; border: 1px solid var(--line); border-radius: 3px; background: var(--soft); color: var(--muted); font: inherit; font-size: 14px; }
+.cv-download:disabled { cursor: not-allowed; }
+.cv-row p { margin: 0; color: var(--muted); font-size: 13px; }
 
 @media (max-width: 700px) {
   .site-shell { width: calc(100% - 40px); }

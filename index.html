@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Seokmin Kim's research and notes on metasurfaces, inverse design, RCWA, and FDTD.">
-  <meta name="theme-color" content="#fafaf8">
+  <meta name="theme-color" content="#0b1118">
   <meta property="og:title" content="Metamin — Seokmin Kim">
   <meta property="og:description" content="Research and notes on metasurfaces and inverse design.">
   <meta property="og:type" content="website">
@@ -12,10 +12,12 @@
   <title>Metamin — Seokmin Kim</title>
   <link rel="canonical" href="https://vesper22110852.github.io/Metamin/">
   <link rel="icon" href="assets/favicon.svg?v=2" type="image/svg+xml">
-  <link rel="stylesheet" href="assets/site.css?v=2">
+  <link rel="stylesheet" href="assets/site.css?v=3">
+  <link rel="stylesheet" href="assets/home.css?v=1">
   <script src="assets/site.js?v=2" defer></script>
+  <script type="module" src="assets/metasurface.js?v=1"></script>
 </head>
-<body>
+<body class="home-page">
   <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header">
     <div class="site-shell nav-wrap">
@@ -29,38 +31,59 @@
     </div>
   </header>
 
-  <main id="main" class="site-shell">
-    <section class="profile" aria-labelledby="profile-title">
-      <div>
-        <p class="eyebrow">Research &amp; notes</p>
-        <h1 id="profile-title">Seokmin Kim</h1>
-        <p class="profile-subtitle">Metasurfaces &amp; inverse design</p>
-        <p class="profile-description">I study metasurfaces and inverse design using RCWA and FDTD. This site collects my research and technical notes.</p>
-        <div class="profile-links">
-          <a href="about.html">About me</a>
-          <a href="https://github.com/vesper22110852">GitHub <span aria-hidden="true">↗</span></a>
+  <main id="main">
+    <section class="optics-hero" aria-labelledby="hero-title">
+      <div class="site-shell hero-stage">
+        <div class="hero-copy">
+          <p class="hero-kicker">Metasurfaces / Inverse design</p>
+          <h1 id="hero-title">Wavefront<br><em>shaping.</em></h1>
+          <p class="hero-description">An ideal phase mask for focusing<br class="desktop-break"> and beam steering.</p>
+          <a class="hero-work-link" href="#selected-work">Selected work <span aria-hidden="true">↓</span></a>
+        </div>
+        <figure class="wave-figure" aria-labelledby="visual-caption">
+          <div class="wave-drawing">
+            <svg class="wave-fallback" viewBox="0 0 800 600" role="img" aria-labelledby="fallback-title fallback-description">
+              <title id="fallback-title">Ideal focusing phase mask</title>
+              <desc id="fallback-description">A planar grid and straight ray paths converging at a target focus. This is a schematic, not a simulation result.</desc>
+              <defs>
+                <pattern id="phase-grid" width="24" height="24" patternUnits="userSpaceOnUse"><rect width="21" height="21" fill="#627f9d" stroke="#a4bdd4" stroke-width=".5"/></pattern>
+              </defs>
+              <g fill="none" stroke="#9bdddf" stroke-width="1" opacity=".55">
+                <path d="M216 310 400 90 584 310 M310 350 400 90 490 350 M400 384 400 90 400 235 M310 275 400 90 490 275"/>
+              </g>
+              <g transform="matrix(.9 .38 -.9 .38 400 310)"><rect width="240" height="240" x="-120" y="-120" fill="url(#phase-grid)" stroke="#c1d7e2"/></g>
+              <circle cx="400" cy="90" r="4" fill="#c6f2ed"/>
+            </svg>
+            <canvas id="wave-canvas" role="img" aria-label="Ideal focusing phase mask: phase-colored cells and straight rays converging at a target focus."></canvas>
+            <div class="phase-legend" aria-label="Surface colors encode phase from zero to two pi, not wavelength.">
+              <span>Phase</span><span class="phase-scale" aria-hidden="true"></span><span>0 — 2π</span>
+            </div>
+          </div>
+          <figcaption id="visual-caption">Ideal phase mask · Analytic ray illustration</figcaption>
+        </figure>
+        <div class="hero-bottom">
+          <div class="wave-controls" hidden>
+            <div class="mode-switch" role="group" aria-label="Wavefront mode">
+              <button type="button" data-wave-mode="focus" aria-pressed="true">Focus</button>
+              <button type="button" data-wave-mode="steer" aria-pressed="false">Steer</button>
+            </div>
+            <button type="button" id="motion-toggle" class="motion-toggle"><span class="motion-symbol" aria-hidden="true">Ⅱ</span><span data-motion-label>Pause motion</span></button>
+          </div>
+          <p class="hero-disclaimer">Concept only. Not RCWA / FDTD results.</p>
+          <noscript><p class="hero-disclaimer">Static view. Enable JavaScript for interaction.</p></noscript>
         </div>
       </div>
-      <aside class="profile-facts" aria-label="Research overview">
-        <div>
-          <h2>Research interests</h2>
-          <ul><li>Metasurfaces</li><li>Inverse design</li><li>Structural color</li></ul>
-        </div>
-        <div>
-          <h2 class="fact-label">Methods</h2>
-          <p>RCWA · FDTD</p>
-        </div>
-      </aside>
     </section>
 
-    <section class="content-section" aria-labelledby="publications-heading">
+    <section id="selected-work" class="site-shell content-section selected-work" aria-labelledby="publications-heading">
       <div class="section-heading">
-        <h2 id="publications-heading">Selected publication <span class="section-count">01</span></h2>
+        <h2 id="publications-heading">Selected work <span class="section-count">01</span></h2>
         <a href="publications.html">All publications <span aria-hidden="true">→</span></a>
       </div>
       <article class="publication-item">
         <div class="publication-year"><time datetime="2026">2026</time></div>
         <div>
+          <p class="work-topics">Polarization / Structural color</p>
           <h3 class="publication-title"><a href="research/polarization-decoupled-cavity.html">Decoupled polarization response in a meta-mirror-assisted structural color cavity</a></h3>
           <p class="publication-authors"><strong>Seokmin Kim</strong>, Eui-soo Cho, Gyeongsu Jin, Seung-yeol Lee</p>
           <p class="publication-journal"><cite>Journal of Optics</cite> 28, 085001 (2026) · First author</p>
@@ -72,7 +95,7 @@
       </article>
     </section>
 
-    <section class="content-section" aria-labelledby="notes-heading">
+    <section class="site-shell content-section home-notes" aria-labelledby="notes-heading">
       <div class="section-heading">
         <h2 id="notes-heading">Notes <span class="section-count">00</span></h2>
         <a href="notes.html">All notes <span aria-hidden="true">→</span></a>
@@ -83,7 +106,7 @@
 
   <footer class="site-footer">
     <div class="site-shell footer-inner">
-      <span>© <span data-current-year>2026</span> Seokmin Kim</span>
+      <span>© <span data-current-year>2026</span> Metamin</span>
       <a href="https://github.com/vesper22110852">GitHub <span aria-hidden="true">↗</span></a>
     </div>
   </footer>

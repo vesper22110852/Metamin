@@ -1,50 +1,45 @@
 # Metamin
 
-Research portfolio and technical blog for Seokmin Kim, focused on metasurfaces, inverse design, RCWA, FDTD, and computational nanophotonics.
+Seokmin Kim's research site. Plain HTML and CSS, with a small optional script for the footer year.
 
-## Preview locally
+- Website: [vesper22110852.github.io/Metamin/](https://vesper22110852.github.io/Metamin/)
+- Repository: [vesper22110852/Metamin](https://github.com/vesper22110852/Metamin)
 
-The site uses plain HTML, CSS, and JavaScript, so it has no package installation or build step.
+## Local preview
 
-From PowerShell, run:
+Run from this folder in PowerShell:
 
 ```powershell
 .\preview.ps1
 ```
 
-Then open `http://127.0.0.1:4173/`. Press `Ctrl+C` in PowerShell to stop the preview server.
+Open [http://127.0.0.1:4173/](http://127.0.0.1:4173/). Stop the server with Ctrl+C. Use `-Port 4174` if the default port is occupied. No packages or build tools are needed.
 
-Opening `index.html` directly also works, but the local server reproduces web hosting behavior more accurately.
+## Editing
 
-## Publish with GitHub Pages
+- `index.html`: short introduction, selected publication, latest notes.
+- `research.html` and `research/`: research index and summaries.
+- `publications.html`: publication list.
+- `notes.html` and `notes/`: notes index and posts.
+- `about.html`: profile.
+- `assets/site.css`: colors, typography, spacing, responsive layout.
+- `sitemap.xml`: canonical URLs of published pages.
 
-1. Create a repository named `Metamin` (already created).
-2. Add `https://github.com/vesper22110852/Metamin.git` as this folder's `origin` remote.
-3. Push the current branch (`main` is recommended; `master` is also supported).
-4. In the repository, open **Settings → Pages** and set **Source** to **GitHub Actions**.
+Use relative links for regular pages so local previews and the `/Metamin/` project site both work. The 404 page uses project-root links because a missing URL can be arbitrarily nested.
 
-The workflow in `.github/workflows/deploy.yml` deploys the static site after each push to `main` or `master`.
+Notes is intentionally empty. The previous auto-generated note is unlisted and marked `noindex`; its original content remains in Git history. Add only content reviewed by the site owner. CV, email, photograph, affiliation, and project details can be added when supplied.
 
-The default project-site address is `https://vesper22110852.github.io/Metamin/`.
+## Deployment
 
-> GitHub Pages from a private repository requires a paid GitHub plan that supports private-repository Pages. The published Pages website is public even when its source repository is private.
+Push to `main`. GitHub Actions stages only website files and publishes them to GitHub Pages. Settings → Pages → Source is **GitHub Actions**.
 
-## Content map
+Development files such as this README and `preview.ps1` are excluded from the Pages artifact.
 
-- `index.html` — Home
-- `research.html` — Research index
-- `research/` — Research stories
-- `notes.html` — Writing index
-- `notes/` — Technical notes
-- `publications.html` — Publication record
-- `about.html` — Researcher profile and contact
-- `assets/site.css` — Design system and responsive layout
-- `assets/site.js` — Mobile navigation and small enhancements
+## Renewal copy examples
 
-## Before public launch
+- ~~Engineering light, one resonance at a time.~~ → Seokmin Kim
+- ~~From physical mechanism to designed response.~~ → Research
+- ~~Published work, without the résumé fog.~~ → Publications
+- ~~Curious about light. Serious about evidence.~~ → About
 
-- Add a public research email address.
-- Confirm the preferred institutional affiliation wording.
-- Replace the About-page brand placeholder if a portrait is desired.
-- Add an Open Graph preview image.
-- Review every technical statement and author-contribution description.
+The previous decorative diagrams, quotes, unconfirmed projects, and draft-post listings have been removed from the site. Prior versions are preserved in Git history.

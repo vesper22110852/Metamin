@@ -3,29 +3,24 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Metamin is the research portfolio of Seokmin Kim, exploring metasurfaces, inverse design, RCWA, FDTD, and computational nanophotonics.">
-  <meta name="theme-color" content="#f4f3ef">
-  <meta property="og:title" content="Metamin — Computational Nanophotonics">
-  <meta property="og:description" content="Designing optical responses, not just structures.">
+  <meta name="description" content="Seokmin Kim's research and notes on metasurfaces, inverse design, RCWA, and FDTD.">
+  <meta name="theme-color" content="#fafaf8">
+  <meta property="og:title" content="Metamin — Seokmin Kim">
+  <meta property="og:description" content="Research and notes on metasurfaces and inverse design.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://vesper22110852.github.io/Metamin/">
-  <title>Metamin — Computational Nanophotonics</title>
-  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="assets/site.css">
-  <script src="assets/site.js" defer></script>
+  <title>Metamin — Seokmin Kim</title>
+  <link rel="canonical" href="https://vesper22110852.github.io/Metamin/">
+  <link rel="icon" href="assets/favicon.svg?v=2" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/site.css?v=2">
+  <script src="assets/site.js?v=2" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header">
     <div class="site-shell nav-wrap">
-      <a class="brand" href="index.html" aria-label="Metamin home">
-        <span class="brand-mark" aria-hidden="true"></span>
-        <span>metamin</span>
-      </a>
-      <button class="menu-button" type="button" aria-label="Open navigation" aria-expanded="false" data-menu-button>
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h18M3 12h18M3 17h18" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
-      </button>
-      <nav class="site-nav" aria-label="Primary navigation" data-navigation>
+      <a class="brand" href="index.html" aria-label="Metamin home">Metamin<span class="brand-dot" aria-hidden="true"></span></a>
+      <nav class="site-nav" aria-label="Primary navigation">
         <a href="research.html">Research</a>
         <a href="notes.html">Notes</a>
         <a href="publications.html">Publications</a>
@@ -34,211 +29,62 @@
     </div>
   </header>
 
-  <main id="main">
-    <section class="site-shell hero">
-      <div class="hero-copy">
-        <p class="eyebrow">Computational nanophotonics · Daegu, Republic of Korea</p>
-        <h1>Engineering light, <span class="soft">one resonance at a time.</span></h1>
-        <p class="hero-description">I’m Seokmin Kim, a nanophotonics researcher working on metasurfaces, inverse design, and computational electromagnetics. I use RCWA and FDTD to turn physical mechanisms into controllable optical responses.</p>
-        <div class="button-row">
-          <a class="button button-primary" href="research.html">Explore research <span class="arrow" aria-hidden="true">↗</span></a>
-          <a class="button button-secondary" href="https://doi.org/10.1088/2040-8986/ae90be" target="_blank" rel="noreferrer">Read first-author paper <span class="arrow" aria-hidden="true">↗</span></a>
+  <main id="main" class="site-shell">
+    <section class="profile" aria-labelledby="profile-title">
+      <div>
+        <p class="eyebrow">Research &amp; notes</p>
+        <h1 id="profile-title">Seokmin Kim</h1>
+        <p class="profile-subtitle">Metasurfaces &amp; inverse design</p>
+        <p class="profile-description">I study metasurfaces and inverse design using RCWA and FDTD. This site collects my research and technical notes.</p>
+        <div class="profile-links">
+          <a href="about.html">About me</a>
+          <a href="https://github.com/vesper22110852">GitHub <span aria-hidden="true">↗</span></a>
         </div>
       </div>
-
-      <div class="hero-visual" aria-label="Conceptual visualization of a confined optical field">
-        <svg class="field-figure" viewBox="0 0 640 720" role="img" aria-labelledby="field-title field-desc">
-          <title id="field-title">Confined optical field</title>
-          <desc id="field-desc">An abstract field map surrounding an elliptical meta-atom inside a layered optical cavity.</desc>
-          <defs>
-            <radialGradient id="fieldBlue" cx="50%" cy="50%" r="50%">
-              <stop offset="0" stop-color="#8aefff" stop-opacity="1"/>
-              <stop offset=".22" stop-color="#3d6cff" stop-opacity=".94"/>
-              <stop offset=".58" stop-color="#4716a8" stop-opacity=".45"/>
-              <stop offset="1" stop-color="#090b10" stop-opacity="0"/>
-            </radialGradient>
-            <radialGradient id="fieldHot" cx="50%" cy="50%" r="50%">
-              <stop offset="0" stop-color="#fff6a7" stop-opacity="1"/>
-              <stop offset=".25" stop-color="#ff8b39" stop-opacity=".92"/>
-              <stop offset=".58" stop-color="#e52f73" stop-opacity=".42"/>
-              <stop offset="1" stop-color="#080b10" stop-opacity="0"/>
-            </radialGradient>
-            <linearGradient id="metal" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0" stop-color="#fbfbf5"/>
-              <stop offset=".4" stop-color="#9ca2a8"/>
-              <stop offset="1" stop-color="#292f35"/>
-            </linearGradient>
-            <filter id="blur28"><feGaussianBlur stdDeviation="28"/></filter>
-            <filter id="blur10"><feGaussianBlur stdDeviation="10"/></filter>
-            <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse">
-              <path d="M48 0H0V48" fill="none" stroke="#fff" stroke-opacity=".065"/>
-            </pattern>
-          </defs>
-          <rect width="640" height="720" fill="#0c0f14"/>
-          <rect width="640" height="720" fill="url(#grid)"/>
-          <g class="wave-a" filter="url(#blur28)">
-            <ellipse cx="240" cy="320" rx="226" ry="126" fill="url(#fieldBlue)" transform="rotate(-20 240 320)"/>
-            <ellipse cx="444" cy="407" rx="210" ry="119" fill="url(#fieldHot)" transform="rotate(-20 444 407)"/>
-          </g>
-          <g class="wave-b" fill="none" stroke-width="1.4" opacity=".46">
-            <ellipse cx="324" cy="354" rx="246" ry="112" stroke="#74cbff" transform="rotate(-20 324 354)"/>
-            <ellipse cx="324" cy="354" rx="206" ry="91" stroke="#b180ff" transform="rotate(-20 324 354)"/>
-            <ellipse cx="324" cy="354" rx="166" ry="70" stroke="#ff9b74" transform="rotate(-20 324 354)"/>
-            <ellipse cx="324" cy="354" rx="126" ry="49" stroke="#ffe678" transform="rotate(-20 324 354)"/>
-          </g>
-          <rect x="71" y="124" width="498" height="20" rx="2" fill="url(#metal)" opacity=".92"/>
-          <rect x="71" y="570" width="498" height="22" rx="2" fill="url(#metal)" opacity=".86"/>
-          <path d="M320 278c68 0 107 28 107 76s-39 76-107 76-107-28-107-76 39-76 107-76Z" fill="#e5e9ea" fill-opacity=".2" stroke="#fff" stroke-opacity=".76" stroke-width="2" transform="rotate(-20 320 354)"/>
-          <ellipse cx="255" cy="378" rx="62" ry="38" fill="url(#fieldBlue)" filter="url(#blur10)"/>
-          <ellipse cx="386" cy="329" rx="62" ry="38" fill="url(#fieldHot)" filter="url(#blur10)"/>
-          <path d="M100 198h125M100 198l18-10M100 198l18 10" fill="none" stroke="#fff" stroke-opacity=".62" stroke-width="1.5"/>
-          <text x="100" y="184" fill="#fff" fill-opacity=".68" font-family="monospace" font-size="11" letter-spacing="1">Eₓ</text>
-        </svg>
-        <div class="visual-label">
-          <div><strong>Field confinement</strong>Conceptual / not to scale</div>
-          <div><div class="visual-scale"></div>|E|²</div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="site-shell">
-        <div class="section-heading">
-          <div class="section-index">01 / Featured work</div>
-          <div>
-            <h2>Decoupling color through vertical cavity design.</h2>
-            <p>A meta-mirror-assisted architecture that separates geometry-sensitive color tuning from a polarization-locked optical response.</p>
-          </div>
-        </div>
-
-        <article class="paper-card">
-          <div class="paper-visual" aria-hidden="true">
-            <svg viewBox="0 0 560 660" preserveAspectRatio="xMidYMid slice">
-              <defs>
-                <linearGradient id="spectral" x1="0" y1="1" x2="1" y2="0">
-                  <stop offset="0" stop-color="#3253ff"/><stop offset=".24" stop-color="#3cbfff"/><stop offset=".47" stop-color="#36d17e"/><stop offset=".68" stop-color="#ffe44f"/><stop offset=".84" stop-color="#ff713f"/><stop offset="1" stop-color="#b431ff"/>
-                </linearGradient>
-                <filter id="glow"><feGaussianBlur stdDeviation="20"/></filter>
-                <pattern id="paperGrid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#fff" stroke-opacity=".055"/></pattern>
-              </defs>
-              <rect width="560" height="660" fill="#101318"/>
-              <rect width="560" height="660" fill="url(#paperGrid)"/>
-              <g opacity=".32" filter="url(#glow)">
-                <ellipse cx="182" cy="308" rx="120" ry="220" fill="#355cff"/>
-                <ellipse cx="405" cy="365" rx="110" ry="190" fill="#ff3e68"/>
-              </g>
-              <g fill="none" stroke="url(#spectral)" stroke-width="3">
-                <path d="M58 492C114 442 127 203 186 213s60 226 116 194 63-249 111-213 35 223 89 277"/>
-                <path d="M58 520c62-43 68-198 130-198s69 132 124 91 57-167 104-146 48 159 86 177" opacity=".56"/>
-                <path d="M58 540c50-18 86-102 135-91s71 81 121 34 76-104 110-68 48 88 78 91" opacity=".28"/>
-              </g>
-              <g transform="translate(64 91)">
-                <rect width="432" height="18" rx="2" fill="#e9eaeb" opacity=".82"/>
-                <rect y="432" width="432" height="19" rx="2" fill="#e9eaeb" opacity=".82"/>
-                <ellipse cx="216" cy="225" rx="102" ry="44" fill="#cbd0d5" fill-opacity=".21" stroke="#fff" stroke-opacity=".72" stroke-width="2"/>
-                <path d="M216 119v-33m0 0-8 12m8-12 8 12" stroke="#fff" stroke-opacity=".5"/>
-                <path d="M65 355h302" stroke="#fff" stroke-opacity=".18" stroke-dasharray="4 7"/>
-              </g>
-              <text x="54" y="49" fill="#fff" fill-opacity=".62" font-family="monospace" font-size="10" letter-spacing="1.4">META-MIRROR CAVITY / RESPONSE MAP</text>
-              <text x="54" y="624" fill="#fff" fill-opacity=".48" font-family="monospace" font-size="10">430</text>
-              <text x="276" y="624" fill="#fff" fill-opacity=".48" font-family="monospace" font-size="10" text-anchor="middle">λ (nm)</text>
-              <text x="506" y="624" fill="#fff" fill-opacity=".48" font-family="monospace" font-size="10" text-anchor="end">700</text>
-            </svg>
-          </div>
-          <div class="paper-card-content">
-            <div>
-              <div class="paper-meta"><span>Journal of Optics</span><span>2026</span><span>First author</span></div>
-              <h3>Decoupled polarization response in a meta-mirror-assisted structural color cavity</h3>
-              <p>Under x-polarized illumination, the reflected color is continuously tunable through geometry. Under y-polarized illumination, the response remains largely geometry-invariant—a robust route toward polarization-selective optical encoding.</p>
-            </div>
-            <a class="text-link" href="research/polarization-decoupled-cavity.html">View the research story <span class="arrow" aria-hidden="true">→</span></a>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="site-shell">
-        <div class="section-heading">
-          <div class="section-index">02 / Methods</div>
-          <div>
-            <h2>Physics-led computation across scales.</h2>
-            <p>Fast spectral modeling, full-wave validation, and optimization are treated as one connected design loop—not isolated tools.</p>
-          </div>
-        </div>
-        <div class="capability-grid">
-          <article class="capability">
-            <span class="capability-number">M–01</span>
-            <h3>RCWA</h3>
-            <p>Efficient frequency-domain analysis for periodic photonic structures, large parameter sweeps, and spectral response mapping.</p>
-          </article>
-          <article class="capability">
-            <span class="capability-number">M–02</span>
-            <h3>FDTD</h3>
-            <p>Full-wave verification, near-field analysis, and physical interpretation of resonant electromagnetic behavior.</p>
-          </article>
-          <article class="capability">
-            <span class="capability-number">M–03</span>
-            <h3>Inverse design</h3>
-            <p>Optimization-driven exploration of high-dimensional design spaces under optical and fabrication constraints.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="statement">
-      <div class="site-shell statement-inner">
-        <div class="section-index">Working principle</div>
+      <aside class="profile-facts" aria-label="Research overview">
         <div>
-          <blockquote>Simulation becomes research only when it produces an explanation that can survive a changed geometry.</blockquote>
-          <cite>Metamin / research approach</cite>
+          <h2>Research interests</h2>
+          <ul><li>Metasurfaces</li><li>Inverse design</li><li>Structural color</li></ul>
         </div>
-      </div>
+        <div>
+          <h2 class="fact-label">Methods</h2>
+          <p>RCWA · FDTD</p>
+        </div>
+      </aside>
     </section>
 
-    <section class="section">
-      <div class="site-shell">
-        <div class="section-heading">
-          <div class="section-index">03 / Notes</div>
-          <div>
-            <h2>Notes from the design loop.</h2>
-            <p>Technical writing on computational nanophotonics, numerical methods, and the reasoning behind optical design decisions.</p>
+    <section class="content-section" aria-labelledby="publications-heading">
+      <div class="section-heading">
+        <h2 id="publications-heading">Selected publication <span class="section-count">01</span></h2>
+        <a href="publications.html">All publications <span aria-hidden="true">→</span></a>
+      </div>
+      <article class="publication-item">
+        <div class="publication-year"><time datetime="2026">2026</time></div>
+        <div>
+          <h3 class="publication-title"><a href="research/polarization-decoupled-cavity.html">Decoupled polarization response in a meta-mirror-assisted structural color cavity</a></h3>
+          <p class="publication-authors"><strong>Seokmin Kim</strong>, Eui-soo Cho, Gyeongsu Jin, Seung-yeol Lee</p>
+          <p class="publication-journal"><cite>Journal of Optics</cite> 28, 085001 (2026) · First author</p>
+          <div class="publication-actions">
+            <a href="https://doi.org/10.1088/2040-8986/ae90be">Paper <span aria-hidden="true">↗</span></a>
+            <a href="research/polarization-decoupled-cavity.html">Research summary <span aria-hidden="true">→</span></a>
           </div>
         </div>
-        <div class="note-grid">
-          <article class="note-card">
-            <div class="note-meta">Research note · 7 min</div>
-            <h3><a href="notes/why-decoupling-matters.html">Why polarization decoupling is a design problem</a></h3>
-            <p>Moving from two correlated optical responses to independently useful channels.</p>
-          </article>
-          <article class="note-card">
-            <span class="status-label">In preparation</span>
-            <h3>Choosing RCWA or FDTD without ritual</h3>
-            <p>A solver should follow the physical question, not habit or software availability.</p>
-          </article>
-          <article class="note-card">
-            <span class="status-label">In preparation</span>
-            <h3>What makes an inverse-designed result believable?</h3>
-            <p>Robustness, interpretation, and the tests an optimized geometry should survive.</p>
-          </article>
-        </div>
+      </article>
+    </section>
+
+    <section class="content-section" aria-labelledby="notes-heading">
+      <div class="section-heading">
+        <h2 id="notes-heading">Notes <span class="section-count">00</span></h2>
+        <a href="notes.html">All notes <span aria-hidden="true">→</span></a>
       </div>
+      <p class="empty-state">No notes published yet.</p>
     </section>
   </main>
 
   <footer class="site-footer">
-    <div class="site-shell">
-      <div class="footer-grid">
-        <p class="footer-title">Let’s build optical systems that do something unexpected.</p>
-        <div class="footer-links">
-          <a href="https://github.com/vesper22110852" target="_blank" rel="noreferrer">GitHub ↗</a>
-          <a href="about.html">Contact</a>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <span>© <span data-current-year>2026</span> Seokmin Kim / Metamin</span>
-        <span>Built for clarity, curiosity, and reproducibility.</span>
-      </div>
+    <div class="site-shell footer-inner">
+      <span>© <span data-current-year>2026</span> Seokmin Kim</span>
+      <a href="https://github.com/vesper22110852">GitHub <span aria-hidden="true">↗</span></a>
     </div>
   </footer>
 </body>

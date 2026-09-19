@@ -29,17 +29,40 @@ test("local HTML links, asset paths and fragment targets resolve", () => {
   }
 });
 
-test("home is work-led, About contains the profile and an honest CV state", () => {
+test("academic home uses supplied photo and contacts, with an honest CV state", () => {
   const home = readFileSync(join(root, "index.html"), "utf8");
   const about = readFileSync(join(root, "about.html"), "utf8");
-  assert.ok(!home.includes("I study"));
-  assert.ok(!home.includes("About me"));
-  assert.match(home, /Not RCWA \/ FDTD results/);
-  assert.match(home, /<svg class="wave-fallback"/);
-  assert.match(home, /class="wave-controls" hidden/);
+  assert.match(home, /src="assets\/portrait\.jpg"/);
+  assert.match(home, /alt="Portrait of Seokmin Kim"/);
+  assert.match(home, /href="about\.html#cv-heading"/);
+  assert.ok(!home.includes("wave-canvas"));
+  assert.ok(!home.includes("metasurface.js"));
+  for (const html of [home, about]) {
+    assert.match(html, /mailto:ffnvkd1221@gmail\.com/);
+    assert.match(html, /https:\/\/scholar\.google\.com\/citations\?hl=en&amp;user=9jJYjVEAAAAJ/);
+    assert.match(html, /https:\/\/www\.linkedin\.com\/in\/seokmin-kim-969104386\//);
+    assert.ok(!html.includes("gunyeal"));
+  }
   assert.match(about, /I study metasurfaces and inverse design/);
   assert.match(about, /class="cv-download"[^>]* disabled/);
   assert.match(about, /Not uploaded yet/);
+});
+
+test("all pages share the academic theme and include home navigation", () => {
+  for (const file of files) {
+    const html = readFileSync(join(root, file), "utf8");
+    assert.match(html, /site\.css\?v=4/);
+    assert.match(html, /href="[^\"]*index\.html"(?: aria-current="page")?>Home<\/a>/);
+    assert.ok(!html.includes("home.css"));
+  }
+});
+
+test("public portrait is JPEG without camera/editing metadata", () => {
+  const photo = readFileSync(join(root, "assets/portrait.jpg"));
+  assert.equal(photo.readUInt16BE(0), 0xffd8);
+  assert.ok(!photo.includes(Buffer.from("Exif")));
+  assert.ok(!photo.includes(Buffer.from("Photoshop")));
+  assert.ok(photo.length < 30000);
 });
 
 test("deployment includes the visual assets but does not publish tests or authoring files", () => {

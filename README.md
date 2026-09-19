@@ -24,7 +24,7 @@ Open [http://127.0.0.1:4173/](http://127.0.0.1:4173/). Stop the server with Ctrl
 ## Editing
 
 - `index.html`: portrait, short introduction, and contact links.
-- `research.html`: ongoing projects; currently OLED metasurface co-design and Project COSMOS.
+- `research.html`: ongoing projects; currently Project Blackhole and Project COSMOS, in two compact full-width rows.
 - `publications.html` and `publications/`: publication list, paper summaries, and Google Scholar link.
 - `research/`: compatibility redirect for the former paper-summary URL.
 - `notes.html` and `notes/`: retained, unlisted placeholders; not shown in navigation.
@@ -33,7 +33,7 @@ Open [http://127.0.0.1:4173/](http://127.0.0.1:4173/). Stop the server with Ctrl
 - `assets/portrait.jpg`: public photo; original pixels and color profile preserved, EXIF and editing metadata removed.
 - `sitemap.xml`: canonical URLs of published pages.
 
-Use relative links for regular pages so local previews and the `/Metamin/` project site both work. The 404 page uses project-root links because a missing URL can be arbitrarily nested. Local page links and theme assets share the `?v=6` release marker to avoid loading stale HTML with an older stylesheet when navigating. Keep this marker consistent when releasing theme changes; canonical URLs remain unversioned.
+Use relative links for regular pages so local previews and the `/Metamin/` project site both work. The 404 page uses project-root links because a missing URL can be arbitrarily nested. Local page links and theme assets share the `?v=7` release marker to avoid loading stale HTML with an older stylesheet when navigating. Keep this marker consistent when releasing theme changes; canonical URLs remain unversioned.
 
 Notes is hidden from navigation and the sitemap. Its retained pages are marked `noindex`; the previous auto-generated note's original content remains in Git history. Add only content reviewed by the site owner. Project descriptions contain only the scope supplied by the owner, without inferred results or performance claims.
 
@@ -71,6 +71,9 @@ Push to `main`. GitHub Actions stages only website files and publishes them to G
 README, scripts, tests, and preview files are excluded from the Pages artifact.
 
 ## Current copy changes
+
+- Project name: ~~OLED metasurface co-design~~ → Project Blackhole; description unchanged.
+- Project layout: ~~two side-by-side cards~~ → two compact full-width cards stacked vertically.
 
 - Navigation: ~~Home / Research / Publications / Notes / About~~ → Home / Research / Publications / About.
 - Research: ~~Published research~~ → Ongoing projects, with two owner-supplied projects marked In progress.

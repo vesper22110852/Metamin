@@ -34,7 +34,7 @@ test("academic home uses supplied photo and contacts, with an honest CV state", 
   const about = readFileSync(join(root, "about.html"), "utf8");
   assert.match(home, /src="assets\/portrait\.jpg"/);
   assert.match(home, /alt="Portrait of Seokmin Kim"/);
-  assert.match(home, /href="about\.html\?v=6#cv-heading"/);
+  assert.match(home, /href="about\.html\?v=7#cv-heading"/);
   assert.ok(!home.includes("wave-canvas"));
   assert.ok(!home.includes("metasurface.js"));
   for (const html of [home, about]) {
@@ -51,17 +51,17 @@ test("academic home uses supplied photo and contacts, with an honest CV state", 
 test("all pages share four navigation items and a cache-versioned blue theme", () => {
   for (const file of files) {
     const html = readFileSync(join(root, file), "utf8");
-    assert.match(html, /site\.css\?v=6/);
+    assert.match(html, /site\.css\?v=7/);
     const nav = html.match(/<nav class="site-nav"[\s\S]*?<\/nav>/)?.[0];
     assert.ok(nav, `${file}: missing navigation`);
     assert.deepEqual([...nav.matchAll(/<a[^>]*>([^<]+)<\/a>/g)].map(match => match[1]),
       ["Home", "Research", "Publications", "About"], file);
     for (const [, href] of nav.matchAll(/href="([^"]+)"/g)) {
-      assert.match(href, /\.html\?v=6$/, `${file}: stale navigation URL`);
+      assert.match(href, /\.html\?v=7$/, `${file}: stale navigation URL`);
     }
     const current = file.startsWith("publications/") || file.startsWith("research/") ? "publications.html" : file;
     if (["index.html", "research.html", "publications.html", "about.html"].includes(current)) {
-      assert.match(nav, new RegExp(`href="[^"]*${current.replace(".", "\\.")}\\?v=6" aria-current="page"`), file);
+      assert.match(nav, new RegExp(`href="[^"]*${current.replace(".", "\\.")}\\?v=7" aria-current="page"`), file);
       assert.equal((nav.match(/aria-current="page"/g) || []).length, 1, file);
     }
     assert.ok(!html.includes("home.css"));
@@ -80,15 +80,18 @@ test("Research contains only the two supplied ongoing projects; papers live in P
   assert.doesNotMatch(home, /Featured publication|Research notes|Journal of Optics|ae90be/);
   assert.doesNotMatch(research, /Published research|Journal of Optics|ae90be|publication-item/);
   assert.match(research, /Ongoing projects/);
-  assert.match(research, /OLED metasurface co-design/);
+  assert.match(research, /<h3 id="oled-project-title">Project Blackhole<\/h3>/);
   assert.match(research, /absorber beneath an OLED and RGB metamirrors/);
   assert.match(research, /Project COSMOS/);
   assert.match(research, /Hermite–Gaussian \(HG\) modes in a cascaded system/);
   assert.equal((research.match(/class="project-card"/g) || []).length, 2);
   assert.equal((research.match(/>In progress</g) || []).length, 2);
+  assert.equal((research.match(/class="project-card-heading"/g) || []).length, 2);
+  const css = readFileSync(join(root, "assets/site.css"), "utf8");
+  assert.match(css, /\.project-grid\s*\{[^}]*grid-template-columns: minmax\(0, 1fr\)/);
   assert.match(publications, /Journal of Optics/);
-  assert.match(publications, /href="publications\/polarization-decoupled-cavity\.html\?v=6"/);
-  assert.match(legacy, /http-equiv="refresh" content="0; url=\.\.\/publications\/polarization-decoupled-cavity\.html\?v=6"/);
+  assert.match(publications, /href="publications\/polarization-decoupled-cavity\.html\?v=7"/);
+  assert.match(legacy, /http-equiv="refresh" content="0; url=\.\.\/publications\/polarization-decoupled-cavity\.html\?v=7"/);
   const sitemap = readFileSync(join(root, "sitemap.xml"), "utf8");
   assert.doesNotMatch(sitemap, /\/notes|\/research\//);
   assert.match(readFileSync(join(root, "notes.html"), "utf8"), /name="robots" content="noindex"/);

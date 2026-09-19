@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Project Blackhole: a conceptual tandem white-OLED cavity with RGB metamirrors and a black matrix by Seokmin Kim.">
+  <meta name="theme-color" content="#f7f8fb">
+  <title>Project Blackhole — Metamin</title>
+  <link rel="canonical" href="https://vesper22110852.github.io/Metamin/research/blackhole.html">
+  <link rel="icon" href="../assets/favicon.svg?v=8" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/site.css?v=8">
+  <link rel="stylesheet" href="../assets/project-detail.css?v=4">
+  <script src="../assets/site.js?v=2" defer></script>
+  <script type="module" src="../assets/blackhole.js?v=5"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="site-shell nav-wrap">
+      <a class="brand" href="../index.html?v=8" aria-label="Metamin home">Metamin</a>
+      <nav class="site-nav" aria-label="Primary navigation">
+        <a href="../index.html?v=8">Home</a>
+        <a href="../research.html?v=8" aria-current="page">Research</a>
+        <a href="../publications.html?v=8">Publications</a>
+        <a href="../about.html?v=8">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="site-shell project-detail">
+    <header class="page-header project-detail-header">
+      <a class="back-link" href="../research.html?v=8">← Research</a>
+      <div class="project-title-row">
+        <h1>Project Blackhole</h1>
+        <p class="project-status">In progress</p>
+      </div>
+      <p class="page-intro">Tandem white OLED, RGB metamirrors and a black matrix.</p>
+    </header>
+
+    <figure id="blackhole-demo" class="project-visual" data-focus="all" data-playing="false" aria-labelledby="concept-heading" aria-describedby="concept-caption">
+      <div class="project-stage-header">
+        <h2 id="concept-heading">Tandem OLED · RGB top emission</h2>
+        <span>Conceptual optical architecture</span>
+      </div>
+      <div id="blackhole-stage" class="project-stage">
+        <img src="../assets/blackhole-concept.svg?v=5" alt="Conceptual tandem OLED on a solid substrate: soft luminous white waves descend from tinted emissive layers toward RGB metamirrors. Four smaller arrows branch from each central RGB output shaft and fade at the black matrix." width="960" height="660">
+      </div>
+      <div class="project-sequence-panel">
+        <ol class="project-optical-sequence" aria-label="Illustrated optical sequence">
+          <li data-optical-step="white"><span aria-hidden="true">1</span>White light down</li>
+          <li data-optical-step="reflection"><span aria-hidden="true">2</span>RGB-selective reflection</li>
+          <li data-optical-step="emission"><span aria-hidden="true">3</span>Top emission</li>
+        </ol>
+        <p>Smaller branches extend from the central RGB shafts and fade at the black matrix, illustrating intended crosstalk suppression.</p>
+      </div>
+      <div class="project-controls" data-demo-controls hidden>
+        <div class="project-control-row">
+          <div class="component-selector" role="group" aria-label="Highlight a component">
+            <button type="button" data-focus-value="all" aria-pressed="true" aria-controls="blackhole-stage">Overview</button>
+            <button type="button" data-focus-value="oled" aria-pressed="false" aria-controls="blackhole-stage">Tandem OLED</button>
+            <button type="button" data-focus-value="mirrors" aria-pressed="false" aria-controls="blackhole-stage">RGB metamirrors</button>
+            <button type="button" data-focus-value="absorbers" aria-pressed="false" aria-controls="blackhole-stage">Black matrix</button>
+          </div>
+          <button id="motion-toggle" class="project-motion-toggle" type="button" aria-pressed="false" aria-controls="blackhole-stage">Play animation</button>
+        </div>
+        <p id="component-description" class="project-component-description" role="status" aria-live="polite">Broadband white OLED emission reaches the RGB metamirrors for color-selective top emission; the black matrix is intended to limit pixel-to-pixel optical crosstalk.</p>
+      </div>
+      <figcaption id="concept-caption" class="project-caption">
+        <p>Conceptual schematic · Not to scale. White wavefronts symbolize broad illumination, not coherent plane-wave emission. Layer spacing, optical paths and animation timing are illustrative, not simulated fields or propagation times.</p>
+        <p>RGB output represents spectral selection from broadband white emission, not frequency conversion. Colors identify optical channels, not constituent materials; no device performance is reported. Crosstalk suppression is a proposed function, not a simulated or measured result.</p>
+      </figcaption>
+    </figure>
+
+    <section class="content-section project-principles" aria-labelledby="principle-heading">
+      <div class="section-heading">
+        <h2 id="principle-heading">Working principle</h2>
+      </div>
+      <div class="project-component-grid">
+        <article class="project-component">
+          <span class="project-component-index" aria-hidden="true">01</span>
+          <h3>Tandem white OLED</h3>
+          <p>The emissive layers of a tandem OLED supply broadband white light. Broad descending wavefronts illustrate illumination of the RGB metamirrors beneath the stack.</p>
+        </article>
+        <article class="project-component">
+          <span class="project-component-index" aria-hidden="true">02</span>
+          <h3>RGB Fabry–Pérot cavity</h3>
+          <p>The lower metamirrors and upper output interface form an optical cavity. Its Fabry–Pérot response is designed to favor the red, green and blue bands in top emission.</p>
+        </article>
+        <article class="project-component">
+          <span class="project-component-index" aria-hidden="true">03</span>
+          <h3>Black matrix</h3>
+          <p>Ring–disk structures form a proposed black matrix along pixel boundaries. Smaller arrows branch from each central RGB shaft and fade at this matrix, illustrating the intended absorption of stray light and reduction of optical crosstalk.</p>
+        </article>
+      </div>
+      <p class="project-design-goal"><strong>Design goal</strong> Color-selective top emission with less unwanted coupling between neighboring subpixels.</p>
+      <p class="project-disclosure">Only the concept is shown; material choices, dimensions and performance data are omitted.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-shell footer-inner">
+      <span>© <span data-current-year>2026</span> Seokmin Kim · Metamin</span>
+      <div class="footer-links">
+        <a href="mailto:ffnvkd1221@gmail.com">Email</a>
+        <a href="https://scholar.google.com/citations?hl=en&amp;user=9jJYjVEAAAAJ">Google Scholar</a>
+        <a href="https://www.linkedin.com/in/seokmin-kim-969104386/">LinkedIn</a>
+        <a href="https://github.com/vesper22110852">GitHub</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,6 +1,6 @@
 # Metamin
 
-Seokmin Kim's academic research site. Plain HTML, CSS, and a small optional footer-year script; no build dependencies.
+Seokmin Kim's academic research site. Plain HTML, CSS, and optional JavaScript for the footer year and interactive project schematics; no build dependencies.
 
 - Website: [vesper22110852.github.io/Metamin/](https://vesper22110852.github.io/Metamin/)
 - Repository: [vesper22110852/Metamin](https://github.com/vesper22110852/Metamin)
@@ -25,15 +25,18 @@ Open [http://127.0.0.1:4173/](http://127.0.0.1:4173/). Stop the server with Ctrl
 
 - `index.html`: portrait, short introduction, and contact links.
 - `research.html`: ongoing projects; currently Project Blackhole and Project COSMOS, in two compact full-width rows.
+- `research/blackhole.html`: public project page, with an interactive conceptual schematic and brief principles. The owner has approved publication of this version; it does not report validated device performance.
+- `assets/project-detail.css`: reusable detail-page visual, controls, and explanation layout.
+- `assets/blackhole-scene.mjs` / `assets/blackhole.js`: illustrative SVG geometry and accessible component/animation controls. `assets/blackhole-concept.svg` is the matching static fallback.
 - `publications.html` and `publications/`: publication list, paper summaries, and Google Scholar link.
-- `research/`: compatibility redirect for the former paper-summary URL.
+- `research/`: project detail pages and a compatibility redirect for the former paper-summary URL.
 - `notes.html` and `notes/`: retained, unlisted placeholders; not shown in navigation.
 - `about.html`: profile, contact information, and CV download area.
 - `assets/site.css`: shared colors, typography, panels, and responsive layout.
 - `assets/portrait.jpg`: public photo; original pixels and color profile preserved, EXIF and editing metadata removed.
 - `sitemap.xml`: canonical URLs of published pages.
 
-Use relative links for regular pages so local previews and the `/Metamin/` project site both work. The 404 page uses project-root links because a missing URL can be arbitrarily nested. Local page links and theme assets share the `?v=7` release marker to avoid loading stale HTML with an older stylesheet when navigating. Keep this marker consistent when releasing theme changes; canonical URLs remain unversioned.
+Use relative links for regular pages so local previews and the `/Metamin/` project site both work. The 404 page uses project-root links because a missing URL can be arbitrarily nested. Local page links and theme assets share the `?v=8` release marker to avoid loading stale HTML with an older stylesheet when navigating. Keep this marker consistent when releasing theme changes; canonical URLs remain unversioned.
 
 Notes is hidden from navigation and the sitemap. Its retained pages are marked `noindex`; the previous auto-generated note's original content remains in Git history. Add only content reviewed by the site owner. Project descriptions contain only the scope supplied by the owner, without inferred results or performance claims.
 
@@ -66,11 +69,27 @@ Run `node --test --test-isolation=none tests/*.test.mjs` with a recent Node.js v
 
 ## Deployment
 
+**Public release:** The owner has explicitly approved publishing the current Project Blackhole page and animation. The conceptual architecture is public; material choices, actual dimensions and performance data remain omitted. New unpublished research details still require the owner's approval before publication. Keep local preview bound to `127.0.0.1`.
+
 Push to `main`. GitHub Actions stages only website files and publishes them to GitHub Pages. Settings → Pages → Source is **GitHub Actions**.
 
 README, scripts, tests, and preview files are excluded from the Pages artifact.
 
 ## Current copy changes
+
+- Release status: ~~local-only draft; not approved for publication~~ → owner-approved public concept page, included in the sitemap and no longer marked `noindex`.
+- Scientific scope: ~~no device performance is reported~~ → no device performance is reported; crosstalk suppression is a proposed function, not a simulated or measured result. The drawing and animation are unchanged.
+- Site description: ~~a small optional footer-year script~~ → optional JavaScript for the footer year and interactive project schematics.
+- Blackhole white light: ~~transparent rectangular wave sheets~~ → luminous curved white waves with soft edges and no pane outlines.
+- Blackhole outward rays: ~~detached arrows leaving the subpixel base~~ → four connected branches growing from an elevated point on each main RGB shaft; branch growth begins only after the main shaft reaches that point. Conceptual illustration, not simulated fields.
+- Blackhole illumination: ~~individual downward white arrows~~ → broad descending white wavefronts from tinted, translucent emissive layers. The wavefronts are symbolic illumination, not a claim of coherent plane-wave emission.
+- Blackhole crosstalk view: ~~a single lateral leakage path~~ → smaller RGB arrows spreading outward from each subpixel and fading at the black matrix. ~~Absorbing boundaries~~ → Black matrix; external component labels are removed. These remain conceptual illustrations, not simulation results.
+- Blackhole optical sequence: ~~repeating white streaks in upward RGB beams~~ → white light traveling down from tandem OLED emissive layers, RGB-selective reflection and top emission, with illustrative attenuation at absorbing boundaries. Spectral selection is not described as frequency conversion; enlarged layer spacing and animation timing are explicitly schematic.
+- Blackhole presentation: ~~separate cylinder and ring–disk insets~~ → one integrated device view on a solid substrate, with a compact three-step optical legend.
+- Blackhole mechanism: ~~generic OLED stack~~ → tandem white OLED, lower-mirror reflection, Fabry–Pérot cavity, and RGB top emission.
+- Blackhole visual: ~~selected thin beams and boundary-directed paths~~ → substantial centered output from all 12 illustrative subpixels. Removed layer-separation control; ring and disk now share one material palette. This remains a concept, not a performance claim.
+
+- Project Blackhole: ~~plain project title~~ → linked project detail page with an interactive concept drawing and short principles. No actual dimensions, material stack, or performance data are included.
 
 - Project name: ~~OLED metasurface co-design~~ → Project Blackhole; description unchanged.
 - Project layout: ~~two side-by-side cards~~ → two compact full-width cards stacked vertically.

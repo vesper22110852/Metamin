@@ -51,7 +51,7 @@ test("academic home uses supplied photo and contacts, with an honest CV state", 
 test("all pages share the academic theme and include home navigation", () => {
   for (const file of files) {
     const html = readFileSync(join(root, file), "utf8");
-    assert.match(html, /site\.css\?v=4/);
+    assert.match(html, /site\.css\?v=5/);
     assert.match(html, /href="[^\"]*index\.html"(?: aria-current="page")?>Home<\/a>/);
     assert.ok(!html.includes("home.css"));
   }

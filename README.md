@@ -7,7 +7,7 @@ Seokmin Kim's academic research site. Plain HTML, CSS, and a small optional foot
 
 ## Design
 
-The academic profile layout is independently implemented, with visual inspiration from [Gun-Yeal Lee's site](https://gunyeal.github.io/): a light background, white rounded panels, burgundy accents, portrait beside the introduction, and a compact publication list. No biography, affiliation, publication artwork, or source code was copied from that site.
+The academic profile layout is independently implemented, with visual inspiration from [Gun-Yeal Lee's site](https://gunyeal.github.io/): a light background, white rounded panels, blue accents, portrait beside the introduction, and a compact publication list. No biography, affiliation, publication artwork, or source code was copied from that site. The accent color is now `#004C98`, with link blue `#1155A7`, both used in [KAIST's website stylesheet](https://www.kaist.ac.kr/kr/css/layout.css?ver=1.2). Only the palette is referenced; no KAIST affiliation, logo, or endorsement is implied.
 
 Home uses the owner's supplied photograph, email, Google Scholar profile, and LinkedIn profile. Personal details not supplied by the owner are not filled in.
 
@@ -70,6 +70,8 @@ Push to `main`. GitHub Actions stages only website files and publishes them to G
 README, scripts, tests, and preview files are excluded from the Pages artifact.
 
 ## Current copy changes
+
+- Accent palette: ~~burgundy (`#8D2638`)~~ → KAIST website blue (`#004C98`); layout and content unchanged.
 
 - Home ~~Wavefront shaping.~~ → Seokmin Kim.
 - ~~An ideal phase mask for focusing and beam steering.~~ → Metasurfaces & inverse design.

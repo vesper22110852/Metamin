@@ -92,7 +92,7 @@ test("Research contains only the two supplied ongoing projects; papers live in P
   const css = readFileSync(join(root, "assets/site.css"), "utf8");
   assert.match(css, /\.project-grid\s*\{[^}]*grid-template-columns: minmax\(0, 1fr\)/);
   assert.match(publications, /Journal of Optics/);
-  assert.match(publications, /href="publications\/polarization-decoupled-cavity\.html\?v=15"/);
+  assert.match(publications, /href="publications\/polarization-decoupled-cavity\.html\?v=16"/);
   assert.match(legacy, /http-equiv="refresh" content="0; url=\.\.\/publications\/polarization-decoupled-cavity\.html\?v=9"/);
   const sitemap = readFileSync(join(root, "sitemap.xml"), "utf8");
   assert.doesNotMatch(sitemap, /\/notes\/|\/research\/polarization-decoupled-cavity/);

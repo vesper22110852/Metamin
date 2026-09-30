@@ -32,7 +32,7 @@ Double-click **Metamin Preview** on the Windows desktop to open the site. `scrip
 - `assets/project-detail.css`: reusable detail-page visual, controls, and explanation layout.
 - `assets/blackhole-scene.mjs` / `assets/blackhole.js`: illustrative SVG geometry and accessible component/animation controls. `assets/blackhole-concept.svg` is the matching static fallback.
 - `publications.html` and `publications/`: publication list, paper summaries, and Google Scholar link.
-- `assets/paper-summary.css` / `assets/summary-player.mjs`: reusable, user-started 20-second publication player. Includes pause, restart, seeking and chapter navigation; no autoplay, looping, audio or external video host.
+- `assets/paper-summary.css` / `assets/summary-player.mjs`: reusable 20-second publication player. The paper summary autoplays once when first visible. This specific film has an owner-approved reduced-motion exception; the reusable player's default and other animations still respect reduced motion. Pause, restart, seeking and chapter navigation remain available; leaving the view pauses playback without automatic resumption. No looping, audio or external video host.
 - `assets/polarization-scene.mjs` / `assets/polarization-summary.js`: first paper's normal-incidence, five-layer color/polarization story. x-pol colors are sampled from published Figure 1(e); a representative cyan from Figure 1(f) summarizes y-pol. Provenance and the original small y-pol differences are recorded in `scripts/polarization-color-samples.json`. The cutaway, vertical scale and polarization transitions are schematic, not reconstructed spectra, measured footage or fabrication evidence. `node scripts/build-polarization-fallback.mjs` regenerates its static SVG fallback.
 - `research/`: project detail pages and a compatibility redirect for the former paper-summary URL.
 - `notes.html` and `notes/`: personal writing about scholarship applications, conferences, research life, and other experiences. Notes sits between Publications and About. The list is empty until the owner supplies a reviewed post.
@@ -91,6 +91,8 @@ Pushing to `main` or `master` triggers deployment; a manual workflow run can als
 README, scripts, tests, and preview files are excluded from the Pages artifact, but repository files and Git history are visible in the public GitHub repository. Do not commit credentials, private drafts, or undisclosed research data.
 
 ## Current copy changes
+
+- Summary playback: ~~user-started; no autoplay~~ → one-time autoplay when visible, including an owner-approved reduced-motion exception for this paper film only; manual controls remain available.
 
 - Release status (2026-09-30): ~~private development; Pages disabled~~ → owner-approved public release; repository made Public by the owner and Pages configured for the existing deployment workflow.
 - Repository safety: ~~private GitHub pushes can be used for backup~~ → the repository and its history are public; only reviewed material may be pushed.

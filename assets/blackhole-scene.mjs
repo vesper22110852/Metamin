@@ -174,24 +174,34 @@ ${waveKeyframes}
     ${plane(0,0,4,3,0,'class="bh-substrate-top" fill="url(#bh-base)" stroke="#8aa2ba" stroke-width="1.2"')}
     ${polygon([[0,3,-6],[4,3,-6],[4,3,-8],[0,3,-8]], 'fill="#a3b7c8" fill-opacity=".33"')}
     ${polygon([[4,0,-6],[4,3,-6],[4,3,-8],[4,0,-8]], 'fill="#8ca2b9" fill-opacity=".25"')}
-  </g><g class="bh-part bh-mirrors">`);
+  </g><g class="bh-part bh-mirrors"><g class="bh-cell-pads">`);
+  const raisedStructures = [];
   for (const { row,col,channel } of SUBPIXELS) {
     parts.push(plane(col+.1,row+.1,.8,.8,.5,`fill="${PALETTE[channel].main}" fill-opacity=".14" stroke="${PALETTE[channel].main}" stroke-opacity=".5" stroke-width=".8"`));
     for (let depth=0;depth<3;depth++) for (let across=0;across<3;across++) {
-      parts.push(`<use href="#bh-pillar-${channel}" transform="translate(${point(col+.27+across*.23,row+.27+depth*.23,1)})"/>`);
+      const x = col+.27+across*.23, y = row+.27+depth*.23;
+      const baseDepth = projectPoint(x,y).y;
+      raisedStructures.push({baseDepth,markup:`<use href="#bh-pillar-${channel}" transform="translate(${point(x,y,1)})" class="bh-part bh-mirrors bh-nanopillar" data-cell="${row}-${col}" data-base-depth="${n(baseDepth)}"/>`});
     }
   }
-  parts.push(`</g><g class="bh-part bh-absorbers"><g class="bh-boundary-tracks">`);
-  // Draw all strips first so crossing strips never cut the annular ring tops.
+  parts.push(`</g></g><g class="bh-part bh-absorbers"><g class="bh-boundary-tracks">`);
+  // Finish every ground surface before drawing raised structures. A flat
+  // neighbor pad or boundary strip must never slice an elevated cylinder.
   for (let col=0;col<=4;col++) parts.push(plane(col-.075,-.075,.15,3.15,1.2,'fill="#0a1422"'));
   for (let row=0;row<=3;row++) parts.push(plane(-.075,row-.075,4.15,.15,1.2,'fill="#0a1422"'));
-  parts.push(`</g><g class="bh-boundary-units">`);
+  parts.push(`</g></g><g class="bh-raised-structures">`);
   const rings = [];
   for (let col=0;col<=4;col++) for (let step=0;step<=15;step++) rings.push([col,step/5]);
   for (let row=0;row<=3;row++) for (let step=1;step<20;step++) if (step%5!==0) rings.push([step/5,row]);
-  rings.sort((a,b)=>projectPoint(...a).y-projectPoint(...b).y);
-  for (const [x,y] of rings) parts.push(`<use href="#bh-ring-disk" transform="translate(${point(x,y,1.5)})"/>`);
-  parts.push(`</g></g><g class="bh-spacer" fill="#8cbacc" fill-opacity=".025">
+  for (const [x,y] of rings) {
+    const baseDepth = projectPoint(x,y).y;
+    raisedStructures.push({baseDepth,markup:`<use href="#bh-ring-disk" transform="translate(${point(x,y,1.5)})" class="bh-part bh-absorbers bh-boundary-unit" data-base-depth="${n(baseDepth)}"/>`});
+  }
+  // Whole pillar and ring/disk glyphs share one back-to-front pass. Sorting
+  // at the common ground plane keeps their different heights out of depth.
+  raisedStructures.sort((a,b)=>a.baseDepth-b.baseDepth);
+  for (const {markup} of raisedStructures) parts.push(markup);
+  parts.push(`</g><g class="bh-spacer" fill="#8cbacc" fill-opacity=".025">
     ${polygon([[0,3,bottomPlane],[4,3,bottomPlane],[4,3,OLED_LAYERS[0].bottom],[0,3,OLED_LAYERS[0].bottom]])}
     ${polygon([[4,0,bottomPlane],[4,3,bottomPlane],[4,3,OLED_LAYERS[0].bottom],[4,0,OLED_LAYERS[0].bottom]])}
   </g>`);

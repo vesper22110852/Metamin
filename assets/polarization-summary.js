@@ -1,4 +1,4 @@
-import { mountSummaryPlayer } from "./summary-player.mjs?v=1";
+import { mountSummaryPlayer } from "./summary-player.mjs?v=2";
 import { createPolarizationSVG, getSummaryFrame } from "./polarization-scene.mjs?v=5";
 
 const root=document.querySelector("[data-paper-summary]");
@@ -25,7 +25,8 @@ if(root) {
   const angle=root.querySelector("[data-summary-angle]");
   const chapters=[...root.querySelectorAll("[data-summary-chapter]")];
   let currentChapter=-1;
-  mountSummaryPlayer(root,{duration:20,render(seconds) {
+  // Owner-requested exception for this film only; other animations keep their motion preferences.
+  mountSummaryPlayer(root,{duration:20,autoplay:true,respectReducedMotion:false,render(seconds) {
     const frame=getSummaryFrame(seconds);
     for(const element of fills) element.setAttribute("fill",frame.colors[Number(element.dataset.colorIndex)]);
     illumination.setAttribute("opacity",String(frame.incidentOpacity));

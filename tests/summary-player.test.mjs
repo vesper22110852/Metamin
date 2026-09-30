@@ -8,13 +8,16 @@ class Element {
   getAttribute(key) { return this.attributes.get(key) ?? null; }
   addEventListener(type, handler) { if (!this.listeners.has(type)) this.listeners.set(type, new Set()); this.listeners.get(type).add(handler); }
   removeEventListener(type, handler) { this.listeners.get(type)?.delete(handler); }
-  emit(type) { for (const handler of this.listeners.get(type) ?? []) handler({ target: this }); }
+  emit(type, details = {}) { for (const handler of this.listeners.get(type) ?? []) handler({ target: this, ...details }); }
 }
-function fixture(extra = {}) {
+function fixture(extra = {}, { hidden = false, reduced = false, observer: observe = true } = {}) {
   const root = new Element();
   const doc = new Element();
-  doc.hidden = false;
-  doc.defaultView = {};
+  const motion = new Element();
+  motion.matches = reduced;
+  motion.media = "(prefers-reduced-motion: reduce)";
+  doc.hidden = hidden;
+  doc.defaultView = { matchMedia: query => { assert.equal(query, motion.media); return motion; } };
   root.ownerDocument = doc;
   const controls = Object.fromEntries(["play", "replay", "seek", "time", "status"].map(key => [key, new Element()]));
   const chapters = [0, 5, 12, 17].map(time => { const button = new Element(); button.dataset.time = String(time); return button; });
@@ -35,7 +38,7 @@ function fixture(extra = {}) {
     now: () => milliseconds,
     requestAnimationFrame: callback => { frames.set(++id, callback); return id; },
     cancelAnimationFrame: frameId => frames.delete(frameId),
-    IntersectionObserver: MockObserver
+    IntersectionObserver: observe ? MockObserver : null
   };
   const player = mountSummaryPlayer(root, { render: time => rendered.push(time), platform, ...extra });
   function advance(delta, runFrame = true) {
@@ -45,7 +48,8 @@ function fixture(extra = {}) {
     frames.clear();
     pending.forEach(callback => callback(milliseconds));
   }
-  return { root, doc, controls, chapters, player, frames, rendered, advance, get observer() { return observer; } };
+  const setReducedMotion = value => { motion.matches = value; motion.emit("change", { matches: value }); };
+  return { root, doc, controls, chapters, player, frames, rendered, motion, setReducedMotion, advance, get observer() { return observer; } };
 }
 
 test("summary starts at zero without autoplay and exposes accessible controls", () => {
@@ -60,6 +64,206 @@ test("summary starts at zero without autoplay and exposes accessible controls", 
   assert.equal(f.controls.time.textContent, "0:00 / 0:20");
   assert.equal(f.controls.time.getAttribute("aria-live"), "off");
   assert.equal(f.controls.status.getAttribute("aria-live"), "polite");
+});
+
+test("opt-in autoplay waits until the summary is visible and then starts once", () => {
+  const f = fixture({ autoplay: true });
+  assert.deepEqual(f.rendered, [0]);
+  assert.equal(f.player.getState().playing, false);
+  assert.equal(f.frames.size, 0);
+  f.advance(30000);
+  f.observer.show(false);
+  assert.equal(f.player.getState().playing, false);
+  f.observer.show(true);
+  assert.equal(f.player.getState().playing, true);
+  assert.equal(f.player.getState().time, 0);
+  assert.equal(f.controls.play.textContent, "Pause summary");
+  assert.equal(f.frames.size, 1);
+  f.advance(1000);
+  f.observer.show(true);
+  assert.equal(f.player.getState().time, 1);
+  assert.equal(f.frames.size, 1);
+  f.advance(19000);
+  assert.equal(f.player.getState().ended, true);
+  f.observer.show(false);
+  f.observer.show(true);
+  f.doc.emit("visibilitychange");
+  assert.equal(f.player.getState().playing, false);
+  assert.equal(f.player.getState().time, 20);
+  assert.equal(f.frames.size, 0);
+});
+
+test("autoplay defers in a background document until both visibility conditions hold", () => {
+  for (const documentFirst of [true, false]) {
+    const f = fixture({ autoplay: true }, { hidden: true });
+    f.advance(10000);
+    if (documentFirst) {
+      f.doc.hidden = false;
+      f.doc.emit("visibilitychange");
+      assert.equal(f.player.getState().playing, false);
+      f.observer.show(true);
+    } else {
+      f.observer.show(true);
+      assert.equal(f.player.getState().playing, false);
+      f.doc.hidden = false;
+      f.doc.emit("visibilitychange");
+    }
+    assert.equal(f.player.getState().playing, true);
+    assert.equal(f.player.getState().time, 0);
+    assert.equal(f.frames.size, 1);
+    f.advance(500);
+    assert.equal(f.player.getState().time, 0.5);
+  }
+});
+
+test("autoplay works without IntersectionObserver while still respecting document visibility", () => {
+  const foreground = fixture({ autoplay: true }, { observer: false });
+  assert.equal(foreground.player.getState().playing, true);
+  assert.equal(foreground.frames.size, 1);
+  const background = fixture({ autoplay: true }, { observer: false, hidden: true });
+  assert.equal(background.player.getState().playing, false);
+  assert.equal(background.frames.size, 0);
+  background.advance(60000);
+  background.doc.hidden = false;
+  background.doc.emit("visibilitychange");
+  assert.equal(background.player.getState().playing, true);
+  assert.equal(background.player.getState().time, 0);
+  assert.equal(background.frames.size, 1);
+});
+
+test("pause, seek and snapshot actions cancel pending autoplay before visibility arrives", () => {
+  const actions = [
+    [f => f.player.pause(), 0],
+    [f => f.player.seek(8), 8],
+    [f => f.chapters[2].emit("click"), 12]
+  ];
+  for (const [act, time] of actions) {
+    const f = fixture({ autoplay: true });
+    act(f);
+    f.observer.show(true);
+    f.doc.emit("visibilitychange");
+    f.advance(10000);
+    assert.equal(f.player.getState().playing, false);
+    assert.equal(f.player.getState().time, time);
+    assert.equal(f.frames.size, 0);
+  }
+});
+
+test("a user pause or seek after autoplay is not undone by later visibility changes", () => {
+  for (const act of [f => f.controls.play.emit("click"), f => f.player.seek(8), f => f.chapters[2].emit("click")]) {
+    const f = fixture({ autoplay: true });
+    f.observer.show(true);
+    f.advance(2000);
+    act(f);
+    const time = f.player.getState().time;
+    f.observer.show(false);
+    f.observer.show(true);
+    f.doc.hidden = true;
+    f.doc.emit("visibilitychange");
+    f.doc.hidden = false;
+    f.doc.emit("visibilitychange");
+    f.advance(60000);
+    assert.equal(f.player.getState().playing, false);
+    assert.equal(f.player.getState().time, time);
+    assert.equal(f.frames.size, 0);
+  }
+});
+
+test("autoplay does not resume after being paused by offscreen or background transitions", () => {
+  for (const background of [false, true]) {
+    const f = fixture({ autoplay: true });
+    f.observer.show(true);
+    f.advance(2000);
+    if (background) { f.doc.hidden = true; f.doc.emit("visibilitychange"); }
+    else f.observer.show(false);
+    f.advance(60000);
+    if (background) { f.doc.hidden = false; f.doc.emit("visibilitychange"); }
+    else f.observer.show(true);
+    assert.equal(f.player.getState().playing, false);
+    assert.equal(f.player.getState().time, 2);
+    assert.equal(f.frames.size, 0);
+    f.controls.play.emit("click");
+    f.advance(1000);
+    assert.equal(f.player.getState().time, 3);
+  }
+});
+
+test("reduced motion blocks autoplay but still allows explicit playback", () => {
+  for (const observe of [true, false]) {
+    const f = fixture({ autoplay: true }, { reduced: true, observer: observe });
+    f.observer?.show(true);
+    assert.equal(f.player.getState().playing, false);
+    assert.equal(f.frames.size, 0);
+    f.setReducedMotion(false);
+    f.observer?.show(true);
+    f.doc.emit("visibilitychange");
+    assert.equal(f.player.getState().playing, false);
+    f.setReducedMotion(true);
+    f.controls.play.emit("click");
+    assert.equal(f.player.getState().playing, true);
+    f.advance(1000);
+    assert.equal(f.player.getState().time, 1);
+  }
+});
+
+test("turning reduced motion on cancels pending autoplay or pauses active playback", () => {
+  const pending = fixture({ autoplay: true });
+  pending.setReducedMotion(true);
+  pending.setReducedMotion(false);
+  pending.observer.show(true);
+  assert.equal(pending.player.getState().playing, false);
+  assert.equal(pending.frames.size, 0);
+  const active = fixture({ autoplay: true });
+  active.observer.show(true);
+  active.advance(2000);
+  active.setReducedMotion(true);
+  assert.equal(active.player.getState().playing, false);
+  assert.equal(active.player.getState().time, 2);
+  assert.equal(active.frames.size, 0);
+  active.setReducedMotion(false);
+  active.observer.show(true);
+  assert.equal(active.player.getState().playing, false);
+  active.controls.play.emit("click");
+  assert.equal(active.player.getState().playing, true);
+});
+
+test("an explicitly configured film can autoplay under reduced motion without changing other players", () => {
+  const film = fixture({ autoplay: true, respectReducedMotion: false }, { reduced: true });
+  const other = fixture({ autoplay: true }, { reduced: true });
+  film.observer.show(true);
+  other.observer.show(true);
+  assert.equal(film.player.getState().playing, true);
+  assert.equal(other.player.getState().playing, false);
+  film.advance(1500);
+  film.setReducedMotion(false);
+  film.setReducedMotion(true);
+  assert.equal(film.player.getState().playing, true);
+  assert.equal(film.frames.size, 1);
+  film.controls.play.emit("click");
+  film.observer.show(true);
+  assert.equal(film.player.getState().playing, false, "the exception never overrides manual pause");
+});
+
+test("destroy cancels pending autoplay and removes motion listeners as well as visibility listeners", () => {
+  for (const start of [false, true]) {
+    const f = fixture({ autoplay: true });
+    if (start) { f.observer.show(true); f.advance(1000); }
+    const count = f.rendered.length;
+    f.player.destroy();
+    assert.equal(f.frames.size, 0);
+    assert.equal(f.observer.disconnected, true);
+    assert.equal([...f.motion.listeners.values()].every(handlers => handlers.size === 0), true);
+    assert.equal([...f.doc.listeners.values()].every(handlers => handlers.size === 0), true);
+    f.observer.show(true);
+    f.setReducedMotion(true);
+    f.setReducedMotion(false);
+    f.doc.emit("visibilitychange");
+    f.controls.play.emit("click");
+    f.advance(30000);
+    assert.equal(f.player.getState().playing, false);
+    assert.equal(f.rendered.length, count);
+    assert.equal(f.frames.size, 0);
+  }
 });
 
 test("foreground playback finishes in 20 seconds even with sparse frames, without looping", () => {

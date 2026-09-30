@@ -156,10 +156,11 @@ test("illustrative device geometry keeps twelve centered 3 by 3 RGB arrays", () 
     const actual = (svg.match(new RegExp(`<use href="#bh-pillar-${channel}"`, "g")) ?? []).length;
     assert.equal(actual, expected, `${channel}: exactly nine pillars per cell with no peripheral shape key`);
   }
-  const pillars = [...svg.matchAll(/<use href="#bh-pillar-([rgb])" transform="translate\(([\d.-]+),([\d.-]+)\)"/g)].slice(0, 108);
+  const pillars = [...svg.matchAll(/<use href="#bh-pillar-([rgb])" transform="translate\(([\d.-]+),([\d.-]+)\)"[^>]*data-cell="([\d-]+)"[^>]*\/>/g)];
   assert.equal(pillars.length, 108);
-  SUBPIXELS.forEach((cell, index) => {
-    const cellPillars = pillars.slice(index * 9, index * 9 + 9);
+  SUBPIXELS.forEach(cell => {
+    const cellPillars = pillars.filter(pillar => pillar[4] === `${cell.row}-${cell.col}`);
+    assert.equal(cellPillars.length, 9, "each subpixel retains its complete 3 by 3 array after depth sorting");
     assert.ok(cellPillars.every(([, channel]) => channel === cell.channel));
     const meanX = cellPillars.reduce((sum, pillar) => sum + Number(pillar[2]), 0) / 9;
     const meanY = cellPillars.reduce((sum, pillar) => sum + Number(pillar[3]), 0) / 9;
@@ -459,7 +460,7 @@ test("the solid OLED silhouette occludes lower structures in every component foc
     assert.doesNotMatch(ancestors.join("\n"), /bh-part|bh-motion|opacity|mask|filter/,
       `${focus}: a faded ancestor must not reveal the lower array through the OLED`);
     assert.ok(occluder.index > svg.lastIndexOf('<g class="bh-cavity-cell"'), "cavity light is behind the OLED");
-    assert.ok(occluder.index > svg.indexOf('<g class="bh-boundary-units">'), "ring-disk units are behind the OLED");
+    assert.ok(occluder.index > svg.lastIndexOf('<use href="#bh-ring-disk"'), "all ring-disk units are behind the OLED");
     assert.ok(occluder.index > svg.indexOf('<g class="bh-part bh-boundary-light">'), "absorption light is behind the OLED");
     assert.ok(occluder.index + occluder[0].length <= svg.indexOf('<g class="bh-part bh-oled"'), "the finish is above the opaque backing");
     assert.ok(occluder.index < svg.indexOf('<g class="bh-part bh-rgb-light">'), "top-emission beams stay in front of the OLED");
@@ -502,14 +503,81 @@ test("ring and disk share material colors and intact annular tops drawn above bo
   assert.equal((annulus[1].match(/Z/g) ?? []).length, 2);
   assert.equal((annulus[1].match(/a/g) ?? []).length, 4, "inner and outer rings each comprise two uninterrupted arcs");
   const tracks = svg.match(/<g class="bh-boundary-tracks">([\s\S]*?)<\/g>/);
-  const units = svg.match(/<g class="bh-boundary-units">([\s\S]*?)<\/g>/);
-  assert.ok(tracks && units);
+  const raised = svg.match(/<g class="bh-raised-structures">([\s\S]*?)<\/g>/);
+  assert.ok(tracks && raised);
   assert.equal((tracks[1].match(/<polygon/g) ?? []).length, 9);
-  assert.ok(tracks.index + tracks[0].length <= units.index, "all backing strips are painted before any rings");
-  assert.doesNotMatch(units[1], /<polygon/);
-  const depths = [...units[1].matchAll(/transform="translate\([\d.-]+,([\d.-]+)\)"/g)].map(([, y]) => Number(y));
+  assert.ok(tracks.index + tracks[0].length <= raised.index, "all backing strips are painted before any raised structures");
+  assert.doesNotMatch(raised[1], /<polygon/);
+  const depths = [...raised[1].matchAll(/<use href="#bh-ring-disk"[^>]*data-base-depth="([\d.-]+)"/g)].map(([, depth]) => Number(depth));
   assert.equal(depths.length, 144);
   assert.deepEqual(depths, [...depths].sort((a, b) => a - b), "boundary units paint back-to-front");
+});
+
+test("all ground pads and black-matrix tracks stay behind the depth-sorted complete nanopillars", () => {
+  for (const compactView of [false, true]) {
+    const svg = createBlackholeSVG({ compactView });
+    const pads = svg.match(/<g class="bh-cell-pads">([\s\S]*?)<\/g>/);
+    const tracks = svg.match(/<g class="bh-boundary-tracks">([\s\S]*?)<\/g>/);
+    const raised = svg.match(/<g class="bh-raised-structures">([\s\S]*?)<\/g>/);
+    assert.ok(pads && tracks && raised);
+    assert.equal((pads[1].match(/<polygon/g) ?? []).length, SUBPIXELS.length);
+    assert.equal((tracks[1].match(/<polygon/g) ?? []).length, 9);
+    const instances = [...raised[1].matchAll(/<use href="#bh-(pillar-[rgb]|ring-disk)"[^>]*\/>/g)];
+    assert.equal(instances.length, 108 + 144, "one global depth queue contains every raised structure exactly once");
+    const firstRaised = raised.index + raised[0].indexOf("<use");
+    for (const ground of [pads, tracks]) {
+      assert.ok(ground.index + ground[0].length < firstRaised,
+        "a later-painted cell pad or opaque boundary track must never cut off a pillar cap or sidewall");
+    }
+    assert.doesNotMatch(raised[0], /<polygon|clip-path|<clipPath|\bmask=|\bfilter=/,
+      "raised structures are not clipped to their projected planar cell boundaries");
+    const depths = instances.map(([tag, type]) => {
+      const depth = Number(tag.match(/data-base-depth="([\d.-]+)"/)[1]);
+      const projectedY = Number(tag.match(/transform="translate\([\d.-]+,([\d.-]+)\)"/)[1]);
+      const isPillar = type.startsWith("pillar-");
+      assert.ok(Math.abs(depth - projectedY - (isPillar ? 1 : 1.5)) < .011,
+        "depth sorting uses the common ground plane, not the different pillar and ring base elevations");
+      assert.match(tag, isPillar ? /class="bh-part bh-mirrors bh-nanopillar"/ : /class="bh-part bh-absorbers bh-boundary-unit"/,
+        "individual raised instances retain their own component highlighting");
+      return depth;
+    });
+    assert.deepEqual(depths, [...depths].sort((a, b) => a - b),
+      "pillars and ring-disk units share one back-to-front order instead of mutually occluding whole groups");
+  }
+});
+
+test("nanopillars retain complete closed sidewalls and top caps on fully supported footprints", () => {
+  const svg = createBlackholeSVG();
+  const origin = projectPoint(0, 0), alongX = projectPoint(1, 0), alongY = projectPoint(0, 1);
+  const a = alongX.x - origin.x, b = alongY.x - origin.x;
+  const c = alongX.y - origin.y, d = alongY.y - origin.y;
+  const determinant = a * d - b * c;
+  assert.ok(determinant > 0);
+  for (const channel of ["r", "g", "b"]) {
+    const symbol = svg.match(new RegExp(`<g id="bh-pillar-${channel}">([\\s\\S]*?)<\\/g>`));
+    assert.ok(symbol);
+    assert.doesNotMatch(symbol[0], /clip-path|<clipPath|\bmask=|<rect|<polygon/,
+      "a nanopillar is an intact cylinder, not a cell-clipped or sliced shape");
+    assert.match(symbol[1], /<path d="M-5\.8,-8v8a5\.8,2\.7 0 0 0 11\.6,0v-8Z"/,
+      "the original full-height closed sidewall preserves its complete lower arc");
+    const cap = symbol[1].match(/<ellipse cy="(-?[\d.]+)" rx="([\d.]+)" ry="([\d.]+)"/);
+    assert.ok(cap, "every cylinder has a complete elliptical top cap");
+    assert.equal(Number(cap[1]), -8);
+    const rx = Number(cap[2]), ry = Number(cap[3]);
+    const extentX = Math.hypot(d * rx, b * ry) / determinant;
+    const extentY = Math.hypot(c * rx, a * ry) / determinant;
+    const instances = [...svg.matchAll(new RegExp(`<use href="#bh-pillar-${channel}" transform="translate\\(([\\d.-]+),([\\d.-]+)\\)"[^>]*data-cell="(\\d+)-(\\d+)"[^>]*\\/>`, "g"))];
+    assert.equal(instances.length, SUBPIXELS.filter(cell => cell.channel === channel).length * 9);
+    for (const [, screenX, screenY, row, col] of instances) {
+      const dx = Number(screenX) - origin.x, dy = Number(screenY) + 1 - origin.y;
+      const x = (d * dx - b * dy) / determinant;
+      const y = (-c * dx + a * dy) / determinant;
+      assert.ok(x - extentX > Number(col) + .1 && x + extentX < Number(col) + .9,
+        "the cylinder footprint is fully supported inside its own subpixel horizontally");
+      assert.ok(y - extentY > Number(row) + .1 && y + extentY < Number(row) + .9,
+        "the cylinder footprint is fully supported inside its own subpixel in depth");
+    }
+  }
 });
 
 test("a solid three-face substrate supports the metamirror backplane", () => {

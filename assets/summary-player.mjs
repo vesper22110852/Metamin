@@ -1,5 +1,5 @@
-/** A user-started, non-looping timeline. `platform` is injectable for deterministic tests. */
-export function mountSummaryPlayer(root, { duration = 20, render, onChapter, platform = {} } = {}) {
+/** A non-looping timeline with optional one-time autoplay. `platform` is injectable for deterministic tests. */
+export function mountSummaryPlayer(root, { duration = 20, autoplay = false, respectReducedMotion = true, render, onChapter, platform = {} } = {}) {
   if (!root?.querySelector || typeof render !== "function") throw new TypeError("A player root and render function are required.");
   if (!Number.isFinite(duration) || duration <= 0) throw new RangeError("Duration must be a positive finite number.");
 
@@ -9,6 +9,7 @@ export function mountSummaryPlayer(root, { duration = 20, render, onChapter, pla
   const requestFrame = platform.requestAnimationFrame ?? win.requestAnimationFrame.bind(win);
   const cancelFrame = platform.cancelAnimationFrame ?? win.cancelAnimationFrame.bind(win);
   const Observer = Object.hasOwn(platform, "IntersectionObserver") ? platform.IntersectionObserver : win.IntersectionObserver;
+  const motionPreference = respectReducedMotion ? win.matchMedia?.("(prefers-reduced-motion: reduce)") : null;
   const playButton = root.querySelector("[data-summary-play]");
   const replayButton = root.querySelector("[data-summary-replay]");
   const seekInput = root.querySelector("[data-summary-seek]");
@@ -18,6 +19,8 @@ export function mountSummaryPlayer(root, { duration = 20, render, onChapter, pla
 
   const state = { time: 0, playing: false, visible: true, destroyed: false };
   const listeners = [];
+  let autoplayPending = Boolean(autoplay) && !motionPreference?.matches;
+  let visibilityKnown = !Observer;
   let frame = null;
   let startedAt = 0;
   let startedFrom = 0;
@@ -50,6 +53,7 @@ export function mountSummaryPlayer(root, { duration = 20, render, onChapter, pla
     announce("Summary complete. Replay or choose a chapter.");
   }
   function pause(message = "Summary paused.", syncTime = true) {
+    autoplayPending = false;
     if (state.destroyed || !state.playing) return;
     if (syncTime) state.time = clamp(startedFrom + (now() - startedAt) / 1000);
     state.playing = false;
@@ -69,6 +73,7 @@ export function mountSummaryPlayer(root, { duration = 20, render, onChapter, pla
     frame = requestFrame(tick);
   }
   function play() {
+    autoplayPending = false;
     if (state.destroyed || state.playing) return;
     if (doc.hidden || !state.visible) return announce("Bring the summary into view, then press Play.");
     if (state.time >= duration) state.time = 0;
@@ -80,6 +85,7 @@ export function mountSummaryPlayer(root, { duration = 20, render, onChapter, pla
     frame = requestFrame(tick);
   }
   function seek(seconds) {
+    autoplayPending = false;
     if (state.destroyed) return;
     cancel();
     state.playing = false;
@@ -88,6 +94,9 @@ export function mountSummaryPlayer(root, { duration = 20, render, onChapter, pla
     announce(`Paused at ${clock(state.time)}.`);
   }
   function replay() { seek(0); play(); }
+  function tryAutoplay() {
+    if (autoplayPending && !state.destroyed && visibilityKnown && state.visible && !doc.hidden && !motionPreference?.matches) play();
+  }
 
   seekInput.min = "0";
   seekInput.max = String(duration);
@@ -102,22 +111,30 @@ export function mountSummaryPlayer(root, { duration = 20, render, onChapter, pla
     listen(button, "click", () => { seek(button.dataset.time); onChapter?.(state.time, button); });
   }
   listen(doc, "visibilitychange", () => {
-    if (doc.hidden) pause("Summary paused while this page is hidden.", false);
+    if (doc.hidden && state.playing) pause("Summary paused while this page is hidden.", false);
+    else if (!doc.hidden) tryAutoplay();
+  });
+  listen(motionPreference, "change", () => {
+    if (motionPreference.matches) pause("Summary paused for reduced motion. Press Play to continue.");
   });
   const observer = Observer ? new Observer(entries => {
     const entry = entries.find(item => item.target === root);
     if (!entry || state.destroyed) return;
+    visibilityKnown = true;
     state.visible = entry.isIntersecting;
-    if (!state.visible) pause("Summary paused while out of view.", false);
+    if (!state.visible && state.playing) pause("Summary paused while out of view.", false);
+    else if (state.visible) tryAutoplay();
   }) : null;
   observer?.observe(root);
   update();
   announce(`Summary ready. ${duration} seconds. Press Play to begin.`);
+  tryAutoplay();
 
   return {
     play, pause, seek, getState,
     destroy() {
       if (state.destroyed) return;
+      autoplayPending = false;
       cancel();
       state.playing = false;
       state.destroyed = true;

@@ -387,7 +387,7 @@ test("publication actions distinguish the publisher paper from the local 20-seco
   assert.match(html, /Geometry remains fixed/);
   assert.match(html, /polarization-summary\.svg\?v=\d+/);
   assert.match(html, /polarization-summary\.js\?v=\d+" type="module"/);
-  assert.doesNotMatch(html, /autoplay|<iframe\b|<video\b/);
+  assert.doesNotMatch(html, /<iframe\b|<video\b/);
 });
 
 test("summary page exposes only x-pol and y-pol snapshots, without numbered scene buttons or comparison", () => {
@@ -407,7 +407,7 @@ test("summary page exposes only x-pol and y-pol snapshots, without numbered scen
   assert.doesNotMatch(html + controller + read("../assets/paper-summary.css"), /paper-preview-play|data-summary-preview-play|previewPlay/);
   assert.doesNotMatch(controller, /data-summary-comparison|comparison\.style/);
   assert.match(controller, /if\(root\)/);
-  assert.match(controller, /mountSummaryPlayer\(root,\{duration:20/);
+  assert.match(controller, /mountSummaryPlayer\(root,\{duration:20,autoplay:true,respectReducedMotion:false/);
   assert.match(controller, /\.hidden=false/);
   assert.doesNotMatch(controller + read("../assets/polarization-scene.mjs"), /\b(?:fetch|XMLHttpRequest|WebSocket)\s*\(/);
 });

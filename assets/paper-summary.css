@@ -1,0 +1,59 @@
+/* Publication film shell. Device drawing and story remain paper-specific. */
+.paper-summary-header { max-width: 930px; }
+.paper-summary-header h1 { font-size: clamp(29px,3.4vw,39px); }
+.paper-film { margin: 30px 0 0; overflow: hidden; border: 1px solid var(--line); border-radius: 20px; background: #fff; box-shadow: var(--shadow); }
+.paper-film-screen { position: relative; background: radial-gradient(ellipse at 50% 58%,#172c43,#080f1c 76%); color: #edf4fc; }
+.paper-film-topline { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px 18px; padding: 22px 28px 0; color: #97adc5; font-size: 12px; }
+.paper-film-topline > span:first-child { color: #d9e8f7; }
+.paper-film-topline [data-summary-angle] { font-variant-numeric: tabular-nums; }
+.paper-film-stage { width: min(100%,1040px); margin-inline: auto; }
+.paper-film-stage > svg, .paper-film-stage > img { width: 100%; height: auto; }
+.paper-mobile-key { display: none; }
+.paper-film-caption { padding: 0 32px 27px; min-height: 116px; }
+.paper-film-caption h2 { margin-bottom: 9px; font-size: clamp(20px,2.5vw,29px); font-weight: 600; letter-spacing: -.65px; }
+.paper-film-caption p { max-width: 800px; margin: 0; color: #b5c7da; font-size: 15px; line-height: 1.65; }
+.paper-film-controls { padding: 22px 28px; background: #fff; }
+.paper-film-controls[hidden] { display:none; }
+.paper-playback { display: flex; align-items: center; gap: 10px; }
+.paper-playback button { display: inline-flex; justify-content: center; align-items: center; flex-shrink: 0; min-height: 44px; padding: 8px 16px; border: 1px solid #d7e2f0; border-radius: 8px; color: var(--accent); background: #f3f7fc; font: inherit; font-size: 13px; cursor: pointer; }
+.paper-playback [data-summary-play] { min-width: 176px; border-color: var(--accent); background: var(--accent); color: #fff; }
+.paper-playback button:hover { filter: brightness(.94); }
+.paper-playback input { flex: 1; min-width: 50px; min-height: 44px; margin: 0 5px; accent-color: var(--accent); cursor: pointer; }
+.paper-playback output { flex-shrink: 0; min-width: 79px; color: #63748a; font-size: 12px; font-variant-numeric: tabular-nums; text-align: right; }
+.paper-chapters { display: flex; flex-wrap: wrap; gap: 5px 8px; margin-top: 15px; }
+.paper-chapters button { min-height: 38px; padding: 5px 10px; border: 0; border-radius: 6px; color: #69778a; background: transparent; font: inherit; font-size: 12px; cursor: pointer; }
+.paper-chapters button[aria-current="step"] { color: var(--accent); background: #edf4fb; }
+.paper-chapters button:hover { background: #f1f5fa; }
+.paper-film-notes { padding: 17px 28px 20px; border-top: 1px solid var(--line); font-size: 12px; color: var(--muted); line-height: 1.75; }
+.paper-film-notes p { margin: 0; }
+.paper-film-notes p + p { margin-top: 5px; }
+.summary-visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+.paper-summary-details { max-width: none; }
+@media(max-width:640px) {
+  .paper-film { margin-top: 24px; border-radius: 14px; }
+  .paper-film-topline { padding: 17px 18px 5px; font-size: 10px; gap: 5px 10px; }
+  .paper-film-stage { overflow: hidden; }
+  .paper-film-stage > svg { display: block; width: 125%; max-width: none; }
+  .ps-light-label, .ps-layer-labels, .ps-radius-labels { display: none; }
+  .ps-polarization { transform: translate(760px,69px); }
+  .paper-mobile-key { display: block; margin: -20px 20px 15px; color: #9fb7d0; font-size: 11px; line-height: 1.7; }
+  .paper-mobile-key p { margin: 0 0 6px; }
+  .paper-mobile-key strong { color: #cddff0; font-weight: 500; }
+  .paper-film-caption { padding: 12px 20px 23px; min-height: 158px; }
+  .paper-film-caption h2 { font-size: 22px; }
+  .paper-film-caption p { font-size: 13px; }
+  .paper-film-controls { padding: 16px 18px; }
+  .paper-playback { flex-wrap: wrap; gap: 8px; }
+  .paper-playback [data-summary-play] { flex: 1; min-width: 155px; }
+  .paper-playback input { order: 3; width: calc(100% - 99px); flex-basis: calc(100% - 99px); margin-left: 0; }
+  .paper-playback output { order: 4; }
+  .paper-chapters { gap: 4px; margin-top: 8px; }
+  .paper-chapters button { padding: 5px 7px; font-size: 11px; min-height: 44px; }
+  .paper-film-notes { padding: 15px 20px 18px; font-size: 11px; }
+  .ps-footnote { display: none; }
+}
+@media print {
+  .paper-film-controls { display:none; }
+  .paper-film-screen { print-color-adjust:exact; -webkit-print-color-adjust:exact; }
+  .paper-film { break-inside:avoid; }
+}

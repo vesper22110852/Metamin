@@ -1,0 +1,17 @@
+{
+  "sourceUrl": "https://content.cld.iop.org/journals/2040-8986/28/8/085001/revision2/joptae90bef1_hr.jpg",
+  "articleDoi": "10.1088/2040-8986/ae90be",
+  "figure": "Figure 1(e), x polarization; Figure 1(f), y polarization",
+  "imageSize": [1725, 971],
+  "conditions": {"dcslNm": 180, "ryNm": 100, "incidence": "normal"},
+  "method": "Component-wise median of a 17 × 17 pixel window centered inside each published color-map cell; 8-bit RGB hex. Coordinates are zero-based.",
+  "samples": [
+    {"rxNm":25,"x":{"center":[1332,235],"hex":"#defaa6"},"y":{"center":[1332,717],"hex":"#a6f9ff"}},
+    {"rxNm":30,"x":{"center":[1416,235],"hex":"#f6d4ef"},"y":{"center":[1416,717],"hex":"#9af7ff"}},
+    {"rxNm":35,"x":{"center":[1500,235],"hex":"#ed9bfd"},"y":{"center":[1500,717],"hex":"#8ff5ff"}},
+    {"rxNm":40,"x":{"center":[1584,235],"hex":"#7cb7fd"},"y":{"center":[1584,717],"hex":"#89f5ff"}},
+    {"rxNm":45,"x":{"center":[1668,235],"hex":"#01eefe"},"y":{"center":[1668,717],"hex":"#81f1fd"}}
+  ],
+  "representativeYColor": "#8ff5ff",
+  "scope": "Samples from the published rendered image, not original numerical spectra or experimental measurements. The animation uses the middle y-pol sample for all five designs to summarize near invariance; the source has small variations. Intermediate polarization colors are visual interpolation, not a simulated angle sweep. Layer thicknesses and cutaway transparency are schematic. The source image is not redistributed."
+}

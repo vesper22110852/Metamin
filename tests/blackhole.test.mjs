@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { COMPONENT_DESCRIPTIONS, SCENE_GEOMETRY, SUBPIXELS, createBlackholeSVG, projectPoint } from "../assets/blackhole-scene.mjs";
+import { COMPONENT_DESCRIPTIONS, SCENE_GEOMETRY, SUBPIXELS, WAVEFRONTS, CAVITY_STOPS, OLED_LAYERS, cavityArrowAt, createBlackholeSVG, projectPoint } from "../assets/blackhole-scene.mjs";
 
 const read = relative => readFileSync(new URL(relative, import.meta.url), "utf8");
 let controllerImport = 0;
@@ -169,245 +169,313 @@ test("illustrative device geometry keeps twelve centered 3 by 3 RGB arrays", () 
   });
   const boundaryElements = (svg.match(/<use href="#bh-ring-disk"/g) ?? []).length;
   assert.equal(boundaryElements, 144);
-  for (const [, points] of svg.matchAll(/<polygon points="([^"]+)"/g)) {
-    for (const point of points.split(" ")) {
-      const [x, y] = point.split(",").map(Number);
-      assertInViewBox(svg, x, y, "device polygon");
+  for (const framedScene of [svg, createBlackholeSVG({ compactView: true })]) {
+    for (const [, points] of framedScene.matchAll(/<polygon points="([^"]+)"/g)) {
+      for (const point of points.split(" ")) {
+        const [x, y] = point.split(",").map(Number);
+        assertInViewBox(framedScene, x, y, "device polygon");
+      }
     }
   }
 });
 
-test("every RGB subpixel has a centered substantial output with an unobstructed pointed arrowhead", () => {
+test("the twelve subpixels form a cropped, repeating RGGB Bayer pattern", () => {
+  const tile = [["r", "g"], ["g", "b"]];
+  assert.equal(SUBPIXELS.length, 12, "Bayer ordering preserves the existing four-column, three-row device");
+  for (const { row, col, channel } of SUBPIXELS) {
+    assert.equal(channel, tile[row % 2][col % 2], `row ${row}, column ${col} must repeat the RG/GB tile`);
+  }
+  for (let row = 0; row < 3; row++) {
+    assert.deepEqual(SUBPIXELS.filter(cell => cell.row === row).map(cell => cell.col).sort(), [0, 1, 2, 3]);
+  }
+});
+
+test("volumetric RGB beams emerge above the OLED stack on all twelve subpixel axes", () => {
   const round = value => Number(value.toFixed(2));
   for (const compactView of [false, true]) {
     const svg = createBlackholeSVG({ compactView });
-    const outputs = [...svg.matchAll(/<g class="bh-motion bh-output"([^>]*)>([\s\S]*?<path class="bh-motion bh-arrowhead"[^>]+\/>)/g)];
-    assert.equal(outputs.length, 12);
+    const outputs = [...svg.matchAll(/<g class="bh-motion bh-output"([^>]*)>/g)];
+    assert.equal(outputs.length, SUBPIXELS.length);
     const seen = new Set();
-    for (const [, attributes, body] of outputs) {
-      const key = attributes.match(/data-cell="([^"]+)"/)[1];
-      const cell = SUBPIXELS.find(cell => `${cell.row}-${cell.col}` === key);
-      assert.ok(cell, `unknown output cell ${key}`);
-      assert.ok(!seen.has(key), `duplicate output cell ${key}`);
-      seen.add(key);
-      assert.match(attributes, new RegExp(`data-channel="${cell.channel}"`));
-      const core = body.match(/<path class="bh-output-core"([^>]+)\/>/);
-      assert.ok(core, `missing output core for ${key}`);
-      const path = core[1].match(/d="M([\d.-]+),([\d.-]+) L([\d.-]+),([\d.-]+)"/);
-      assert.ok(path, `output ${key} must be a straight path`);
-      const [x1, y1, x2, y2] = path.slice(1).map(Number);
-      const origin = projectPoint(cell.x, cell.y, SCENE_GEOMETRY.bottomPlane);
+    for (const [, attrs] of outputs) {
+      const cellId = attrs.match(/data-cell="([^"]+)"/)[1];
+      const cell = SUBPIXELS.find(cell => String(cell.row) + "-" + cell.col === cellId);
+      assert.ok(cell);
+      assert.ok(!seen.has(cellId));
+      seen.add(cellId);
+      assert.equal(attrs.match(/data-channel="([^"]+)"/)[1], cell.channel);
+      const origin = projectPoint(cell.x, cell.y, SCENE_GEOMETRY.outputPlane);
       const tip = projectPoint(cell.x, cell.y, SCENE_GEOMETRY.outputPlane + SCENE_GEOMETRY.beamLength);
-      const declaredOrigin = attributes.match(/data-origin="([^"]+)"/)[1].split(",").map(Number);
-      const declaredTip = attributes.match(/data-tip="([^"]+)"/)[1].split(",").map(Number);
-      assert.deepEqual(declaredOrigin, [round(origin.x), round(origin.y)]);
-      assert.deepEqual(declaredTip, [round(tip.x), round(tip.y)]);
-      assert.deepEqual([x1, y1, x2], [0, 0, 0], "output shaft starts at the array center in local mirror coordinates");
-      assert.ok(y2 < 0, "output grows upward");
-      assert.match(core[1], /stroke-linecap="butt"/, "the shaft cannot project a rounded cap through the pointed head");
-      assert.ok(Number(core[1].match(/stroke-width="([\d.]+)"/)[1]) >= 4, "output cores should be visibly substantial");
-      const channelDefinition = svg.match(new RegExp(`<g id="bh-pillar-${cell.channel}">([\\s\\S]*?)</g>`))[1];
-      const channelColor = channelDefinition.match(/<ellipse[^>]+stroke="([^"]+)"/)[1];
-      assert.equal(core[1].match(/stroke="([^"]+)"/)[1], channelColor, `output ${key} must match its underlying RGB array`);
-      const head = body.match(/<path class="bh-motion bh-arrowhead"[^>]+d="M([\d.-]+),([\d.-]+) L([\d.-]+),([\d.-]+) L([\d.-]+),([\d.-]+)Z"[^>]+fill="([^"]+)"/);
-      assert.ok(head, `output ${key} requires a closed triangular head`);
-      const [tipX, tipY, leftX, leftY, rightX, rightY] = head.slice(1, 7).map(Number);
-      assert.equal(tipX, 0);
-      assert.equal(tipY, round(tip.y - origin.y));
-      assert.equal(leftY, rightY);
-      assert.ok(leftX < 0 && rightX > 0 && tipY < leftY);
-      assert.ok(y2 > tipY + 5 && y2 <= leftY, "shaft terminates within the triangle base, safely behind the sharp tip");
-      assert.equal(head[7], channelColor);
-      assert.doesNotMatch(body, /stroke="#(?:fff|ffffff|f5f8ff)"/i, "upward outputs contain no white moving streak");
-      assertInViewBox(svg, origin.x, origin.y, `output ${key} origin`);
-      assertInViewBox(svg, tip.x, tip.y, `output ${key} arrow tip`);
+      assert.deepEqual(attrs.match(/data-origin="([^"]+)"/)[1].split(",").map(Number), [round(origin.x), round(origin.y)]);
+      assert.deepEqual(attrs.match(/data-tip="([^"]+)"/)[1].split(",").map(Number), [round(tip.x), round(tip.y)]);
+      for (const x of [tip.x - 25, tip.x + 25]) assertInViewBox(svg, x, tip.y - 10, cellId);
+      assert.ok(tip.y < origin.y);
     }
+    assert.equal((svg.match(/class="bh-beam-body"/g) || []).length, 12);
+    assert.equal((svg.match(/class="bh-beam-cap"/g) || []).length, 12);
+    assert.doesNotMatch(svg, /bh-branch|bh-radial-ray|bh-reflection/);
+    assert.equal(SCENE_GEOMETRY.outputPlane, OLED_LAYERS.at(-1).top,
+      "beam origin is the upper surface, not an artificial lower cylinder");
   }
 });
 
-test("three luminous curved white wavefronts descend without glass-like panels before RGB output grows", () => {
+test("three translucent wavefronts remain superimposed while fixed boundaries dim", () => {
   const svg = createBlackholeSVG({ animated: true });
-  const fronts = [...svg.matchAll(/<g class="bh-motion bh-wavefront"([^>]*)>([\s\S]*?)<\/g>/g)];
+  const fronts = [...svg.matchAll(/<g class="bh-motion bh-wavefront"([^>]*)>\s*<g mask="url\(#bh-wave-envelope-\d\)">([\s\S]*?)<\/g>/g)];
   assert.equal(fronts.length, 3);
-  const sourcePlane = SCENE_GEOMETRY.whiteEmissionPlanes[0];
-  const distance = sourcePlane - SCENE_GEOMETRY.bottomPlane;
-  const seen = new Set(), delays = [];
-  for (const [, attributes, body] of fronts) {
-    const key = attributes.match(/data-front="([^"]+)"/)[1];
-    assert.ok(!seen.has(key));
-    seen.add(key);
-    assert.equal(Number(attributes.match(/data-start-plane="([^"]+)"/)[1]), sourcePlane);
-    assert.equal(Number(attributes.match(/data-end-plane="([^"]+)"/)[1]), SCENE_GEOMETRY.bottomPlane);
-    assert.equal(Number(attributes.match(/--wave-distance:([\d.]+)px/)[1]), distance);
-    const rest = Number(attributes.match(/--wave-rest:([\d.]+)px/)[1]);
-    assert.ok(rest > 0 && rest < distance, "static fallback places each wave inside the optical gap");
-    delays.push(Number(attributes.match(/animation-delay:([\d.]+)s/)[1]));
-    assert.match(attributes, /fill="none" stroke-linecap="round"/);
-    assert.doesNotMatch(body, /<polygon|<rect|<ellipse|<circle|<use|marker|bh-wave-surface|bh-wave-sheet/,
-      "incoming light is made of open wave curves, not framed planes or arrow glyphs");
-    const ribbons = [...body.matchAll(/<path class="bh-wave-ribbon" d="([^"]+)"([^>]*)\/>/g)];
-    const crests = [...body.matchAll(/<path class="bh-wave-crest" d="([^"]+)"([^>]*)\/>/g)];
-    const glows = [...body.matchAll(/<path class="bh-wave-glow" d="([^"]+)"([^>]*)\/>/g)];
-    assert.equal(ribbons.length, 4, "white waves cover multiple rows across the array");
-    assert.equal(crests.length, 4);
-    assert.equal(glows.length, 4);
-    ribbons.forEach(([, d, properties], index) => {
-      assert.match(d, /^M/);
-      assert.equal((d.match(/C/g) ?? []).length, 8, "each open wave has repeated smooth cubic crests");
-      assert.doesNotMatch(d, /[LZ]/i, "no straight rectangular perimeter or closed surface");
-      assert.match(properties, /stroke="url\(#bh-wave-ink\)"/);
-      assert.ok(Number(properties.match(/stroke-width="([\d.]+)"/)[1]) >= 5, "white wave bands remain visibly substantial");
-      assert.ok(Number(properties.match(/stroke-opacity="([\d.]+)"/)[1]) >= .7);
-      assert.equal(crests[index][1], d);
-      assert.equal(glows[index][1], d);
-      assert.match(glows[index][2], /filter="url\(#bh-wave-softness\)"/);
-      const coordinates = [...d.matchAll(/([\d.-]+),([\d.-]+)/g)].map(match => match.slice(1).map(Number));
-      assert.ok(coordinates.at(-1)[0] - coordinates[0][0] > 300, "each ribbon spans the array rather than a single subpixel");
-      const [[x0, y0], [x1, y1], , [x3, y3]] = coordinates;
-      assert.ok(Math.abs(y1 - (y0 + (y3 - y0) * (x1 - x0) / (x3 - x0))) > 4,
-        "cubic control points visibly deviate from a straight wavefront");
-      for (const [x, y] of coordinates) {
-        assertInViewBox(svg, x, y, "wave source curve");
-        assertInViewBox(svg, x, y + distance, "wave arrival curve");
-      }
+  for (const [, attrs, body] of fronts) {
+    assert.equal(Number(attrs.match(/data-start-plane="([^"]+)"/)[1]), SCENE_GEOMETRY.whiteEmissionPlanes[0]);
+    assert.equal(Number(attrs.match(/data-end-plane="([^"]+)"/)[1]), SCENE_GEOMETRY.bottomPlane);
+    assert.equal(Number(attrs.match(/--wave-distance:([\d.]+)px/)[1]), SCENE_GEOMETRY.whiteEmissionPlanes[0] - SCENE_GEOMETRY.bottomPlane);
+    const boundary = body.match(/<polygon points="([^"]+)" class="bh-wave-surface" fill="#ffffff"/);
+    assert.ok(boundary);
+    const fullFront = [[0,0],[4,0],[4,3],[0,3]].map(([x,y]) => {
+      const p = projectPoint(x,y,SCENE_GEOMETRY.whiteEmissionPlanes[0]);
+      return [p.x,p.y];
     });
-    assert.equal((body.match(/<path/g) ?? []).length, 12);
+    assert.deepEqual(boundary[1].split(' ').map(p => p.split(',').map(Number)), fullFront);
+    assert.doesNotMatch(body, /animation-delay|bh-wave-curve|bh-wave-ribbon/);
   }
-  const ink = svg.match(/<linearGradient id="bh-wave-ink">([\s\S]*?)<\/linearGradient>/)[1];
-  for (const [, color] of ink.matchAll(/stop-color="([^"]+)"/g)) {
-    assert.equal(color.toLowerCase(), "#ffffff", "incoming crests are white rather than tinted transparent glass");
-  }
-  for (const colorStop of ink.matchAll(/<stop[^>]+\/>/g)) {
-    const opacity = colorStop[0].match(/stop-opacity="([\d.]+)"/);
-    if (opacity && Number(opacity[1]) > 0) {
-      assert.ok(Number(opacity[1]) >= .9, "only feathered edges should be transparent");
+  const masks = [...svg.matchAll(/<mask id="bh-wave-envelope-\d"[^>]*>([\s\S]*?)<\/mask>/g)];
+  assert.equal(masks.length, 3);
+  const sourceCorners = [[0, 0], [4, 0], [4, 3], [0, 3]].map(([x, y]) =>
+    projectPoint(x, y, SCENE_GEOMETRY.whiteEmissionPlanes[0]));
+  for (const [mask] of masks) {
+    const attrs = mask.slice(0, mask.indexOf(">"));
+    const bounds = Object.fromEntries(["x", "y", "width", "height"].map(name =>
+      [name, Number(attrs.match(new RegExp(`\\b${name}="([^"]+)"`))[1])]));
+    assert.ok(bounds.width > 0 && bounds.height > 0);
+    for (const { x, y } of sourceCorners) {
+      assert.ok(x >= bounds.x && x <= bounds.x + bounds.width && y >= bounds.y && y <= bounds.y + bounds.height,
+        "wave mask bounds must contain the complete source plane after changing the stack height or projection");
     }
   }
-  assert.equal(new Set(delays).size, 3, "the broad fronts have distinct arrival times");
-  const duration = Number(svg.match(/\.bh-motion \{ animation-duration:([\d.]+)s/)[1]);
-  const waveCompletion = Number(svg.match(/([\d.]+)%\{transform:translateY\(var\(--wave-distance\)\)\}/)[1]);
-  const rgbStart = Number(svg.match(/@keyframes bh-output-grow\s*\{\s*0%,([\d.]+)%\{transform:scaleY\(0\)/)[1]);
-  assert.ok(rgbStart / 100 * duration >= waveCompletion / 100 * duration + Math.max(...delays), "RGB output starts after the last white wave reaches the mirror");
-  assert.match(svg, /svg\[data-animated="true"\] \.bh-wavefront \{ animation-name:bh-wave-descent;/);
-  assert.match(svg, /svg\[data-playing="true"\] \.bh-motion \{ animation-play-state:running;/);
-  assert.doesNotMatch(svg, /bh-white-down|bh-white-head|bh-white-shaft|stroke-dasharray|stroke-dashoffset/);
+  const contours = masks.map(([, mask]) => mask.match(/class="bh-motion bh-boundary-cut"[^>]* d="([^"]+)"[^>]*fill-rule="evenodd"/)[1]);
+  assert.ok(contours.every(contour => contour === contours[0]));
+  assert.equal((contours[0].match(/M/g) || []).length, 13, "one full outline minus twelve exact fixed-size square apertures");
+  assert.doesNotMatch(masks.map(m=>m[1]).join(''), /scale|gradient|filter/i, "opacity-only absorption cannot move or soften inward across the square edges");
+  WAVEFRONTS.forEach(({start,arrival},i) => {
+    assert.ok(start < arrival);
+    if(i) assert.ok(arrival > WAVEFRONTS[i-1].arrival);
+    const retained = svg.match(new RegExp(`@keyframes bh-wave-${i} \\{[\\s\\S]*?${arrival}%,(\\d+)%\\{opacity:([\\d.]+);transform:translateY\\(var\\(--wave-distance\\)\\)`));
+    assert.ok(retained, "each wavefront remains at the surface after arrival");
+    assert.ok(Number(retained[1]) > WAVEFRONTS.at(-1).arrival);
+    assert.ok(Number(retained[2]) > .2 && Number(retained[2]) < .6);
+  });
+  assert.ok(SCENE_GEOMETRY.boundaryFade > WAVEFRONTS.at(-1).arrival);
+  assert.doesNotMatch(svg, /bh-wave-apertures|bh-color-selection|bh-boundary-fade/);
 });
 
-test("each subpixel branches four connected RGB arrows from the main output body to its ring-disk black matrix", () => {
-  const round = value => Number(value.toFixed(2));
-  const svg = createBlackholeSVG();
-  assert.ok(SCENE_GEOMETRY.branchPlane > SCENE_GEOMETRY.bottomPlane, "branches start above the mirror, not from the output base");
-  assert.ok(SCENE_GEOMETRY.branchPlane < SCENE_GEOMETRY.whiteEmissionPlanes[0], "branches remain inside the illustrated optical gap");
-  const rays = [...svg.matchAll(/<g class="bh-radial-ray"([^>]*)>([\s\S]*?class="bh-motion bh-absorption"[^>]+\/>)/g)];
-  assert.equal(rays.length, 48);
-  const seen = new Set();
-  for (const [, attributes, body] of rays) {
-    const key = attributes.match(/data-cell="([^"]+)"/)[1];
-    const cell = SUBPIXELS.find(cell => `${cell.row}-${cell.col}` === key);
+test("cavity arrows make three round trips before feeding the upper RGB output", () => {
+  const svg = createBlackholeSVG({ animated: true });
+  assert.equal((svg.match(/class="bh-cavity-cell"/g) || []).length, 12);
+  assert.equal((svg.match(/class="[^"]*\bbh-cavity-arrow\b[^"]*"/g) || []).length, 12);
+  assert.equal((svg.match(/<path[^>]*class="[^"]*\bbh-cavity-path\b[^"]*"/g) || []).length, 24);
+  assert.doesNotMatch(svg, /bh-cavity-packet|bh-cavity-white-front|bh-cavity-color-front|bh-resonance-band/,
+    "moving square wave packets are replaced with directed cavity paths");
+  assert.ok(CAVITY_STOPS[0].time > SCENE_GEOMETRY.boundaryFade);
+  for(let i=0;i<7;i++) {
+    assert.equal(CAVITY_STOPS[i].plane, i%2 ? SCENE_GEOMETRY.cavityUpperPlane : SCENE_GEOMETRY.bottomPlane);
+    if(i) assert.ok(CAVITY_STOPS[i].time > CAVITY_STOPS[i-1].time);
+  }
+  assert.equal(CAVITY_STOPS.at(-1).plane, SCENE_GEOMETRY.outputPlane);
+  assert.equal(CAVITY_STOPS.at(-1).time, SCENE_GEOMETRY.beamStart, "upper emission starts when the final upward path reaches the stack surface");
+  assert.ok(SCENE_GEOMETRY.colorStart >= CAVITY_STOPS[2].time, "selected color builds over repeated round trips");
+  assert.ok(SCENE_GEOMETRY.colorFull <= SCENE_GEOMETRY.beamStart);
+  for(const [, attrs] of svg.matchAll(/<g class="bh-cavity-cell"([^>]*)>/g)) {
+    const id = attrs.match(/data-cell="([^"]+)"/)[1];
+    const cell = SUBPIXELS.find(cell => `${cell.row}-${cell.col}` === id);
     assert.ok(cell);
-    const direction = attributes.match(/data-direction="([^"]+)"/)[1];
-    assert.ok(["north", "east", "south", "west"].includes(direction));
-    assert.ok(!seen.has(`${key}-${direction}`));
-    seen.add(`${key}-${direction}`);
-    assert.match(attributes, new RegExp(`data-channel="${cell.channel}"`));
-    const [boundaryX, boundaryY] = attributes.match(/data-boundary="([^"]+)"/)[1].split(",").map(Number);
-    if (direction === "east" || direction === "west") {
-      assert.equal(boundaryX, cell.col + (direction === "east" ? 1 : 0));
-      assert.ok(boundaryY > cell.row && boundaryY < cell.row + 1);
-    } else {
-      assert.equal(boundaryY, cell.row + (direction === "south" ? 1 : 0));
-      assert.ok(boundaryX > cell.col && boundaryX < cell.col + 1);
-    }
-    const ring = projectPoint(boundaryX, boundaryY, 1.5);
-    assert.ok(svg.includes(`href="#bh-ring-disk" transform="translate(${round(ring.x)},${round(ring.y)})"`), "every arrow terminates at a physical ring-disk instance");
-    const center = projectPoint(cell.x, cell.y, SCENE_GEOMETRY.branchPlane);
-    const origin = attributes.match(/data-origin="([^"]+)"/)[1].split(",").map(Number);
-    assert.deepEqual(origin, [round(center.x), round(center.y)], "outward rays originate on the body of the main RGB output axis");
-    const outputOrigin = projectPoint(cell.x, cell.y, SCENE_GEOMETRY.bottomPlane);
-    const outputTip = projectPoint(cell.x, cell.y, SCENE_GEOMETRY.outputPlane + SCENE_GEOMETRY.beamLength);
-    assert.equal(origin[0], round(outputOrigin.x));
-    assert.equal(origin[0], round(outputTip.x));
-    assert.ok(origin[1] < outputOrigin.y && origin[1] > outputTip.y);
-    const end = attributes.match(/data-end="([^"]+)"/)[1].split(",").map(Number);
-    const target = projectPoint(boundaryX, boundaryY, 5.5);
-    assert.deepEqual(end, [round(target.x), round(target.y)]);
-    assert.ok(end[1] <= ring.y && end[1] >= ring.y - 6, "light is absorbed at the unit surface, not below the substrate");
-    assert.equal(Number(attributes.match(/data-branch-plane="([^"]+)"/)[1]), SCENE_GEOMETRY.branchPlane);
-    const dx = round(end[0] - origin[0]), dy = round(end[1] - origin[1]);
-    const length = round(Math.hypot(dx, dy));
-    assert.match(body, new RegExp(`<g transform="translate\\(${origin[0]},${origin[1]}\\)">`));
-    const rotation = body.match(/<g class="bh-branch-geometry" transform="rotate\(([\d.-]+)\)"/);
-    assert.ok(rotation, "the branch has a fixed coordinate frame anchored to the main shaft");
-    assert.equal(Number(rotation[1]), round(Math.atan2(dy, dx) * 180 / Math.PI));
-    assert.equal(Number(body.match(/--branch-start:([\d.-]+)px/)[1]), -length);
-    const shaft = body.match(/<path class="bh-motion bh-branch-shaft" d="M0,0 L([\d.-]+),0"([^>]+)\/>/);
-    assert.ok(shaft, "the growing branch shaft is always attached to local origin zero");
-    const shaftLength = Number(shaft[1]);
-    assert.ok(shaftLength > 0 && shaftLength < length);
-    assert.match(shaft[2], /stroke-linecap="butt"/);
-    const glyph = body.match(/<path class="bh-motion bh-radial-arrow" d="([^"]+)" fill="([^"]+)"/);
-    assert.ok(glyph);
-    assert.ok(glyph[1].endsWith("Z"), "branches retain closed triangular heads");
-    const localPoints = [...glyph[1].matchAll(/[ML]([\d.-]+),([\d.-]+)/g)].map(match => match.slice(1).map(Number));
-    assert.equal(localPoints.length, 3);
-    assert.deepEqual(localPoints[0], [length, 0], "the final arrow tip reaches the physical boundary");
-    assert.equal(localPoints[1][0], localPoints[2][0]);
-    assert.ok(localPoints[1][1] < 0 && localPoints[2][1] > 0);
-    assert.ok(localPoints.every(([x]) => x <= length), "the triangular head never extends past its boundary endpoint");
-    for (const progress of [0, .1, .25, .5, .75, 1]) {
-      const shaftEnd = shaftLength * progress;
-      const headBase = localPoints[1][0] - length * (1 - progress);
-      assert.ok(shaftEnd >= headBase, "the moving arrowhead never disconnects from its growing shaft");
-    }
-    const definition = svg.match(new RegExp(`<g id="bh-pillar-${cell.channel}">([\\s\\S]*?)</g>`))[1];
-    const channelColor = definition.match(/<ellipse[^>]+stroke="([^"]+)"/)[1];
-    assert.equal(glyph[2], channelColor);
-    assert.equal(shaft[2].match(/stroke="([^"]+)"/)[1], channelColor);
+    assert.equal(attrs.match(/data-channel="([^"]+)"/)[1],cell.channel);
+    assert.equal(Number(attrs.match(/data-exit-plane="([^"]+)"/)[1]),SCENE_GEOMETRY.outputPlane);
   }
-  const branchGrow = svg.match(/@keyframes bh-branch-grow\s*\{\s*0%,([\d.]+)%\{transform:scaleX\(0\)\} ([\d.]+)%,100%\{transform:scaleX\(1\)\}/);
-  assert.ok(branchGrow);
-  const [, start, end] = branchGrow.map(Number);
-  const branchTip = svg.match(/@keyframes bh-branch-tip\s*\{\s*0%,([\d.]+)%\{transform:translateX\(var\(--branch-start\)\)\} ([\d.]+)%,100%\{transform:translateX\(0\)\}/);
-  assert.ok(branchTip);
-  assert.deepEqual(branchTip.slice(1).map(Number), [start, end], "branch shaft and tip share the same growth timeline");
-  assert.match(svg, /\.bh-motion \{[^}]+animation-timing-function:linear;[^}]+transform-origin:0 0;/);
-  const outputGrow = svg.match(/@keyframes bh-output-grow\s*\{\s*0%,([\d.]+)%\{transform:scaleY\(0\)\} ([\d.]+)%,100%\{transform:scaleY\(1\)\}/);
-  const [, outputStart, outputEnd] = outputGrow.map(Number);
-  const outputShaftLength = -Number(svg.match(/class="bh-output-core" d="M0,0 L0,([\d.-]+)"/)[1]);
-  const crossingTime = outputStart + (outputEnd - outputStart) * (SCENE_GEOMETRY.branchPlane - SCENE_GEOMETRY.bottomPlane) / outputShaftLength;
-  assert.ok(start >= crossingTime, "branches appear only after the main RGB shaft reaches the junction height");
-  const absorptionPeak = Number(svg.match(/@keyframes bh-absorb[^}]+\}\s*([\d.]+)%\{opacity:\.75/)[1]);
-  assert.ok(end > start && end < 100);
-  assert.ok(absorptionPeak >= end && absorptionPeak <= end + 5, "the boundary response follows the disappearing arrow tip");
-  assert.doesNotMatch(svg, /bh-leak-trace|bh-leak-packet|bh-leakage|bh-radial-travel|bh-radial-glyph|--ray-rest/);
 });
 
-test("two visible EL regions use tinted translucent full-array surfaces", () => {
+test("cavity arrows follow continuous tangents through reflections and the final upward exit", () => {
+  const height = SCENE_GEOMETRY.cavityUpperPlane - SCENE_GEOMETRY.bottomPlane;
+  const start = CAVITY_STOPS[0].time;
+  const end = CAVITY_STOPS.at(-1).time;
+  for (const { time, plane } of CAVITY_STOPS) {
+    const pose = cavityArrowAt(time);
+    assert.ok(Math.abs(pose.x) < .001, `phase ${time}: reflection remains on the cell center axis`);
+    assert.ok(Math.abs(pose.y - (SCENE_GEOMETRY.bottomPlane - plane)) < .001,
+      `phase ${time}: arrow reaches the specified optical interface`);
+  }
+  const epsilon = .0001;
+  for (let phase = start; phase <= end; phase += .125) {
+    const pose = cavityArrowAt(phase);
+    assert.ok([pose.x, pose.y, pose.angle].every(Number.isFinite));
+    assert.ok(pose.y >= -height - .001 && pose.y <= .001, "ray stays inside the cavity until output");
+    const before = cavityArrowAt(Math.max(start, phase - epsilon));
+    const after = cavityArrowAt(Math.min(end, phase + epsilon));
+    const dx = after.x - before.x, dy = after.y - before.y;
+    const distance = Math.hypot(dx, dy);
+    assert.ok(distance > 0, `phase ${phase}: arrow motion must have a well-defined tangent`);
+    const radians = pose.angle * Math.PI / 180;
+    const aligned = (Math.cos(radians) * dx + Math.sin(radians) * dy) / distance;
+    assert.ok(aligned > .999, `phase ${phase}: arrowhead must point along travel, not across or backward`);
+  }
+  for (const { time } of CAVITY_STOPS.slice(1, -1)) {
+    const before = cavityArrowAt(time - epsilon);
+    const after = cavityArrowAt(time + epsilon);
+    assert.ok(Math.hypot(after.x - before.x, after.y - before.y) < .1,
+      `phase ${time}: position is continuous at reflection`);
+    assert.ok(Math.abs(after.angle - before.angle) < .1,
+      `phase ${time}: unwrapped angle prevents a sudden full spin at reflection`);
+  }
+  assert.deepEqual(cavityArrowAt(start - 1), cavityArrowAt(start));
+  assert.deepEqual(cavityArrowAt(end + 1), cavityArrowAt(end));
+  const exitAngle = cavityArrowAt(end).angle * Math.PI / 180;
+  assert.ok(Math.sin(exitAngle) < -.999, "the final arrow feeds the vertical top-emission beam");
+});
+
+test("the expanded gap exposes both round-trip arrow midpoints beneath the opaque upper slab", () => {
+  const underside = OLED_LAYERS[0].bottom;
+  const frontEdges = [[[0, 3], [4, 3]], [[4, 3], [4, 0]]].map(edge =>
+    edge.map(([x, y]) => projectPoint(x, y, underside)));
+  const phases = [
+    (CAVITY_STOPS[0].time + CAVITY_STOPS[1].time) / 2,
+    (CAVITY_STOPS[1].time + CAVITY_STOPS[2].time) / 2
+  ];
+  const frames = [createBlackholeSVG(), createBlackholeSVG({ compactView: true })];
+  for (const cell of SUBPIXELS) {
+    const origin = projectPoint(cell.x, cell.y, SCENE_GEOMETRY.bottomPlane);
+    for (const phase of phases) {
+      const pose = cavityArrowAt(phase);
+      const x = origin.x + pose.x, y = origin.y + pose.y;
+      const edgesAtX = frontEdges.filter(([a, b]) => x >= Math.min(a.x, b.x) && x <= Math.max(a.x, b.x));
+      assert.ok(edgesAtX.length, "arrow midpoint remains beneath the projected device footprint");
+      const frontY = Math.max(...edgesAtX.map(([a, b]) => a.y + (x - a.x) / (b.x - a.x) * (b.y - a.y)));
+      assert.ok(y - frontY >= 12,
+        `cell ${cell.row}-${cell.col}, phase ${phase}: arrow midpoint needs visible clearance below the opaque OLED silhouette`);
+      for (const frame of frames) assertInViewBox(frame, x, y, "cavity midpoint");
+    }
+  }
+});
+
+test("incoming white light disappears across a fixed planar black-matrix footprint, without needle-like traces", () => {
+  const svg = createBlackholeSVG({ animated: true });
+  const surfaces = [...svg.matchAll(/<path class="bh-motion bh-absorption-surface"([^>]*)>/g)];
+  assert.equal(surfaces.length, 1, "one continuous surface cue darkens the complete boundary network");
+  const attrs = surfaces[0][1];
+  assert.match(attrs, /fill-rule="evenodd"/);
+  assert.doesNotMatch(attrs, /transform=|stroke=|filter=|animation-delay/,
+    "the absorbing footprint has no moving geometry, line rays or blur spilling into the apertures");
+  const path = attrs.match(/\bd="([^"]+)"/)[1];
+  const contours = [...path.matchAll(/M([^Z]+)Z/g)].map(([, contour]) =>
+    contour.split("L").map(point => point.split(",").map(Number)));
+  const expectedContours = [[0, 0, 4, 3], ...SUBPIXELS.map(({ col, row }) => [col + .1, row + .1, .8, .8])]
+    .map(([x, y, width, height]) => [[x, y], [x + width, y], [x + width, y + height], [x, y + height]]
+      .map(([px, py]) => {
+        const p = projectPoint(px, py, SCENE_GEOMETRY.bottomPlane);
+        return [Number(p.x.toFixed(2)), Number(p.y.toFixed(2))];
+      }));
+  assert.deepEqual(contours, expectedContours,
+    "a full planar outline minus twelve fixed .8-square apertures absorbs only between subpixels");
+  const animationName = svg.match(/svg\[data-animated="true"\] \.bh-absorption-surface\s*\{\s*animation-name:([^;]+);/);
+  assert.ok(animationName);
+  const keyframes = svg.match(new RegExp(`@keyframes ${animationName[1]} \\{((?:[^{}]|\\{[^{}]*\\})*)\\}`));
+  assert.ok(keyframes);
+  const stops = [...keyframes[1].matchAll(/([\d%,\s.]+)\{([^}]+)\}/g)].flatMap(([, times, declaration]) => {
+    assert.match(declaration, /^opacity:[\d.]+;?$/,
+      "absorption changes brightness only; it must not shrink, translate or produce reflected strokes");
+    const opacity = Number(declaration.match(/opacity:([\d.]+)/)[1]);
+    return times.trim().split(",").map(time => ({ time: Number(time.trim().replace("%", "")), opacity }));
+  });
+  const opacityAt = time => stops.find(stop => stop.time === time)?.opacity;
+  assert.equal(opacityAt(0), 0);
+  assert.ok(opacityAt(18) > 0 && opacityAt(18) < opacityAt(27));
+  assert.ok(opacityAt(27) < opacityAt(SCENE_GEOMETRY.boundaryFade));
+  assert.ok(opacityAt(SCENE_GEOMETRY.boundaryFade) >= .8);
+  assert.equal(opacityAt(100), 0, "the next illumination cycle resets without a stale boundary overlay");
+  assert.doesNotMatch(svg, /bh-sink-ray|bh-sink-contact|bh-sink-flow|bh-sink-limit|bh-absorption-tail/,
+    "the rejected upright white rods and their clipping/gradient resources are fully removed");
+  assert.doesNotMatch(svg + read("../research/blackhole.html"), /bh-radial|bh-branch|crosstalk|four smaller|Four connected/i);
+});
+
+test("the white OLED is a joined generic multilayer stack rather than two floating panes", () => {
   const svg = createBlackholeSVG();
-  const layers = [...svg.matchAll(/<polygon points="([^"]+)" class="bh-el-layer" data-plane="([^"]+)" fill="([^"]+)" fill-opacity="([^"]+)"/g)];
-  assert.equal(layers.length, 2);
-  assert.deepEqual(layers.map(layer => Number(layer[2])), [...SCENE_GEOMETRY.whiteEmissionPlanes]);
-  for (const [, points, plane, fill, opacity] of layers) {
-    assert.match(fill, /^#[\da-f]{6}$/i);
-    assert.doesNotMatch(fill, /^#(?:fff|ffffff|000000)$/i);
-    assert.ok(Number(opacity) >= .2 && Number(opacity) < 1, "EL surfaces should be visibly colored yet translucent");
-    const corners = points.split(" ").map(point => point.split(",").map(Number));
-    const expected = [[0, 0], [4, 0], [4, 3], [0, 3]].map(([x, y]) => {
-      const p = projectPoint(x, y, Number(plane) + 4);
-      return [p.x, p.y];
-    });
-    assert.deepEqual(corners, expected);
+  assert.ok(OLED_LAYERS.length >= 3, "multiple adjacent slabs should read as one OLED stack");
+  assert.ok(Object.isFrozen(OLED_LAYERS));
+  assert.equal(new Set(OLED_LAYERS.map(layer => layer.key)).size, OLED_LAYERS.length);
+  const layers = [...svg.matchAll(/<g class="bh-oled-layer"([^>]*)>/g)];
+  assert.equal(layers.length, OLED_LAYERS.length);
+  OLED_LAYERS.forEach((layer, index) => {
+    assert.ok(layer.top > layer.bottom, "each constituent slab has positive visible thickness");
+    assert.match(layer.color, /^#[\da-f]{6}$/i);
+    if (index) assert.equal(layer.bottom, OLED_LAYERS[index - 1].top, "there is no visual air gap between slabs");
+    const attrs = layers[index][1];
+    assert.equal(attrs.match(/data-layer="([^"]+)"/)[1], layer.key);
+    assert.equal(Number(attrs.match(/data-bottom="([^"]+)"/)[1]), layer.bottom);
+    assert.equal(Number(attrs.match(/data-top="([^"]+)"/)[1]), layer.top);
+  });
+  assert.equal(OLED_LAYERS.at(-1).top, SCENE_GEOMETRY.outputPlane);
+  const tops = [...svg.matchAll(/<polygon points="([^"]+)" class="bh-oled-top"/g)];
+  assert.equal(tops.length, 1, "only the outside top face spans the array");
+  const expected = [[0, 0], [4, 0], [4, 3], [0, 3]].map(([x, y]) => {
+    const p = projectPoint(x, y, SCENE_GEOMETRY.outputPlane);
+    return [p.x, p.y];
+  });
+  assert.deepEqual(tops[0][1].split(" ").map(point => point.split(",").map(Number)), expected);
+  for (const plane of SCENE_GEOMETRY.whiteEmissionPlanes) {
+    assert.ok(plane >= OLED_LAYERS[0].bottom && plane <= OLED_LAYERS.at(-1).top,
+      "the conceptual white source is inside the drawn stack");
+  }
+  assert.doesNotMatch(svg, /bh-el-layer/);
+});
+
+test("the solid OLED silhouette occludes lower structures in every component focus", () => {
+  const bottom = OLED_LAYERS[0].bottom;
+  const top = OLED_LAYERS.at(-1).top;
+  const expectedFaces = [
+    [[0, 0, top], [4, 0, top], [4, 3, top], [0, 3, top]],
+    [[0, 3, bottom], [4, 3, bottom], [4, 3, top], [0, 3, top]],
+    [[4, 0, bottom], [4, 3, bottom], [4, 3, top], [4, 0, top]]
+  ].map(corners => corners.map(([x, y, z]) => {
+    const projected = projectPoint(x, y, z);
+    return `${Number(projected.x.toFixed(2))},${Number(projected.y.toFixed(2))}`;
+  }).join(" "));
+
+  for (const focus of Object.keys(COMPONENT_DESCRIPTIONS)) {
+    const svg = createBlackholeSVG({ focus, animated: true });
+    const occluders = [...svg.matchAll(/<g class="bh-oled-occluder"([^>]*)>([\s\S]*?)<\/g>/g)];
+    assert.equal(occluders.length, 1, `${focus}: one fixed opaque backing must remain beneath the OLED finish`);
+    const [occluder] = occluders;
+    assert.doesNotMatch(occluder[0], /(?:opacity|mask|filter|animation|bh-part|bh-motion)/,
+      `${focus}: the backing must not become transparent or animated`);
+    const faces = [...occluder[2].matchAll(/<polygon points="([^"]+)"([^>]*)>/g)];
+    assert.equal(faces.length, 3, `${focus}: top, front and side need opaque backing`);
+    assert.deepEqual(faces.map(face => face[1]).sort(), [...expectedFaces].sort());
+    for (const [, , attrs] of faces) {
+      const fill = attrs.match(/\bfill="([^"]+)"/)?.[1] ?? occluder[1].match(/\bfill="([^"]+)"/)?.[1];
+      assert.match(fill, /^#[\da-f]{6}$/i, "each face has an opaque color, directly or inherited from its group");
+    }
+
+    const ancestors = [];
+    for (const tag of svg.slice(0, occluder.index).matchAll(/<g\b[^>]*>|<\/g>/g)) {
+      if (tag[0] === "</g>") ancestors.pop();
+      else ancestors.push(tag[0]);
+    }
+    assert.doesNotMatch(ancestors.join("\n"), /bh-part|bh-motion|opacity|mask|filter/,
+      `${focus}: a faded ancestor must not reveal the lower array through the OLED`);
+    assert.ok(occluder.index > svg.lastIndexOf('<g class="bh-cavity-cell"'), "cavity light is behind the OLED");
+    assert.ok(occluder.index > svg.indexOf('<g class="bh-boundary-units">'), "ring-disk units are behind the OLED");
+    assert.ok(occluder.index > svg.indexOf('<g class="bh-part bh-boundary-light">'), "absorption light is behind the OLED");
+    assert.ok(occluder.index + occluder[0].length <= svg.indexOf('<g class="bh-part bh-oled"'), "the finish is above the opaque backing");
+    assert.ok(occluder.index < svg.indexOf('<g class="bh-part bh-rgb-light">'), "top-emission beams stay in front of the OLED");
+    const topFace = svg.match(/<polygon[^>]*class="bh-oled-top"[^>]*>/);
+    assert.ok(topFace);
+    assert.doesNotMatch(topFace[0], /(?:^|\s)(?:fill-)?opacity=/, "the top surface itself is opaque");
   }
 });
 
-test("tandem white OLED and the reflection cavity are conceptual rather than measured results", () => {
-  assert.equal(SCENE_GEOMETRY.whiteEmissionPlanes.length, 2);
+test("white OLED and the reflection cavity are conceptual rather than a disclosed recipe or measured results", () => {
+  assert.equal(SCENE_GEOMETRY.whiteEmissionPlanes.length, 1, "one generic broadband source does not specify an unverified tandem chemistry");
   assert.ok(SCENE_GEOMETRY.whiteEmissionPlanes[0] > SCENE_GEOMETRY.bottomPlane);
-  assert.ok(SCENE_GEOMETRY.whiteEmissionPlanes[1] > SCENE_GEOMETRY.whiteEmissionPlanes[0]);
-  assert.ok(SCENE_GEOMETRY.outputPlane > SCENE_GEOMETRY.whiteEmissionPlanes[1]);
-  assert.ok(SCENE_GEOMETRY.whiteEmissionPlanes[0] - SCENE_GEOMETRY.bottomPlane > SCENE_GEOMETRY.beamLength, "separated EL regions leave room to read the downward-and-reflected path");
+  assert.ok(SCENE_GEOMETRY.outputPlane > SCENE_GEOMETRY.whiteEmissionPlanes[0]);
+  assert.equal(SCENE_GEOMETRY.cavityUpperPlane, SCENE_GEOMETRY.outputPlane);
+  assert.ok(SCENE_GEOMETRY.whiteEmissionPlanes[0] - SCENE_GEOMETRY.bottomPlane > SCENE_GEOMETRY.beamLength, "the expanded cavity leaves room to read the downward-and-reflected path");
   const content = [createBlackholeSVG(), read("../research/blackhole.html"), ...Object.values(COMPONENT_DESCRIPTIONS)].join("\n");
-  assert.match(content, /tandem/i);
   assert.match(content, /white/i);
   assert.match(content, /Fabry[–\u2011-]P[eé]rot/i);
   assert.match(content, /top[ -]emission/i);
@@ -416,7 +484,7 @@ test("tandem white OLED and the reflection cavity are conceptual rather than mea
   assert.match(content, /material choices, dimensions and performance data are omitted/i);
   assert.match(content, /spectral selection.*not (?:frequency|wavelength) conversion/i);
   assert.match(content, /not coherent plane-wave emission/i);
-  assert.doesNotMatch(content, /\b\d[\d,.]*\s*ppi\b|world[ -](?:best|leading)/i);
+  assert.doesNotMatch(content, /\b\d[\d,.]*\s*ppi\b|world[ -](?:best|leading)|\bB[ -]?Y[ -]?B\b/i);
 });
 
 test("ring and disk share material colors and intact annular tops drawn above boundary tracks", () => {
@@ -467,7 +535,7 @@ test("obsolete dashed-beam animation, detached shape keys and layer-separation c
   }
   assert.doesNotMatch(createBlackholeSVG(), /stroke-dasharray|stroke-dashoffset/);
   assert.doesNotMatch(read("../research/blackhole.html"), /<meta name="robots" content="noindex">/);
-  assert.match(read("../research/blackhole.html"), /Crosstalk suppression is a proposed function, not a simulated or measured result\./);
+  assert.match(read("../research/blackhole.html"), /Brightness and complete disappearance at the boundaries are schematic/);
 });
 
 test("the device drawing is free of peripheral labels and names the absorber control Black matrix", () => {

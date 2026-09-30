@@ -5,10 +5,10 @@
 .project-title-row h1 { margin: 0; }
 .project-title-row .project-status { border: 1px solid #dbe7f5; }
 .project-visual { margin: 30px 0 0; overflow: hidden; border: 1px solid var(--line); border-radius: 20px; background: var(--surface); box-shadow: var(--shadow); }
-.project-stage-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 5px 20px; padding: 22px 28px 12px; background: #09172c; color: #e9f2ff; }
+.project-stage-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 5px 20px; padding: 22px 28px 12px; background: #070e19; color: #e9f2ff; }
 .project-stage-header h2 { margin: 0; font-size: 14px; line-height: 1.5; font-weight: 600; letter-spacing: .05px; }
 .project-stage-header > span { color: #96aecf; font-size: 12px; }
-.project-stage { width: 100%; overflow: hidden; background: radial-gradient(ellipse at 50% 35%, #102a49, #09172c 75%); }
+.project-stage { width: 100%; overflow: hidden; background: radial-gradient(ellipse at 53% 49%, #162b40 0%, #0a1625 49%, #070e19 83%); }
 .project-stage > img, .project-stage > svg { width: 100%; height: auto; margin-inline: auto; }
 .project-sequence-panel { padding: 18px 28px 16px; border-bottom: 1px solid var(--line); background: #f7faff; }
 .project-optical-sequence { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 30px; margin: 0; padding: 0; list-style: none; }

@@ -128,7 +128,7 @@ h1, h2, h3 { line-height: 1.3; font-weight: 700; }
   .nav-wrap { width: calc(100% - 28px); align-items: flex-start; flex-direction: column; gap: 15px; padding-block: 19px 13px; }
   .brand { font-size: 22px; }
   .site-nav { width: 100%; justify-content: space-between; flex-wrap: nowrap; gap: 3px; }
-  .site-nav a { min-height: 40px; padding: 6px 9px; font-size: 12px; border-radius: 7px; }
+  .site-nav a { min-height: 44px; padding: 6px 4px; font-size: clamp(11px,3vw,12px); border-radius: 7px; }
   .profile-card { grid-template-columns: minmax(0,1fr); gap: 28px; margin-top: 24px; padding: 28px 24px; border-radius: 18px; }
   .profile-portrait { width: 156px; }
   .portrait-wrap { justify-self: center; }
@@ -159,8 +159,8 @@ h1, h2, h3 { line-height: 1.3; font-weight: 700; }
   .footer-inner { align-items: flex-start; flex-direction: column; padding-block: 20px; gap: 4px; }
 }
 @media (max-width: 360px) {
-  .site-nav { flex-wrap: wrap; justify-content: flex-start; }
-  .site-nav a { padding-inline: 10px; font-size: 12px; }
+  .site-nav { flex-wrap: nowrap; justify-content: space-between; gap: 2px; }
+  .site-nav a { padding-inline: 4px; font-size: 11px; }
   .profile-card { padding: 24px 20px; }
   .profile-subtitle { font-size: 14px; }
 }

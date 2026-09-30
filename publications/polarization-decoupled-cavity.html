@@ -3,41 +3,104 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Publication details for Decoupled polarization response in a meta-mirror-assisted structural color cavity.">
+  <meta name="description" content="A 20-second visual summary of polarization-dependent reflected structural color, by Seokmin Kim.">
   <meta name="theme-color" content="#f7f8fb">
-  <title>Polarization response in a structural color cavity — Metamin</title>
+  <title>Polarization-dependent structural color — Metamin</title>
   <link rel="canonical" href="https://vesper22110852.github.io/Metamin/publications/polarization-decoupled-cavity.html">
   <link rel="icon" href="../assets/favicon.svg?v=8" type="image/svg+xml">
-  <link rel="stylesheet" href="../assets/site.css?v=8">
+  <link rel="stylesheet" href="../assets/site.css?v=10">
+  <link rel="stylesheet" href="../assets/paper-summary.css?v=4">
+  <link rel="stylesheet" href="../assets/polarization-application.css?v=1">
   <script src="../assets/site.js?v=2" defer></script>
+  <script src="../assets/polarization-summary.js?v=5" type="module"></script>
+  <script src="../assets/polarization-application.js?v=1" type="module"></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header">
     <div class="site-shell nav-wrap">
-      <a class="brand" href="../index.html?v=8" aria-label="Metamin home">Metamin</a>
+      <a class="brand" href="../index.html?v=9" aria-label="Metamin home">Metamin</a>
       <nav class="site-nav" aria-label="Primary navigation">
-        <a href="../index.html?v=8">Home</a>
-        <a href="../research.html?v=8">Research</a>
-        <a href="../publications.html?v=8" aria-current="page">Publications</a>
-        <a href="../about.html?v=8">About</a>
+        <a href="../index.html?v=9">Home</a>
+        <a href="../research.html?v=9">Research</a>
+        <a href="../publications.html?v=9" aria-current="page">Publications</a>
+        <a href="../notes.html?v=9">Notes</a>
+        <a href="../about.html?v=9">About</a>
       </nav>
     </div>
   </header>
 
   <main id="main" class="site-shell">
-    <header class="page-header">
-      <p class="eyebrow"><a href="../publications.html?v=8">Publications</a> / 2026</p>
-      <h1>Polarization response in a structural color cavity</h1>
-      <p class="page-intro">First-author paper · Journal of Optics · 2026</p>
+    <header class="page-header paper-summary-header">
+      <p class="eyebrow"><a href="../publications.html?v=9">Publications</a> / 2026</p>
+      <h1>Polarization-dependent structural color</h1>
+      <p class="page-intro">20-second visual summary · Journal of Optics · 2026</p>
+      <p class="paper-application-jump"><a href="#application">Try the image demo ↓</a></p>
     </header>
-    <article class="article-body">
-      <section class="content-section" aria-labelledby="summary-heading">
-        <div class="section-heading">
-          <h2 id="summary-heading">Paper summary</h2>
+
+    <figure class="paper-film" data-paper-summary aria-labelledby="summary-heading" aria-describedby="summary-scope">
+      <div class="paper-film-screen">
+        <div class="paper-film-topline">
+          <span>VISUAL SUMMARY</span>
+          <span data-summary-angle>0° · x polarization</span>
         </div>
-        <p>This paper examines polarization response in a meta-mirror-assisted structural color cavity. The full study is available in <em>Journal of Optics</em> through the DOI below.</p>
-      </section>
+        <div class="paper-film-stage" data-summary-stage>
+          <img src="../assets/polarization-summary.svg?v=5" width="1040" height="750" alt="Reflected structural colors from five aligned 2 by 2 Al nano-ellipse arrays within an Al–SiO₂–Al metamirror, DCSL and Ag cavity. Colors sampled from Figure 1(e); layer scale is schematic.">
+        </div>
+        <div class="paper-mobile-key">
+          <p><strong>Normal incidence</strong> · white light ↓ · reflected color ↑</p>
+          <p>Top → bottom: Ag / DCSL (planarization) / <strong>Al ellipse / SiO₂ / Al ground (MIM)</strong></p>
+          <p>2 × 2 array per design · r<sub>x</sub> = 25 / 30 / 35 / 40 / 45 nm · fixed r<sub>y</sub> = 100 nm</p>
+        </div>
+        <div class="paper-film-caption">
+          <h2 id="summary-heading" data-summary-title>x-polarization: color varies with radius</h2>
+          <p data-summary-caption>The five short-axis radii produce different reflected colors. The long-axis radius is fixed at 100 nm.</p>
+        </div>
+      </div>
+      <div class="paper-film-controls" data-summary-controls hidden>
+        <div class="paper-playback">
+          <button type="button" data-summary-play aria-pressed="false">Play 20-second summary</button>
+          <button type="button" data-summary-replay aria-label="Restart summary from the beginning">Restart</button>
+          <label class="summary-visually-hidden" for="summary-position">Summary position</label>
+          <input id="summary-position" data-summary-seek type="range" min="0" max="20" value="0" step="0.05">
+          <output data-summary-time for="summary-position">0:00 / 0:20</output>
+        </div>
+        <div class="paper-chapters" role="group" aria-label="Polarization snapshots">
+          <button type="button" data-summary-chapter data-time="4" aria-current="false">x-pol</button>
+          <button type="button" data-summary-chapter data-time="14" aria-current="false">y-pol</button>
+        </div>
+        <span class="summary-visually-hidden" data-summary-status role="status" aria-live="polite"></span>
+      </div>
+      <figcaption id="summary-scope" class="paper-film-notes">
+        <p>Colors are sampled from Figure 1(e–f), with r<sub>y</sub> = 100 nm and a dielectric cavity spacer (DCSL) thickness of 180 nm. x-pol shows five sampled colors; y-pol uses one representative cyan to summarize the small variation across designs. These are rendered-image colors, not colors recomputed from spectral data.</p>
+        <p>Each design is illustrated by a 2 × 2 array; vertical dimensions are not to scale. Geometry remains fixed. Illumination and reflection are shown sequentially for clarity. Animation timing and polarization transitions are illustrative, not time-resolved simulations, a calculated polarization sweep, or measured footage.</p>
+        <p>Source: <a href="https://doi.org/10.1088/2040-8986/ae90be">the published paper</a> · <a href="https://content.cld.iop.org/journals/2040-8986/28/8/085001/revision2/joptae90bef1_hr.jpg">Figure 1</a>.</p>
+      </figcaption>
+    </figure>
+
+    <section id="application" class="paper-application" data-flower-demo aria-labelledby="application-heading" aria-describedby="flower-scope">
+      <div class="flower-layout">
+        <div class="flower-copy">
+          <p class="eyebrow">Application concept</p>
+          <h2 id="application-heading">An image revealed by polarization</h2>
+          <p>A possible application: encode an image with the five geometries above. Switch to x-pol to reveal the flowers; switch back to y-pol for a uniform color.</p>
+          <div class="flower-controls" data-flower-controls hidden>
+            <div class="flower-switch" role="group" aria-label="Image illumination polarization">
+              <button type="button" data-flower-pol="y" aria-pressed="true">y-pol</button>
+              <button type="button" data-flower-pol="x" aria-pressed="false">x-pol</button>
+            </div>
+            <p class="flower-status" data-flower-status role="status" aria-live="polite">y-pol · Uniform color</p>
+          </div>
+          <p class="flower-fallback-note" data-flower-fallback-note>Static x-pol illustration. The interactive polarization switch is available when JavaScript loads.</p>
+        </div>
+        <div class="flower-stage" data-flower-stage>
+          <img src="../assets/polarization-flower.svg?v=1" width="960" height="720" alt="Illustrative x-polarized flower pattern using the paper’s five sampled colors, including a cyan background.">
+        </div>
+      </div>
+      <p id="flower-scope" class="flower-scope">Concept illustration based on the paper’s color response, not a fabricated or measured image-display device. The flowers and background both use the five geometry classes. Small y-polarized color differences are omitted here. The transition is illustrative, not a calculated polarization sweep.</p>
+    </section>
+
+    <article class="article-body paper-summary-details">
       <section class="content-section" aria-labelledby="publication-heading">
         <div class="section-heading">
           <h2 id="publication-heading">Publication</h2>
@@ -46,8 +109,8 @@
         <p class="publication-authors"><strong>Seokmin Kim</strong>, Eui-soo Cho, Gyeongsu Jin, and Seung-yeol Lee</p>
         <p class="publication-journal"><em>Journal of Optics</em> 28, 085001 (2026)</p>
         <div class="publication-actions">
-          <a href="https://doi.org/10.1088/2040-8986/ae90be">Read the paper ↗</a>
-          <a href="../publications.html?v=8">All publications</a>
+          <a href="https://doi.org/10.1088/2040-8986/ae90be">Paper ↗</a>
+          <a href="../publications.html?v=9">All publications</a>
         </div>
       </section>
     </article>

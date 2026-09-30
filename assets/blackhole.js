@@ -1,4 +1,4 @@
-import { COMPONENT_DESCRIPTIONS, createBlackholeSVG } from "./blackhole-scene.mjs?v=5";
+import { COMPONENT_DESCRIPTIONS, createBlackholeSVG } from "./blackhole-scene.mjs?v=11";
 
 const demo = document.getElementById("blackhole-demo");
 if (demo) {

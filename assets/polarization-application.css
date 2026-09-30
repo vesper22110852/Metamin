@@ -1,0 +1,33 @@
+.paper-application-jump { margin: 12px 0 0; font-size: 14px; }
+.paper-application-jump a { display: inline-flex; align-items: center; min-height: 44px; }
+.paper-application { margin-top: 36px; padding: 32px; border: 1px solid var(--line); border-radius: 20px; background: var(--surface); box-shadow: var(--shadow); scroll-margin-top: 24px; }
+.flower-layout { display: grid; grid-template-columns: minmax(220px, .8fr) minmax(0, 1.65fr); align-items: center; gap: 36px; }
+.flower-copy { min-width: 0; }
+.flower-copy h2 { margin-bottom: 16px; font-size: clamp(24px,2.6vw,30px); letter-spacing: -.7px; }
+.flower-copy > p:not(.eyebrow) { margin-bottom: 22px; color: var(--muted); font-size: 15px; }
+.flower-controls[hidden], .flower-fallback-note[hidden] { display: none; }
+.flower-switch { display: flex; flex-wrap: wrap; gap: 8px; }
+.flower-switch button { min-width: 90px; min-height: 44px; padding: 9px 18px; border: 1px solid var(--line); border-radius: 8px; background: var(--soft); color: var(--accent); font: inherit; font-size: 14px; cursor: pointer; }
+.flower-switch button[aria-pressed="true"] { border-color: var(--accent); background: var(--accent); color: var(--surface); }
+.flower-switch button:hover { border-color: var(--accent); }
+.flower-status { min-height: 24px; margin: 12px 0 0; color: var(--muted); font-size: 12px; }
+.flower-stage { overflow: hidden; border-radius: 10px; aspect-ratio: 4 / 3; }
+.flower-stage > svg, .flower-stage > img { width: 100%; height: auto; }
+.flower-scope { margin: 26px 0 0; padding-top: 18px; border-top: 1px solid var(--line); color: var(--muted); font-size: 12px; line-height: 1.75; }
+.flower-fallback-note { margin-top: 12px; color: var(--muted); font-size: 13px; }
+@media(max-width:800px) {
+  .flower-layout { grid-template-columns: minmax(0,1fr); gap: 24px; }
+  .flower-copy h2 { max-width: none; }
+  .flower-copy > p:not(.eyebrow) { margin-bottom: 18px; }
+}
+@media(max-width:640px) {
+  .paper-application { margin-top: 28px; padding: 22px 20px; border-radius: 14px; }
+  .flower-copy h2 { font-size: 25px; }
+  .flower-copy > p:not(.eyebrow) { font-size: 14px; }
+  .flower-scope { font-size: 12px; margin-top: 20px; }
+}
+@media print {
+  .flower-switch { display: none; }
+  .paper-application { break-inside: avoid; }
+  .flower-stage { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+}

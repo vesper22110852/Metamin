@@ -1,687 +1,504 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 660" width="960" height="660" role="img" aria-labelledby="bh-title bh-desc" data-focus="all" data-playing="false" data-animated="false" data-compact="false">
-  <title id="bh-title">Project Blackhole: white-light reflection and RGB top emission</title>
-  <desc id="bh-desc">Two tinted, translucent tandem OLED EL regions sit above twelve RGB metamirror subpixels on a solid substrate. Soft luminous white waves descend across the array, then red, green and blue arrows grow upward from the center of every 3 by 3 pillar array. Four connected smaller RGB branches grow from an elevated point on each main arrow shaft and disappear at its black matrix. The Fabry–Pérot cavity response is conceptual, not calculated performance. Not to scale: spacing and timing are exaggerated. White waves are visual symbols, not coherent plane-wave emission from an OLED. Colors do not identify constituent materials. This is spectral selection, not frequency conversion.</desc>
+  <title id="bh-title">Project Blackhole: white wavefronts, boundary absorption and RGB emission</title>
+  <desc id="bh-desc">Three translucent white wavefronts illuminate the array. Illumination progressively darkens across the ring–disk black-matrix boundaries while square metamirror regions remain lit. Curved directional arrows illustrate three Fabry–Pérot cavity round trips across an enlarged viewing gap, becoming more strongly red, green or blue as the selected spectral component is emphasized. A final ascent feeds bright volumetric beams above a joined white-OLED stack. The stack has adjacent graphite-colored strata and a narrow white emissive band, not separated glass panes or separate RGB OLEDs. Conceptual schematic, not calculated performance; the curved paths are not literal ray trajectories or simulated fields. Wavefronts symbolize broadband illumination. Color buildup illustrates spectral selection, not frequency conversion or optical gain. Layer colors and relative thicknesses do not specify materials or an emitter recipe.</desc>
   <defs>
-    <linearGradient id="bh-base" x2=".8" y2="1"><stop stop-color="#425d7b"/><stop offset="1" stop-color="#1c314d"/></linearGradient>
+    <linearGradient id="bh-base" x2=".8" y2="1"><stop stop-color="#263b50"/><stop offset="1" stop-color="#142435"/></linearGradient>
     <linearGradient id="bh-substrate-front" x2="0" y2="1"><stop stop-color="#45607c"/><stop offset=".35" stop-color="#2b415d"/><stop offset="1" stop-color="#172a43"/></linearGradient>
     <linearGradient id="bh-substrate-side" x2="0" y2="1"><stop stop-color="#334a67"/><stop offset="1" stop-color="#12233a"/></linearGradient>
-    <linearGradient id="bh-wave-ink"><stop stop-color="#ffffff" stop-opacity="0"/><stop offset=".12" stop-color="#ffffff" stop-opacity=".95"/><stop offset=".5" stop-color="#ffffff"/><stop offset=".88" stop-color="#ffffff" stop-opacity=".95"/><stop offset="1" stop-color="#ffffff" stop-opacity="0"/></linearGradient>
-    <filter id="bh-wave-softness" x="-10%" y="-60%" width="120%" height="220%" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="3.5"/></filter>
     <linearGradient id="bh-absorber-side"><stop stop-color="#455971"/><stop offset=".5" stop-color="#90a6bb"/><stop offset="1" stop-color="#455971"/></linearGradient>
     <radialGradient id="bh-shadow"><stop stop-color="#020811" stop-opacity=".65"/><stop offset="1" stop-color="#020811" stop-opacity="0"/></radialGradient>
-    <filter id="bh-beam-glow" x="-300%" y="-15%" width="700%" height="130%" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="2.3"/></filter>
+    <filter id="bh-soft-glow" x="-75%" y="-20%" width="250%" height="140%" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="3"/></filter>
+    <filter id="bh-arrow-glow" filterUnits="userSpaceOnUse" x="-27" y="-12" width="39" height="24" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="2.4"/></filter>
+    <linearGradient id="bh-beam-fade" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="white"/><stop offset=".78" stop-color="white"/><stop offset="1" stop-color="black"/></linearGradient>
+    <mask id="bh-beam-envelope" maskContentUnits="objectBoundingBox"><rect width="1" height="1" fill="url(#bh-beam-fade)"/></mask>
+    <linearGradient id="bh-stack-top" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#172737"/><stop offset=".34" stop-color="#293d50"/><stop offset=".51" stop-color="#465b6c"/><stop offset=".63" stop-color="#304457"/><stop offset="1" stop-color="#192a3d"/></linearGradient>
+    <linearGradient id="bh-stack-edge"><stop stop-color="#a6bbcc" stop-opacity=".25"/><stop offset=".42" stop-color="#e1eef8" stop-opacity=".8"/><stop offset="1" stop-color="#85a1ba" stop-opacity=".2"/></linearGradient>
+    <mask id="bh-wave-envelope-0" maskUnits="userSpaceOnUse" x="212" y="156" width="586" height="166" style="mask-type:luminance">
+    <polygon points="430,164 790,236 580,314 220,242" fill="white"/>
+    <path class="bh-motion bh-boundary-cut" data-front="0" d="M430,164L790,236L580,314L220,242ZM432,168.4L504,182.8L448,203.6L376,189.2ZM522,186.4L594,200.8L538,221.6L466,207.2ZM612,204.4L684,218.8L628,239.6L556,225.2ZM702,222.4L774,236.8L718,257.6L646,243.2ZM362,194.4L434,208.8L378,229.6L306,215.2ZM452,212.4L524,226.8L468,247.6L396,233.2ZM542,230.4L614,244.8L558,265.6L486,251.2ZM632,248.4L704,262.8L648,283.6L576,269.2ZM292,220.4L364,234.8L308,255.6L236,241.2ZM382,238.4L454,252.8L398,273.6L326,259.2ZM472,256.4L544,270.8L488,291.6L416,277.2ZM562,274.4L634,288.8L578,309.6L506,295.2Z" fill="black" fill-rule="evenodd"/>
+  </mask><mask id="bh-wave-envelope-1" maskUnits="userSpaceOnUse" x="212" y="156" width="586" height="166" style="mask-type:luminance">
+    <polygon points="430,164 790,236 580,314 220,242" fill="white"/>
+    <path class="bh-motion bh-boundary-cut" data-front="1" d="M430,164L790,236L580,314L220,242ZM432,168.4L504,182.8L448,203.6L376,189.2ZM522,186.4L594,200.8L538,221.6L466,207.2ZM612,204.4L684,218.8L628,239.6L556,225.2ZM702,222.4L774,236.8L718,257.6L646,243.2ZM362,194.4L434,208.8L378,229.6L306,215.2ZM452,212.4L524,226.8L468,247.6L396,233.2ZM542,230.4L614,244.8L558,265.6L486,251.2ZM632,248.4L704,262.8L648,283.6L576,269.2ZM292,220.4L364,234.8L308,255.6L236,241.2ZM382,238.4L454,252.8L398,273.6L326,259.2ZM472,256.4L544,270.8L488,291.6L416,277.2ZM562,274.4L634,288.8L578,309.6L506,295.2Z" fill="black" fill-rule="evenodd"/>
+  </mask><mask id="bh-wave-envelope-2" maskUnits="userSpaceOnUse" x="212" y="156" width="586" height="166" style="mask-type:luminance">
+    <polygon points="430,164 790,236 580,314 220,242" fill="white"/>
+    <path class="bh-motion bh-boundary-cut" data-front="2" d="M430,164L790,236L580,314L220,242ZM432,168.4L504,182.8L448,203.6L376,189.2ZM522,186.4L594,200.8L538,221.6L466,207.2ZM612,204.4L684,218.8L628,239.6L556,225.2ZM702,222.4L774,236.8L718,257.6L646,243.2ZM362,194.4L434,208.8L378,229.6L306,215.2ZM452,212.4L524,226.8L468,247.6L396,233.2ZM542,230.4L614,244.8L558,265.6L486,251.2ZM632,248.4L704,262.8L648,283.6L576,269.2ZM292,220.4L364,234.8L308,255.6L236,241.2ZM382,238.4L454,252.8L398,273.6L326,259.2ZM472,256.4L544,270.8L488,291.6L416,277.2ZM562,274.4L634,288.8L578,309.6L506,295.2Z" fill="black" fill-rule="evenodd"/>
+  </mask>
     <g id="bh-ring-disk">
       <path class="bh-ring-side" d="M-5.7,-4.5v1.4a5.7,2.9 0 0 0 11.4,0v-1.4Z" fill="url(#bh-absorber-side)"/>
-      <ellipse cx="0" cy="-4.5" rx="3.4" ry="1.72" fill="#0c192a"/>
+      <ellipse cy="-4.5" rx="3.4" ry="1.72" fill="#0c192a"/>
       <path class="bh-disk-side" d="M-1.3,-4.5v1.4a1.3,.66 0 0 0 2.6,0v-1.4Z" fill="url(#bh-absorber-side)"/>
       <ellipse class="bh-disk-top" cy="-4.5" rx="1.3" ry=".66" fill="#aec1d2"/>
       <path class="bh-ring-top" data-top="-4.5" d="M-5.7,-4.5a5.7,2.9 0 1 0 11.4,0a5.7,2.9 0 1 0 -11.4,0Z M-3.4,-4.5a3.4,1.72 0 1 0 6.8,0a3.4,1.72 0 1 0 -6.8,0Z" fill="#aec1d2" fill-rule="evenodd"/>
     </g>
 
-    <linearGradient id="bh-post-r"><stop stop-color="#943454"/><stop offset=".55" stop-color="#ff537c"/><stop offset="1" stop-color="#943454"/></linearGradient>
-    <g id="bh-pillar-r"><path d="M-5.8,-8v8a5.8,2.7 0 0 0 11.6,0v-8Z" fill="url(#bh-post-r)"/><path d="M-2.7,-7v7" stroke="#ffd0d8" stroke-opacity=".42" stroke-width="1.2"/><ellipse cy="-8" rx="5.8" ry="2.7" fill="#ffd0d8" stroke="#ff537c" stroke-width=".7"/></g>
-    <linearGradient id="bh-post-g"><stop stop-color="#247d75"/><stop offset=".55" stop-color="#50efb0"/><stop offset="1" stop-color="#247d75"/></linearGradient>
-    <g id="bh-pillar-g"><path d="M-5.8,-8v8a5.8,2.7 0 0 0 11.6,0v-8Z" fill="url(#bh-post-g)"/><path d="M-2.7,-7v7" stroke="#c5ffe7" stroke-opacity=".42" stroke-width="1.2"/><ellipse cy="-8" rx="5.8" ry="2.7" fill="#c5ffe7" stroke="#50efb0" stroke-width=".7"/></g>
-    <linearGradient id="bh-post-b"><stop stop-color="#315caa"/><stop offset=".55" stop-color="#639dff"/><stop offset="1" stop-color="#315caa"/></linearGradient>
-    <g id="bh-pillar-b"><path d="M-5.8,-8v8a5.8,2.7 0 0 0 11.6,0v-8Z" fill="url(#bh-post-b)"/><path d="M-2.7,-7v7" stroke="#d3e4ff" stroke-opacity=".42" stroke-width="1.2"/><ellipse cy="-8" rx="5.8" ry="2.7" fill="#d3e4ff" stroke="#639dff" stroke-width=".7"/></g>
+    <linearGradient id="bh-post-r"><stop stop-color="#982127"/><stop offset=".55" stop-color="#ff493d"/><stop offset="1" stop-color="#982127"/></linearGradient>
+    <linearGradient id="bh-volume-r"><stop stop-color="#ff493d" stop-opacity="0"/><stop offset=".17" stop-color="#ff493d" stop-opacity=".82"/><stop offset=".43" stop-color="#ffd8d1"/><stop offset=".6" stop-color="#ff493d"/><stop offset=".84" stop-color="#ff493d" stop-opacity=".85"/><stop offset="1" stop-color="#ff493d" stop-opacity="0"/></linearGradient>
+    <radialGradient id="bh-cap-r"><stop stop-color="#ffd8d1"/><stop offset=".5" stop-color="#ff493d"/><stop offset="1" stop-color="#982127"/></radialGradient>
+    <g id="bh-pillar-r"><path d="M-5.8,-8v8a5.8,2.7 0 0 0 11.6,0v-8Z" fill="url(#bh-post-r)"/><path d="M-2.7,-7v7" stroke="#ffd8d1" stroke-opacity=".42" stroke-width="1.2"/><ellipse cy="-8" rx="5.8" ry="2.7" fill="#ffd8d1" stroke="#ff493d" stroke-width=".7"/></g>
+    <linearGradient id="bh-post-g"><stop stop-color="#14794f"/><stop offset=".55" stop-color="#33f590"/><stop offset="1" stop-color="#14794f"/></linearGradient>
+    <linearGradient id="bh-volume-g"><stop stop-color="#33f590" stop-opacity="0"/><stop offset=".17" stop-color="#33f590" stop-opacity=".82"/><stop offset=".43" stop-color="#d5ffe4"/><stop offset=".6" stop-color="#33f590"/><stop offset=".84" stop-color="#33f590" stop-opacity=".85"/><stop offset="1" stop-color="#33f590" stop-opacity="0"/></linearGradient>
+    <radialGradient id="bh-cap-g"><stop stop-color="#d5ffe4"/><stop offset=".5" stop-color="#33f590"/><stop offset="1" stop-color="#14794f"/></radialGradient>
+    <g id="bh-pillar-g"><path d="M-5.8,-8v8a5.8,2.7 0 0 0 11.6,0v-8Z" fill="url(#bh-post-g)"/><path d="M-2.7,-7v7" stroke="#d5ffe4" stroke-opacity=".42" stroke-width="1.2"/><ellipse cy="-8" rx="5.8" ry="2.7" fill="#d5ffe4" stroke="#33f590" stroke-width=".7"/></g>
+    <linearGradient id="bh-post-b"><stop stop-color="#2055a9"/><stop offset=".55" stop-color="#388dff"/><stop offset="1" stop-color="#2055a9"/></linearGradient>
+    <linearGradient id="bh-volume-b"><stop stop-color="#388dff" stop-opacity="0"/><stop offset=".17" stop-color="#388dff" stop-opacity=".82"/><stop offset=".43" stop-color="#dbedff"/><stop offset=".6" stop-color="#388dff"/><stop offset=".84" stop-color="#388dff" stop-opacity=".85"/><stop offset="1" stop-color="#388dff" stop-opacity="0"/></linearGradient>
+    <radialGradient id="bh-cap-b"><stop stop-color="#dbedff"/><stop offset=".5" stop-color="#388dff"/><stop offset="1" stop-color="#2055a9"/></radialGradient>
+    <g id="bh-pillar-b"><path d="M-5.8,-8v8a5.8,2.7 0 0 0 11.6,0v-8Z" fill="url(#bh-post-b)"/><path d="M-2.7,-7v7" stroke="#dbedff" stroke-opacity=".42" stroke-width="1.2"/><ellipse cy="-8" rx="5.8" ry="2.7" fill="#dbedff" stroke="#388dff" stroke-width=".7"/></g>
   </defs>
   <style>
-    .bh-part { transition: opacity .22s ease; }
+    .bh-part { transition:opacity .22s ease; }
     svg[data-focus="oled"] .bh-mirrors, svg[data-focus="oled"] .bh-absorbers,
     svg[data-focus="mirrors"] .bh-oled, svg[data-focus="mirrors"] .bh-absorbers,
-    svg[data-focus="absorbers"] .bh-oled, svg[data-focus="absorbers"] .bh-mirrors { opacity:.22; }
-    svg[data-focus="absorbers"] .bh-main-light { opacity:.14; }
-    .bh-motion { animation-duration:7.2s; animation-timing-function:linear; animation-iteration-count:infinite; animation-play-state:paused; transform-origin:0 0; }
+    svg[data-focus="absorbers"] .bh-oled, svg[data-focus="absorbers"] .bh-mirrors { opacity:.25; }
+    svg[data-focus="absorbers"] .bh-rgb-light, svg[data-focus="absorbers"] .bh-cavity-light { opacity:.2; }
+    .bh-motion { animation-duration:16s; animation-timing-function:cubic-bezier(.4,0,.25,1); animation-iteration-count:infinite; animation-play-state:paused; transform-origin:0 0; }
     svg[data-playing="true"] .bh-motion { animation-play-state:running; }
-    .bh-wavefront { opacity:.22; transform:translateY(var(--wave-rest)); }
-    .bh-branch { opacity:.7; }
-    .bh-absorption { opacity:0; }
-    svg[data-animated="true"] .bh-wavefront { animation-name:bh-wave-descent; }
+    .bh-wavefront { opacity:.16; transform:translateY(var(--wave-rest)); }
+    .bh-boundary-cut { opacity:0; }
+    .bh-cavity-color { color:var(--channel); }
+    .bh-cavity-loop { opacity:.42; }
+    .bh-cavity-arrow { transform:translate(-18px,-144px) rotate(270deg); }
+    .bh-absorption-surface { opacity:0; }
+    svg[data-animated="true"] .bh-boundary-cut[data-front="0"] { animation-name:bh-boundary-first; }
+    svg[data-animated="true"] .bh-boundary-cut[data-front="1"] { animation-name:bh-boundary-second; }
+    svg[data-animated="true"] .bh-boundary-cut[data-front="2"] { animation-name:bh-boundary-third; }
+    svg[data-animated="true"] .bh-cavity-loop { animation-name:bh-cavity-presence; }
+    svg[data-animated="true"] .bh-cavity-arrow { animation-name:bh-cavity-travel; animation-timing-function:linear; }
+    svg[data-animated="true"] .bh-cavity-color { animation-name:bh-cavity-color; }
+    svg[data-animated="true"] .bh-cavity-cursor { animation-name:bh-cursor-presence; }
+    svg[data-animated="true"] .bh-absorption-surface { animation-name:bh-boundary-absorption; }
     svg[data-animated="true"] .bh-output { animation-name:bh-output-presence; }
-    svg[data-animated="true"] .bh-output-shaft { animation-name:bh-output-grow; }
-    svg[data-animated="true"] .bh-arrowhead { animation-name:bh-output-tip; }
-    svg[data-animated="true"] .bh-reflection { animation-name:bh-reflection; }
+    svg[data-animated="true"] .bh-beam-volume { animation-name:bh-beam-rise; }
+    svg[data-animated="true"] .bh-beam-end { animation-name:bh-beam-end-rise; }
+    svg[data-animated="true"] .bh-exit-glow { animation-name:bh-output-presence; }
     svg[data-animated="true"] .bh-el-glow { animation-name:bh-source; }
-    svg[data-animated="true"] .bh-branch { animation-name:bh-branch-presence; }
-    svg[data-animated="true"] .bh-branch-shaft { animation-name:bh-branch-grow; }
-    svg[data-animated="true"] .bh-radial-arrow { animation-name:bh-branch-tip; }
-    svg[data-animated="true"] .bh-absorption { animation-name:bh-absorb; }
-    @keyframes bh-wave-descent {
-      0%,5%{opacity:0;transform:translateY(0)}
-      10%{opacity:.95}
-      28%{opacity:.95}
-      30%{transform:translateY(var(--wave-distance))}
-      34%,100%{opacity:0;transform:translateY(var(--wave-distance))}
+
+    svg[data-animated="true"] .bh-wavefront[data-front="0"] { animation-name:bh-wave-0; }
+    @keyframes bh-wave-0 {
+      0%,1%{opacity:0;transform:translateY(0)}
+      3%{opacity:.42;transform:translateY(0)}
+      14%,41%{opacity:.42;transform:translateY(var(--wave-distance))}
+      62%{opacity:.12;transform:translateY(var(--wave-distance))}
+      88%{opacity:.04;transform:translateY(var(--wave-distance))}
+      100%{opacity:0;transform:translateY(var(--wave-distance))}
     }
-    @keyframes bh-output-presence { 0%,34%{opacity:0} 39%,83%{opacity:1} 96%,100%{opacity:0} }
-    @keyframes bh-output-grow { 0%,35%{transform:scaleY(0)} 66%,100%{transform:scaleY(1)} }
-    @keyframes bh-output-tip { 0%,35%{transform:translateY(var(--output-distance))} 66%,100%{transform:translateY(0)} }
-    @keyframes bh-reflection { 0%,29%,76%,100%{opacity:0} 36%,50%{opacity:.95} }
-    @keyframes bh-source { 0%,42%,100%{opacity:.2} 8%,26%{opacity:.9} }
-    @keyframes bh-branch-presence { 0%,47%{opacity:0} 50%,71%{opacity:.92} 72%,100%{opacity:0} }
-    @keyframes bh-branch-grow { 0%,47%{transform:scaleX(0)} 72%,100%{transform:scaleX(1)} }
-    @keyframes bh-branch-tip { 0%,47%{transform:translateX(var(--branch-start))} 72%,100%{transform:translateX(0)} }
-    @keyframes bh-absorb { 0%,68%,92%,100%{opacity:0;transform:scale(1)} 73%{opacity:.75;transform:scale(1)} 88%{opacity:0;transform:scale(.3)} }
+    svg[data-animated="true"] .bh-wavefront[data-front="1"] { animation-name:bh-wave-1; }
+    @keyframes bh-wave-1 {
+      0%,10%{opacity:0;transform:translateY(0)}
+      12%{opacity:.42;transform:translateY(0)}
+      23%,41%{opacity:.42;transform:translateY(var(--wave-distance))}
+      62%{opacity:.12;transform:translateY(var(--wave-distance))}
+      88%{opacity:.04;transform:translateY(var(--wave-distance))}
+      100%{opacity:0;transform:translateY(var(--wave-distance))}
+    }
+    svg[data-animated="true"] .bh-wavefront[data-front="2"] { animation-name:bh-wave-2; }
+    @keyframes bh-wave-2 {
+      0%,19%{opacity:0;transform:translateY(0)}
+      21%{opacity:.42;transform:translateY(0)}
+      32%,41%{opacity:.42;transform:translateY(var(--wave-distance))}
+      62%{opacity:.12;transform:translateY(var(--wave-distance))}
+      88%{opacity:.04;transform:translateY(var(--wave-distance))}
+      100%{opacity:0;transform:translateY(var(--wave-distance))}
+    }
+    @keyframes bh-boundary-first { 0%,11%{opacity:0} 17%,20%{opacity:.76} 26%,29%{opacity:.94} 36%,100%{opacity:1} }
+    @keyframes bh-boundary-second { 0%,19%{opacity:0} 26%,29%{opacity:.94} 36%,100%{opacity:1} }
+    @keyframes bh-boundary-third { 0%,28%{opacity:0} 36%,100%{opacity:1} }
+    @keyframes bh-cavity-presence { 0%,36%{opacity:0} 39%,76%{opacity:1} 84%,92%{opacity:.3} 100%{opacity:0} }
+    @keyframes bh-cursor-presence { 0%,36%{opacity:0} 39%,76%{opacity:1} 81%,100%{opacity:0} }
+    @keyframes bh-cavity-travel { 0%{transform:translate(0px,0px) rotate(180deg)} 38%{transform:translate(0px,0px) rotate(180deg)}
+38.5%{transform:translate(-5.56px,-7.05px) rotate(248.96deg)}
+39%{transform:translate(-10.58px,-27.5px) rotate(260.24deg)}
+39.5%{transform:translate(-14.56px,-59.36px) rotate(264.81deg)}
+40%{transform:translate(-17.12px,-99.5px) rotate(267.67deg)}
+40.5%{transform:translate(-18px,-144px) rotate(270deg)}
+41%{transform:translate(-17.12px,-188.5px) rotate(272.33deg)}
+41.5%{transform:translate(-14.56px,-228.64px) rotate(275.19deg)}
+42%{transform:translate(-10.58px,-260.5px) rotate(279.76deg)}
+42.5%{transform:translate(-5.56px,-280.95px) rotate(291.04deg)}
+43%{transform:translate(0px,-288px) rotate(360deg)}
+43.5%{transform:translate(5.56px,-280.95px) rotate(428.96deg)}
+44%{transform:translate(10.58px,-260.5px) rotate(440.24deg)}
+44.5%{transform:translate(14.56px,-228.64px) rotate(444.81deg)}
+45%{transform:translate(17.12px,-188.5px) rotate(447.67deg)}
+45.5%{transform:translate(18px,-144px) rotate(450deg)}
+46%{transform:translate(17.12px,-99.5px) rotate(452.33deg)}
+46.5%{transform:translate(14.56px,-59.36px) rotate(455.19deg)}
+47%{transform:translate(10.58px,-27.5px) rotate(459.76deg)}
+47.5%{transform:translate(5.56px,-7.05px) rotate(471.04deg)}
+48%{transform:translate(0px,0px) rotate(540deg)}
+48.5%{transform:translate(-5.56px,-7.05px) rotate(608.96deg)}
+49%{transform:translate(-10.58px,-27.5px) rotate(620.24deg)}
+49.5%{transform:translate(-14.56px,-59.36px) rotate(624.81deg)}
+50%{transform:translate(-17.12px,-99.5px) rotate(627.67deg)}
+50.5%{transform:translate(-18px,-144px) rotate(630deg)}
+51%{transform:translate(-17.12px,-188.5px) rotate(632.33deg)}
+51.5%{transform:translate(-14.56px,-228.64px) rotate(635.19deg)}
+52%{transform:translate(-10.58px,-260.5px) rotate(639.76deg)}
+52.5%{transform:translate(-5.56px,-280.95px) rotate(651.04deg)}
+53%{transform:translate(0px,-288px) rotate(720deg)}
+53.5%{transform:translate(5.56px,-280.95px) rotate(788.96deg)}
+54%{transform:translate(10.58px,-260.5px) rotate(800.24deg)}
+54.5%{transform:translate(14.56px,-228.64px) rotate(804.81deg)}
+55%{transform:translate(17.12px,-188.5px) rotate(807.67deg)}
+55.5%{transform:translate(18px,-144px) rotate(810deg)}
+56%{transform:translate(17.12px,-99.5px) rotate(812.33deg)}
+56.5%{transform:translate(14.56px,-59.36px) rotate(815.19deg)}
+57%{transform:translate(10.58px,-27.5px) rotate(819.76deg)}
+57.5%{transform:translate(5.56px,-7.05px) rotate(831.04deg)}
+58%{transform:translate(0px,0px) rotate(900deg)}
+58.5%{transform:translate(-5.56px,-7.05px) rotate(968.96deg)}
+59%{transform:translate(-10.58px,-27.5px) rotate(980.24deg)}
+59.5%{transform:translate(-14.56px,-59.36px) rotate(984.81deg)}
+60%{transform:translate(-17.12px,-99.5px) rotate(987.67deg)}
+60.5%{transform:translate(-18px,-144px) rotate(990deg)}
+61%{transform:translate(-17.12px,-188.5px) rotate(992.33deg)}
+61.5%{transform:translate(-14.56px,-228.64px) rotate(995.19deg)}
+62%{transform:translate(-10.58px,-260.5px) rotate(999.76deg)}
+62.5%{transform:translate(-5.56px,-280.95px) rotate(1011.04deg)}
+63%{transform:translate(0px,-288px) rotate(1080deg)}
+63.5%{transform:translate(5.56px,-280.95px) rotate(1148.96deg)}
+64%{transform:translate(10.58px,-260.5px) rotate(1160.24deg)}
+64.5%{transform:translate(14.56px,-228.64px) rotate(1164.81deg)}
+65%{transform:translate(17.12px,-188.5px) rotate(1167.67deg)}
+65.5%{transform:translate(18px,-144px) rotate(1170deg)}
+66%{transform:translate(17.12px,-99.5px) rotate(1172.33deg)}
+66.5%{transform:translate(14.56px,-59.36px) rotate(1175.19deg)}
+67%{transform:translate(10.58px,-27.5px) rotate(1179.76deg)}
+67.5%{transform:translate(5.56px,-7.05px) rotate(1191.04deg)}
+68%{transform:translate(0px,0px) rotate(1260deg)}
+68.5%{transform:translate(-4.62px,-4.02px) rotate(1324.28deg)}
+69%{transform:translate(-7.64px,-15.33px) rotate(1341.08deg)}
+69.5%{transform:translate(-9.28px,-32.85px) rotate(1347.08deg)}
+70%{transform:translate(-9.78px,-55.47px) rotate(1350deg)}
+70.5%{transform:translate(-9.36px,-82.08px) rotate(1351.63deg)}
+71%{transform:translate(-8.25px,-111.6px) rotate(1352.57deg)}
+71.5%{transform:translate(-6.68px,-142.92px) rotate(1353.09deg)}
+72%{transform:translate(-4.89px,-174.93px) rotate(1353.28deg)}
+72.5%{transform:translate(-3.09px,-206.55px) rotate(1353.17deg)}
+73%{transform:translate(-1.53px,-236.67px) rotate(1352.71deg)}
+73.5%{transform:translate(-0.42px,-264.18px) rotate(1351.78deg)}
+74%{transform:translate(0px,-288px) rotate(1350deg)} 100%{transform:translate(0px,-288px) rotate(1350deg)} }
+    @keyframes bh-cavity-color { 0%,43%{color:#ffffff} 48%{color:var(--channel-light)} 68%,100%{color:var(--channel)} }
+    @keyframes bh-output-presence { 0%,74%{opacity:0} 80%,92%{opacity:1} 100%{opacity:0} }
+    @keyframes bh-beam-rise { 0%,74%{transform:scaleY(0)} 86%,100%{transform:scaleY(1)} }
+    @keyframes bh-beam-end-rise { 0%,74%{transform:translateY(var(--beam-distance))} 86%,100%{transform:translateY(0)} }
+    @keyframes bh-source { 0%,38%,100%{opacity:.25} 6%,28%{opacity:.85} }
+    @keyframes bh-boundary-absorption { 0%,11%{opacity:0} 18%,20%{opacity:.36} 27%,29%{opacity:.65} 36%,85%{opacity:.85} 100%{opacity:0} }
     @media (prefers-reduced-motion:reduce) { .bh-part { transition:none; } }
     @media print { .bh-motion { animation:none !important; } }
   </style>
-  <ellipse cx="506" cy="516" rx="327" ry="118" fill="url(#bh-shadow)"/>
+  <ellipse cx="506" cy="580" rx="327" ry="68" fill="url(#bh-shadow)"/>
   <g class="bh-substrate" stroke-linejoin="round">
-    <polygon points="220,470 580,578 580,608 220,500" class="bh-substrate-front" fill="url(#bh-substrate-front)" stroke="#627c97" stroke-width="1.1"/>
-    <polygon points="790,458 580,578 580,608 790,488" class="bh-substrate-side" fill="url(#bh-substrate-side)" stroke="#536d89" stroke-width="1.1"/>
-    <polygon points="430,350 790,458 580,578 220,470" class="bh-substrate-top" fill="url(#bh-base)" stroke="#8aa2ba" stroke-width="1.2"/>
-    <polygon points="220,476 580,584 580,586 220,478" fill="#a3b7c8" fill-opacity=".33"/>
-    <polygon points="790,464 580,584 580,586 790,466" fill="#8ca2b9" fill-opacity=".25"/>
-  </g><g class="bh-part bh-mirrors"><polygon points="432,356.2 504,377.8 448,409.8 376,388.2" fill="#ff537c" fill-opacity=".1" stroke="#ff537c" stroke-opacity=".32" stroke-width=".75"/><use href="#bh-pillar-r" transform="translate(435.4,367.09)"/><use href="#bh-pillar-r" transform="translate(456.1,373.3)"/><use href="#bh-pillar-r" transform="translate(476.8,379.51)"/><use href="#bh-pillar-r" transform="translate(419.3,376.29)"/><use href="#bh-pillar-r" transform="translate(440,382.5)"/><use href="#bh-pillar-r" transform="translate(460.7,388.71)"/><use href="#bh-pillar-r" transform="translate(403.2,385.49)"/><use href="#bh-pillar-r" transform="translate(423.9,391.7)"/><use href="#bh-pillar-r" transform="translate(444.6,397.91)"/><polygon points="522,383.2 594,404.8 538,436.8 466,415.2" fill="#50efb0" fill-opacity=".1" stroke="#50efb0" stroke-opacity=".32" stroke-width=".75"/><use href="#bh-pillar-g" transform="translate(525.4,394.09)"/><use href="#bh-pillar-g" transform="translate(546.1,400.3)"/><use href="#bh-pillar-g" transform="translate(566.8,406.51)"/><use href="#bh-pillar-g" transform="translate(509.3,403.29)"/><use href="#bh-pillar-g" transform="translate(530,409.5)"/><use href="#bh-pillar-g" transform="translate(550.7,415.71)"/><use href="#bh-pillar-g" transform="translate(493.2,412.49)"/><use href="#bh-pillar-g" transform="translate(513.9,418.7)"/><use href="#bh-pillar-g" transform="translate(534.6,424.91)"/><polygon points="612,410.2 684,431.8 628,463.8 556,442.2" fill="#639dff" fill-opacity=".1" stroke="#639dff" stroke-opacity=".32" stroke-width=".75"/><use href="#bh-pillar-b" transform="translate(615.4,421.09)"/><use href="#bh-pillar-b" transform="translate(636.1,427.3)"/><use href="#bh-pillar-b" transform="translate(656.8,433.51)"/><use href="#bh-pillar-b" transform="translate(599.3,430.29)"/><use href="#bh-pillar-b" transform="translate(620,436.5)"/><use href="#bh-pillar-b" transform="translate(640.7,442.71)"/><use href="#bh-pillar-b" transform="translate(583.2,439.49)"/><use href="#bh-pillar-b" transform="translate(603.9,445.7)"/><use href="#bh-pillar-b" transform="translate(624.6,451.91)"/><polygon points="702,437.2 774,458.8 718,490.8 646,469.2" fill="#50efb0" fill-opacity=".1" stroke="#50efb0" stroke-opacity=".32" stroke-width=".75"/><use href="#bh-pillar-g" transform="translate(705.4,448.09)"/><use href="#bh-pillar-g" transform="translate(726.1,454.3)"/><use href="#bh-pillar-g" transform="translate(746.8,460.51)"/><use href="#bh-pillar-g" transform="translate(689.3,457.29)"/><use href="#bh-pillar-g" transform="translate(710,463.5)"/><use href="#bh-pillar-g" transform="translate(730.7,469.71)"/><use href="#bh-pillar-g" transform="translate(673.2,466.49)"/><use href="#bh-pillar-g" transform="translate(693.9,472.7)"/><use href="#bh-pillar-g" transform="translate(714.6,478.91)"/><polygon points="362,396.2 434,417.8 378,449.8 306,428.2" fill="#639dff" fill-opacity=".1" stroke="#639dff" stroke-opacity=".32" stroke-width=".75"/><use href="#bh-pillar-b" transform="translate(365.4,407.09)"/><use href="#bh-pillar-b" transform="translate(386.1,413.3)"/><use href="#bh-pillar-b" transform="translate(406.8,419.51)"/><use href="#bh-pillar-b" transform="translate(349.3,416.29)"/><use href="#bh-pillar-b" transform="translate(370,422.5)"/><use href="#bh-pillar-b" transform="translate(390.7,428.71)"/><use href="#bh-pillar-b" transform="translate(333.2,425.49)"/><use href="#bh-pillar-b" transform="translate(353.9,431.7)"/><use href="#bh-pillar-b" transform="translate(374.6,437.91)"/><polygon points="452,423.2 524,444.8 468,476.8 396,455.2" fill="#50efb0" fill-opacity=".1" stroke="#50efb0" stroke-opacity=".32" stroke-width=".75"/><use href="#bh-pillar-g" transform="translate(455.4,434.09)"/><use href="#bh-pillar-g" transform="translate(476.1,440.3)"/><use href="#bh-pillar-g" transform="translate(496.8,446.51)"/><use href="#bh-pillar-g" transform="translate(439.3,443.29)"/><use href="#bh-pillar-g" transform="translate(460,449.5)"/><use href="#bh-pillar-g" transform="translate(480.7,455.71)"/><use href="#bh-pillar-g" transform="translate(423.2,452.49)"/><use href="#bh-pillar-g" transform="translate(443.9,458.7)"/><use href="#bh-pillar-g" transform="translate(464.6,464.91)"/><polygon points="542,450.2 614,471.8 558,503.8 486,482.2" fill="#ff537c" fill-opacity=".1" stroke="#ff537c" stroke-opacity=".32" stroke-width=".75"/><use href="#bh-pillar-r" transform="translate(545.4,461.09)"/><use href="#bh-pillar-r" transform="translate(566.1,467.3)"/><use href="#bh-pillar-r" transform="translate(586.8,473.51)"/><use href="#bh-pillar-r" transform="translate(529.3,470.29)"/><use href="#bh-pillar-r" transform="translate(550,476.5)"/><use href="#bh-pillar-r" transform="translate(570.7,482.71)"/><use href="#bh-pillar-r" transform="translate(513.2,479.49)"/><use href="#bh-pillar-r" transform="translate(533.9,485.7)"/><use href="#bh-pillar-r" transform="translate(554.6,491.91)"/><polygon points="632,477.2 704,498.8 648,530.8 576,509.2" fill="#639dff" fill-opacity=".1" stroke="#639dff" stroke-opacity=".32" stroke-width=".75"/><use href="#bh-pillar-b" transform="translate(635.4,488.09)"/><use href="#bh-pillar-b" transform="translate(656.1,494.3)"/><use href="#bh-pillar-b" transform="translate(676.8,500.51)"/><use href="#bh-pillar-b" transform="translate(619.3,497.29)"/><use href="#bh-pillar-b" transform="translate(640,503.5)"/><use href="#bh-pillar-b" transform="translate(660.7,509.71)"/><use href="#bh-pillar-b" transform="translate(603.2,506.49)"/><use href="#bh-pillar-b" transform="translate(623.9,512.7)"/><use href="#bh-pillar-b" transform="translate(644.6,518.91)"/><polygon points="292,436.2 364,457.8 308,489.8 236,468.2" fill="#50efb0" fill-opacity=".1" stroke="#50efb0" stroke-opacity=".32" stroke-width=".75"/><use href="#bh-pillar-g" transform="translate(295.4,447.09)"/><use href="#bh-pillar-g" transform="translate(316.1,453.3)"/><use href="#bh-pillar-g" transform="translate(336.8,459.51)"/><use href="#bh-pillar-g" transform="translate(279.3,456.29)"/><use href="#bh-pillar-g" transform="translate(300,462.5)"/><use href="#bh-pillar-g" transform="translate(320.7,468.71)"/><use href="#bh-pillar-g" transform="translate(263.2,465.49)"/><use href="#bh-pillar-g" transform="translate(283.9,471.7)"/><use href="#bh-pillar-g" transform="translate(304.6,477.91)"/><polygon points="382,463.2 454,484.8 398,516.8 326,495.2" fill="#ff537c" fill-opacity=".1" stroke="#ff537c" stroke-opacity=".32" stroke-width=".75"/><use href="#bh-pillar-r" transform="translate(385.4,474.09)"/><use href="#bh-pillar-r" transform="translate(406.1,480.3)"/><use href="#bh-pillar-r" transform="translate(426.8,486.51)"/><use href="#bh-pillar-r" transform="translate(369.3,483.29)"/><use href="#bh-pillar-r" transform="translate(390,489.5)"/><use href="#bh-pillar-r" transform="translate(410.7,495.71)"/><use href="#bh-pillar-r" transform="translate(353.2,492.49)"/><use href="#bh-pillar-r" transform="translate(373.9,498.7)"/><use href="#bh-pillar-r" transform="translate(394.6,504.91)"/><polygon points="472,490.2 544,511.8 488,543.8 416,522.2" fill="#50efb0" fill-opacity=".1" stroke="#50efb0" stroke-opacity=".32" stroke-width=".75"/><use href="#bh-pillar-g" transform="translate(475.4,501.09)"/><use href="#bh-pillar-g" transform="translate(496.1,507.3)"/><use href="#bh-pillar-g" transform="translate(516.8,513.51)"/><use href="#bh-pillar-g" transform="translate(459.3,510.29)"/><use href="#bh-pillar-g" transform="translate(480,516.5)"/><use href="#bh-pillar-g" transform="translate(500.7,522.71)"/><use href="#bh-pillar-g" transform="translate(443.2,519.49)"/><use href="#bh-pillar-g" transform="translate(463.9,525.7)"/><use href="#bh-pillar-g" transform="translate(484.6,531.91)"/><polygon points="562,517.2 634,538.8 578,570.8 506,549.2" fill="#639dff" fill-opacity=".1" stroke="#639dff" stroke-opacity=".32" stroke-width=".75"/><use href="#bh-pillar-b" transform="translate(565.4,528.09)"/><use href="#bh-pillar-b" transform="translate(586.1,534.3)"/><use href="#bh-pillar-b" transform="translate(606.8,540.51)"/><use href="#bh-pillar-b" transform="translate(549.3,537.29)"/><use href="#bh-pillar-b" transform="translate(570,543.5)"/><use href="#bh-pillar-b" transform="translate(590.7,549.71)"/><use href="#bh-pillar-b" transform="translate(533.2,546.49)"/><use href="#bh-pillar-b" transform="translate(553.9,552.7)"/><use href="#bh-pillar-b" transform="translate(574.6,558.91)"/></g><g class="bh-part bh-absorbers"><g class="bh-boundary-tracks"><polygon points="429.2,346.12 436.4,348.28 220.8,471.48 213.6,469.32" fill="#101c2c"/><polygon points="519.2,373.12 526.4,375.28 310.8,498.48 303.6,496.32" fill="#101c2c"/><polygon points="609.2,400.12 616.4,402.28 400.8,525.48 393.6,523.32" fill="#101c2c"/><polygon points="699.2,427.12 706.4,429.28 490.8,552.48 483.6,550.32" fill="#101c2c"/><polygon points="789.2,454.12 796.4,456.28 580.8,579.48 573.6,577.32" fill="#101c2c"/><polygon points="429.2,346.12 796.4,456.28 790.8,459.48 423.6,349.32" fill="#101c2c"/><polygon points="359.2,386.12 726.4,496.28 720.8,499.48 353.6,389.32" fill="#101c2c"/><polygon points="289.2,426.12 656.4,536.28 650.8,539.48 283.6,429.32" fill="#101c2c"/><polygon points="219.2,466.12 586.4,576.28 580.8,579.48 213.6,469.32" fill="#101c2c"/></g><g class="bh-boundary-units"><use href="#bh-ring-disk" transform="translate(430,348.5)"/><use href="#bh-ring-disk" transform="translate(448,353.9)"/><use href="#bh-ring-disk" transform="translate(416,356.5)"/><use href="#bh-ring-disk" transform="translate(466,359.3)"/><use href="#bh-ring-disk" transform="translate(402,364.5)"/><use href="#bh-ring-disk" transform="translate(484,364.7)"/><use href="#bh-ring-disk" transform="translate(502,370.1)"/><use href="#bh-ring-disk" transform="translate(388,372.5)"/><use href="#bh-ring-disk" transform="translate(520,375.5)"/><use href="#bh-ring-disk" transform="translate(374,380.5)"/><use href="#bh-ring-disk" transform="translate(538,380.9)"/><use href="#bh-ring-disk" transform="translate(506,383.5)"/><use href="#bh-ring-disk" transform="translate(556,386.3)"/><use href="#bh-ring-disk" transform="translate(360,388.5)"/><use href="#bh-ring-disk" transform="translate(492,391.5)"/><use href="#bh-ring-disk" transform="translate(574,391.7)"/><use href="#bh-ring-disk" transform="translate(378,393.9)"/><use href="#bh-ring-disk" transform="translate(346,396.5)"/><use href="#bh-ring-disk" transform="translate(592,397.1)"/><use href="#bh-ring-disk" transform="translate(396,399.3)"/><use href="#bh-ring-disk" transform="translate(478,399.5)"/><use href="#bh-ring-disk" transform="translate(610,402.5)"/><use href="#bh-ring-disk" transform="translate(332,404.5)"/><use href="#bh-ring-disk" transform="translate(414,404.7)"/><use href="#bh-ring-disk" transform="translate(464,407.5)"/><use href="#bh-ring-disk" transform="translate(628,407.9)"/><use href="#bh-ring-disk" transform="translate(432,410.1)"/><use href="#bh-ring-disk" transform="translate(596,410.5)"/><use href="#bh-ring-disk" transform="translate(318,412.5)"/><use href="#bh-ring-disk" transform="translate(646,413.3)"/><use href="#bh-ring-disk" transform="translate(450,415.5)"/><use href="#bh-ring-disk" transform="translate(582,418.5)"/><use href="#bh-ring-disk" transform="translate(664,418.7)"/><use href="#bh-ring-disk" transform="translate(304,420.5)"/><use href="#bh-ring-disk" transform="translate(468,420.9)"/><use href="#bh-ring-disk" transform="translate(436,423.5)"/><use href="#bh-ring-disk" transform="translate(682,424.1)"/><use href="#bh-ring-disk" transform="translate(486,426.3)"/><use href="#bh-ring-disk" transform="translate(568,426.5)"/><use href="#bh-ring-disk" transform="translate(290,428.5)"/><use href="#bh-ring-disk" transform="translate(700,429.5)"/><use href="#bh-ring-disk" transform="translate(422,431.5)"/><use href="#bh-ring-disk" transform="translate(504,431.7)"/><use href="#bh-ring-disk" transform="translate(308,433.9)"/><use href="#bh-ring-disk" transform="translate(554,434.5)"/><use href="#bh-ring-disk" transform="translate(718,434.9)"/><use href="#bh-ring-disk" transform="translate(276,436.5)"/><use href="#bh-ring-disk" transform="translate(522,437.1)"/><use href="#bh-ring-disk" transform="translate(686,437.5)"/><use href="#bh-ring-disk" transform="translate(326,439.3)"/><use href="#bh-ring-disk" transform="translate(408,439.5)"/><use href="#bh-ring-disk" transform="translate(736,440.3)"/><use href="#bh-ring-disk" transform="translate(540,442.5)"/><use href="#bh-ring-disk" transform="translate(262,444.5)"/><use href="#bh-ring-disk" transform="translate(344,444.7)"/><use href="#bh-ring-disk" transform="translate(672,445.5)"/><use href="#bh-ring-disk" transform="translate(754,445.7)"/><use href="#bh-ring-disk" transform="translate(394,447.5)"/><use href="#bh-ring-disk" transform="translate(558,447.9)"/><use href="#bh-ring-disk" transform="translate(362,450.1)"/><use href="#bh-ring-disk" transform="translate(526,450.5)"/><use href="#bh-ring-disk" transform="translate(772,451.1)"/><use href="#bh-ring-disk" transform="translate(248,452.5)"/><use href="#bh-ring-disk" transform="translate(576,453.3)"/><use href="#bh-ring-disk" transform="translate(658,453.5)"/><use href="#bh-ring-disk" transform="translate(380,455.5)"/><use href="#bh-ring-disk" transform="translate(790,456.5)"/><use href="#bh-ring-disk" transform="translate(512,458.5)"/><use href="#bh-ring-disk" transform="translate(594,458.7)"/><use href="#bh-ring-disk" transform="translate(234,460.5)"/><use href="#bh-ring-disk" transform="translate(398,460.9)"/><use href="#bh-ring-disk" transform="translate(644,461.5)"/><use href="#bh-ring-disk" transform="translate(366,463.5)"/><use href="#bh-ring-disk" transform="translate(612,464.1)"/><use href="#bh-ring-disk" transform="translate(776,464.5)"/><use href="#bh-ring-disk" transform="translate(416,466.3)"/><use href="#bh-ring-disk" transform="translate(498,466.5)"/><use href="#bh-ring-disk" transform="translate(220,468.5)"/><use href="#bh-ring-disk" transform="translate(630,469.5)"/><use href="#bh-ring-disk" transform="translate(352,471.5)"/><use href="#bh-ring-disk" transform="translate(434,471.7)"/><use href="#bh-ring-disk" transform="translate(762,472.5)"/><use href="#bh-ring-disk" transform="translate(238,473.9)"/><use href="#bh-ring-disk" transform="translate(484,474.5)"/><use href="#bh-ring-disk" transform="translate(648,474.9)"/><use href="#bh-ring-disk" transform="translate(452,477.1)"/><use href="#bh-ring-disk" transform="translate(616,477.5)"/><use href="#bh-ring-disk" transform="translate(256,479.3)"/><use href="#bh-ring-disk" transform="translate(338,479.5)"/><use href="#bh-ring-disk" transform="translate(666,480.3)"/><use href="#bh-ring-disk" transform="translate(748,480.5)"/><use href="#bh-ring-disk" transform="translate(470,482.5)"/><use href="#bh-ring-disk" transform="translate(274,484.7)"/><use href="#bh-ring-disk" transform="translate(602,485.5)"/><use href="#bh-ring-disk" transform="translate(684,485.7)"/><use href="#bh-ring-disk" transform="translate(324,487.5)"/><use href="#bh-ring-disk" transform="translate(488,487.9)"/><use href="#bh-ring-disk" transform="translate(734,488.5)"/><use href="#bh-ring-disk" transform="translate(292,490.1)"/><use href="#bh-ring-disk" transform="translate(456,490.5)"/><use href="#bh-ring-disk" transform="translate(702,491.1)"/><use href="#bh-ring-disk" transform="translate(506,493.3)"/><use href="#bh-ring-disk" transform="translate(588,493.5)"/><use href="#bh-ring-disk" transform="translate(310,495.5)"/><use href="#bh-ring-disk" transform="translate(720,496.5)"/><use href="#bh-ring-disk" transform="translate(442,498.5)"/><use href="#bh-ring-disk" transform="translate(524,498.7)"/><use href="#bh-ring-disk" transform="translate(328,500.9)"/><use href="#bh-ring-disk" transform="translate(574,501.5)"/><use href="#bh-ring-disk" transform="translate(542,504.1)"/><use href="#bh-ring-disk" transform="translate(706,504.5)"/><use href="#bh-ring-disk" transform="translate(346,506.3)"/><use href="#bh-ring-disk" transform="translate(428,506.5)"/><use href="#bh-ring-disk" transform="translate(560,509.5)"/><use href="#bh-ring-disk" transform="translate(364,511.7)"/><use href="#bh-ring-disk" transform="translate(692,512.5)"/><use href="#bh-ring-disk" transform="translate(414,514.5)"/><use href="#bh-ring-disk" transform="translate(578,514.9)"/><use href="#bh-ring-disk" transform="translate(382,517.1)"/><use href="#bh-ring-disk" transform="translate(546,517.5)"/><use href="#bh-ring-disk" transform="translate(596,520.3)"/><use href="#bh-ring-disk" transform="translate(678,520.5)"/><use href="#bh-ring-disk" transform="translate(400,522.5)"/><use href="#bh-ring-disk" transform="translate(532,525.5)"/><use href="#bh-ring-disk" transform="translate(614,525.7)"/><use href="#bh-ring-disk" transform="translate(418,527.9)"/><use href="#bh-ring-disk" transform="translate(664,528.5)"/><use href="#bh-ring-disk" transform="translate(632,531.1)"/><use href="#bh-ring-disk" transform="translate(436,533.3)"/><use href="#bh-ring-disk" transform="translate(518,533.5)"/><use href="#bh-ring-disk" transform="translate(650,536.5)"/><use href="#bh-ring-disk" transform="translate(454,538.7)"/><use href="#bh-ring-disk" transform="translate(504,541.5)"/><use href="#bh-ring-disk" transform="translate(472,544.1)"/><use href="#bh-ring-disk" transform="translate(636,544.5)"/><use href="#bh-ring-disk" transform="translate(490,549.5)"/><use href="#bh-ring-disk" transform="translate(622,552.5)"/><use href="#bh-ring-disk" transform="translate(508,554.9)"/><use href="#bh-ring-disk" transform="translate(526,560.3)"/><use href="#bh-ring-disk" transform="translate(608,560.5)"/><use href="#bh-ring-disk" transform="translate(544,565.7)"/><use href="#bh-ring-disk" transform="translate(594,568.5)"/><use href="#bh-ring-disk" transform="translate(562,571.1)"/><use href="#bh-ring-disk" transform="translate(580,576.5)"/></g></g><g class="bh-part bh-oled" stroke-linejoin="round"><polygon points="220,321 580,429 580,420 220,312" fill="#7fb5dd" fill-opacity=".18" stroke="#7fb5dd" stroke-opacity=".4"/><polygon points="790,309 580,429 580,420 790,300" fill="#7fb5dd" fill-opacity=".13" stroke="#7fb5dd" stroke-opacity=".35"/><polygon points="430,192 790,300 580,420 220,312" class="bh-el-layer" data-plane="154" fill="#7fb5dd" fill-opacity=".24" stroke="#7fb5dd" stroke-opacity=".65" stroke-width="1.1"/><g class="bh-motion bh-el-glow"><polygon points="430,191.8 790,299.8 580,419.8 220,311.8" fill="#f7f7ff" fill-opacity=".1"/></g><polygon points="220,301 580,409 580,400 220,292" fill="#a8a0de" fill-opacity=".18" stroke="#a8a0de" stroke-opacity=".4"/><polygon points="790,289 580,409 580,400 790,280" fill="#a8a0de" fill-opacity=".13" stroke="#a8a0de" stroke-opacity=".35"/><polygon points="430,172 790,280 580,400 220,292" class="bh-el-layer" data-plane="174" fill="#a8a0de" fill-opacity=".24" stroke="#a8a0de" stroke-opacity=".65" stroke-width="1.1"/><g class="bh-motion bh-el-glow"><polygon points="430,171.8 790,279.8 580,399.8 220,291.8" fill="#f7f7ff" fill-opacity=".1"/></g></g><g class="bh-part bh-main-light"><g class="bh-motion bh-wavefront" data-front="0" data-start-plane="154" data-end-plane="12" style="--wave-distance:142px;--wave-rest:42px;animation-delay:0s" fill="none" stroke-linecap="round"><path class="bh-wave-glow" d="M412.6,209.08 C427,205.4 442.3,209.99 456.7,222.31 C471.1,234.63 486.4,239.22 500.8,235.54 C515.2,231.86 530.5,236.45 544.9,248.77 C559.3,261.09 574.6,265.68 589,262 C603.4,258.32 618.7,262.91 633.1,275.23 C647.5,287.55 662.8,292.14 677.2,288.46 C691.6,284.78 706.9,289.37 721.3,301.69 C735.7,314.01 751,318.6 765.4,314.92" stroke="url(#bh-wave-ink)" stroke-width="13" stroke-opacity=".45" filter="url(#bh-wave-softness)"/>
-        <path class="bh-wave-ribbon" d="M412.6,209.08 C427,205.4 442.3,209.99 456.7,222.31 C471.1,234.63 486.4,239.22 500.8,235.54 C515.2,231.86 530.5,236.45 544.9,248.77 C559.3,261.09 574.6,265.68 589,262 C603.4,258.32 618.7,262.91 633.1,275.23 C647.5,287.55 662.8,292.14 677.2,288.46 C691.6,284.78 706.9,289.37 721.3,301.69 C735.7,314.01 751,318.6 765.4,314.92" stroke="url(#bh-wave-ink)" stroke-width="5.5" stroke-opacity=".78"/>
-        <path class="bh-wave-crest" d="M412.6,209.08 C427,205.4 442.3,209.99 456.7,222.31 C471.1,234.63 486.4,239.22 500.8,235.54 C515.2,231.86 530.5,236.45 544.9,248.77 C559.3,261.09 574.6,265.68 589,262 C603.4,258.32 618.7,262.91 633.1,275.23 C647.5,287.55 662.8,292.14 677.2,288.46 C691.6,284.78 706.9,289.37 721.3,301.69 C735.7,314.01 751,318.6 765.4,314.92" stroke="url(#bh-wave-ink)" stroke-width="1.8"/><path class="bh-wave-glow" d="M356.6,241.08 C371,253.4 386.3,257.99 400.7,254.31 C415.1,250.63 430.4,255.22 444.8,267.54 C459.2,279.86 474.5,284.45 488.9,280.77 C503.3,277.09 518.6,281.68 533,294 C547.4,306.32 562.7,310.91 577.1,307.23 C591.5,303.55 606.8,308.14 621.2,320.46 C635.6,332.78 650.9,337.37 665.3,333.69 C679.7,330.01 695,334.6 709.4,346.92" stroke="url(#bh-wave-ink)" stroke-width="13" stroke-opacity=".45" filter="url(#bh-wave-softness)"/>
-        <path class="bh-wave-ribbon" d="M356.6,241.08 C371,253.4 386.3,257.99 400.7,254.31 C415.1,250.63 430.4,255.22 444.8,267.54 C459.2,279.86 474.5,284.45 488.9,280.77 C503.3,277.09 518.6,281.68 533,294 C547.4,306.32 562.7,310.91 577.1,307.23 C591.5,303.55 606.8,308.14 621.2,320.46 C635.6,332.78 650.9,337.37 665.3,333.69 C679.7,330.01 695,334.6 709.4,346.92" stroke="url(#bh-wave-ink)" stroke-width="5.5" stroke-opacity=".78"/>
-        <path class="bh-wave-crest" d="M356.6,241.08 C371,253.4 386.3,257.99 400.7,254.31 C415.1,250.63 430.4,255.22 444.8,267.54 C459.2,279.86 474.5,284.45 488.9,280.77 C503.3,277.09 518.6,281.68 533,294 C547.4,306.32 562.7,310.91 577.1,307.23 C591.5,303.55 606.8,308.14 621.2,320.46 C635.6,332.78 650.9,337.37 665.3,333.69 C679.7,330.01 695,334.6 709.4,346.92" stroke="url(#bh-wave-ink)" stroke-width="1.8"/><path class="bh-wave-glow" d="M300.6,273.08 C315,269.4 330.3,273.99 344.7,286.31 C359.1,298.63 374.4,303.22 388.8,299.54 C403.2,295.86 418.5,300.45 432.9,312.77 C447.3,325.09 462.6,329.68 477,326 C491.4,322.32 506.7,326.91 521.1,339.23 C535.5,351.55 550.8,356.14 565.2,352.46 C579.6,348.78 594.9,353.37 609.3,365.69 C623.7,378.01 639,382.6 653.4,378.92" stroke="url(#bh-wave-ink)" stroke-width="13" stroke-opacity=".45" filter="url(#bh-wave-softness)"/>
-        <path class="bh-wave-ribbon" d="M300.6,273.08 C315,269.4 330.3,273.99 344.7,286.31 C359.1,298.63 374.4,303.22 388.8,299.54 C403.2,295.86 418.5,300.45 432.9,312.77 C447.3,325.09 462.6,329.68 477,326 C491.4,322.32 506.7,326.91 521.1,339.23 C535.5,351.55 550.8,356.14 565.2,352.46 C579.6,348.78 594.9,353.37 609.3,365.69 C623.7,378.01 639,382.6 653.4,378.92" stroke="url(#bh-wave-ink)" stroke-width="5.5" stroke-opacity=".78"/>
-        <path class="bh-wave-crest" d="M300.6,273.08 C315,269.4 330.3,273.99 344.7,286.31 C359.1,298.63 374.4,303.22 388.8,299.54 C403.2,295.86 418.5,300.45 432.9,312.77 C447.3,325.09 462.6,329.68 477,326 C491.4,322.32 506.7,326.91 521.1,339.23 C535.5,351.55 550.8,356.14 565.2,352.46 C579.6,348.78 594.9,353.37 609.3,365.69 C623.7,378.01 639,382.6 653.4,378.92" stroke="url(#bh-wave-ink)" stroke-width="1.8"/><path class="bh-wave-glow" d="M244.6,305.08 C259,317.4 274.3,321.99 288.7,318.31 C303.1,314.63 318.4,319.22 332.8,331.54 C347.2,343.86 362.5,348.45 376.9,344.77 C391.3,341.09 406.6,345.68 421,358 C435.4,370.32 450.7,374.91 465.1,371.23 C479.5,367.55 494.8,372.14 509.2,384.46 C523.6,396.78 538.9,401.37 553.3,397.69 C567.7,394.01 583,398.6 597.4,410.92" stroke="url(#bh-wave-ink)" stroke-width="13" stroke-opacity=".45" filter="url(#bh-wave-softness)"/>
-        <path class="bh-wave-ribbon" d="M244.6,305.08 C259,317.4 274.3,321.99 288.7,318.31 C303.1,314.63 318.4,319.22 332.8,331.54 C347.2,343.86 362.5,348.45 376.9,344.77 C391.3,341.09 406.6,345.68 421,358 C435.4,370.32 450.7,374.91 465.1,371.23 C479.5,367.55 494.8,372.14 509.2,384.46 C523.6,396.78 538.9,401.37 553.3,397.69 C567.7,394.01 583,398.6 597.4,410.92" stroke="url(#bh-wave-ink)" stroke-width="5.5" stroke-opacity=".78"/>
-        <path class="bh-wave-crest" d="M244.6,305.08 C259,317.4 274.3,321.99 288.7,318.31 C303.1,314.63 318.4,319.22 332.8,331.54 C347.2,343.86 362.5,348.45 376.9,344.77 C391.3,341.09 406.6,345.68 421,358 C435.4,370.32 450.7,374.91 465.1,371.23 C479.5,367.55 494.8,372.14 509.2,384.46 C523.6,396.78 538.9,401.37 553.3,397.69 C567.7,394.01 583,398.6 597.4,410.92" stroke="url(#bh-wave-ink)" stroke-width="1.8"/></g><g class="bh-motion bh-wavefront" data-front="1" data-start-plane="154" data-end-plane="12" style="--wave-distance:142px;--wave-rest:76px;animation-delay:0.12s" fill="none" stroke-linecap="round"><path class="bh-wave-glow" d="M412.6,209.08 C427,205.4 442.3,209.99 456.7,222.31 C471.1,234.63 486.4,239.22 500.8,235.54 C515.2,231.86 530.5,236.45 544.9,248.77 C559.3,261.09 574.6,265.68 589,262 C603.4,258.32 618.7,262.91 633.1,275.23 C647.5,287.55 662.8,292.14 677.2,288.46 C691.6,284.78 706.9,289.37 721.3,301.69 C735.7,314.01 751,318.6 765.4,314.92" stroke="url(#bh-wave-ink)" stroke-width="13" stroke-opacity=".45" filter="url(#bh-wave-softness)"/>
-        <path class="bh-wave-ribbon" d="M412.6,209.08 C427,205.4 442.3,209.99 456.7,222.31 C471.1,234.63 486.4,239.22 500.8,235.54 C515.2,231.86 530.5,236.45 544.9,248.77 C559.3,261.09 574.6,265.68 589,262 C603.4,258.32 618.7,262.91 633.1,275.23 C647.5,287.55 662.8,292.14 677.2,288.46 C691.6,284.78 706.9,289.37 721.3,301.69 C735.7,314.01 751,318.6 765.4,314.92" stroke="url(#bh-wave-ink)" stroke-width="5.5" stroke-opacity=".78"/>
-        <path class="bh-wave-crest" d="M412.6,209.08 C427,205.4 442.3,209.99 456.7,222.31 C471.1,234.63 486.4,239.22 500.8,235.54 C515.2,231.86 530.5,236.45 544.9,248.77 C559.3,261.09 574.6,265.68 589,262 C603.4,258.32 618.7,262.91 633.1,275.23 C647.5,287.55 662.8,292.14 677.2,288.46 C691.6,284.78 706.9,289.37 721.3,301.69 C735.7,314.01 751,318.6 765.4,314.92" stroke="url(#bh-wave-ink)" stroke-width="1.8"/><path class="bh-wave-glow" d="M356.6,241.08 C371,253.4 386.3,257.99 400.7,254.31 C415.1,250.63 430.4,255.22 444.8,267.54 C459.2,279.86 474.5,284.45 488.9,280.77 C503.3,277.09 518.6,281.68 533,294 C547.4,306.32 562.7,310.91 577.1,307.23 C591.5,303.55 606.8,308.14 621.2,320.46 C635.6,332.78 650.9,337.37 665.3,333.69 C679.7,330.01 695,334.6 709.4,346.92" stroke="url(#bh-wave-ink)" stroke-width="13" stroke-opacity=".45" filter="url(#bh-wave-softness)"/>
-        <path class="bh-wave-ribbon" d="M356.6,241.08 C371,253.4 386.3,257.99 400.7,254.31 C415.1,250.63 430.4,255.22 444.8,267.54 C459.2,279.86 474.5,284.45 488.9,280.77 C503.3,277.09 518.6,281.68 533,294 C547.4,306.32 562.7,310.91 577.1,307.23 C591.5,303.55 606.8,308.14 621.2,320.46 C635.6,332.78 650.9,337.37 665.3,333.69 C679.7,330.01 695,334.6 709.4,346.92" stroke="url(#bh-wave-ink)" stroke-width="5.5" stroke-opacity=".78"/>
-        <path class="bh-wave-crest" d="M356.6,241.08 C371,253.4 386.3,257.99 400.7,254.31 C415.1,250.63 430.4,255.22 444.8,267.54 C459.2,279.86 474.5,284.45 488.9,280.77 C503.3,277.09 518.6,281.68 533,294 C547.4,306.32 562.7,310.91 577.1,307.23 C591.5,303.55 606.8,308.14 621.2,320.46 C635.6,332.78 650.9,337.37 665.3,333.69 C679.7,330.01 695,334.6 709.4,346.92" stroke="url(#bh-wave-ink)" stroke-width="1.8"/><path class="bh-wave-glow" d="M300.6,273.08 C315,269.4 330.3,273.99 344.7,286.31 C359.1,298.63 374.4,303.22 388.8,299.54 C403.2,295.86 418.5,300.45 432.9,312.77 C447.3,325.09 462.6,329.68 477,326 C491.4,322.32 506.7,326.91 521.1,339.23 C535.5,351.55 550.8,356.14 565.2,352.46 C579.6,348.78 594.9,353.37 609.3,365.69 C623.7,378.01 639,382.6 653.4,378.92" stroke="url(#bh-wave-ink)" stroke-width="13" stroke-opacity=".45" filter="url(#bh-wave-softness)"/>
-        <path class="bh-wave-ribbon" d="M300.6,273.08 C315,269.4 330.3,273.99 344.7,286.31 C359.1,298.63 374.4,303.22 388.8,299.54 C403.2,295.86 418.5,300.45 432.9,312.77 C447.3,325.09 462.6,329.68 477,326 C491.4,322.32 506.7,326.91 521.1,339.23 C535.5,351.55 550.8,356.14 565.2,352.46 C579.6,348.78 594.9,353.37 609.3,365.69 C623.7,378.01 639,382.6 653.4,378.92" stroke="url(#bh-wave-ink)" stroke-width="5.5" stroke-opacity=".78"/>
-        <path class="bh-wave-crest" d="M300.6,273.08 C315,269.4 330.3,273.99 344.7,286.31 C359.1,298.63 374.4,303.22 388.8,299.54 C403.2,295.86 418.5,300.45 432.9,312.77 C447.3,325.09 462.6,329.68 477,326 C491.4,322.32 506.7,326.91 521.1,339.23 C535.5,351.55 550.8,356.14 565.2,352.46 C579.6,348.78 594.9,353.37 609.3,365.69 C623.7,378.01 639,382.6 653.4,378.92" stroke="url(#bh-wave-ink)" stroke-width="1.8"/><path class="bh-wave-glow" d="M244.6,305.08 C259,317.4 274.3,321.99 288.7,318.31 C303.1,314.63 318.4,319.22 332.8,331.54 C347.2,343.86 362.5,348.45 376.9,344.77 C391.3,341.09 406.6,345.68 421,358 C435.4,370.32 450.7,374.91 465.1,371.23 C479.5,367.55 494.8,372.14 509.2,384.46 C523.6,396.78 538.9,401.37 553.3,397.69 C567.7,394.01 583,398.6 597.4,410.92" stroke="url(#bh-wave-ink)" stroke-width="13" stroke-opacity=".45" filter="url(#bh-wave-softness)"/>
-        <path class="bh-wave-ribbon" d="M244.6,305.08 C259,317.4 274.3,321.99 288.7,318.31 C303.1,314.63 318.4,319.22 332.8,331.54 C347.2,343.86 362.5,348.45 376.9,344.77 C391.3,341.09 406.6,345.68 421,358 C435.4,370.32 450.7,374.91 465.1,371.23 C479.5,367.55 494.8,372.14 509.2,384.46 C523.6,396.78 538.9,401.37 553.3,397.69 C567.7,394.01 583,398.6 597.4,410.92" stroke="url(#bh-wave-ink)" stroke-width="5.5" stroke-opacity=".78"/>
-        <path class="bh-wave-crest" d="M244.6,305.08 C259,317.4 274.3,321.99 288.7,318.31 C303.1,314.63 318.4,319.22 332.8,331.54 C347.2,343.86 362.5,348.45 376.9,344.77 C391.3,341.09 406.6,345.68 421,358 C435.4,370.32 450.7,374.91 465.1,371.23 C479.5,367.55 494.8,372.14 509.2,384.46 C523.6,396.78 538.9,401.37 553.3,397.69 C567.7,394.01 583,398.6 597.4,410.92" stroke="url(#bh-wave-ink)" stroke-width="1.8"/></g><g class="bh-motion bh-wavefront" data-front="2" data-start-plane="154" data-end-plane="12" style="--wave-distance:142px;--wave-rest:110px;animation-delay:0.24s" fill="none" stroke-linecap="round"><path class="bh-wave-glow" d="M412.6,209.08 C427,205.4 442.3,209.99 456.7,222.31 C471.1,234.63 486.4,239.22 500.8,235.54 C515.2,231.86 530.5,236.45 544.9,248.77 C559.3,261.09 574.6,265.68 589,262 C603.4,258.32 618.7,262.91 633.1,275.23 C647.5,287.55 662.8,292.14 677.2,288.46 C691.6,284.78 706.9,289.37 721.3,301.69 C735.7,314.01 751,318.6 765.4,314.92" stroke="url(#bh-wave-ink)" stroke-width="13" stroke-opacity=".45" filter="url(#bh-wave-softness)"/>
-        <path class="bh-wave-ribbon" d="M412.6,209.08 C427,205.4 442.3,209.99 456.7,222.31 C471.1,234.63 486.4,239.22 500.8,235.54 C515.2,231.86 530.5,236.45 544.9,248.77 C559.3,261.09 574.6,265.68 589,262 C603.4,258.32 618.7,262.91 633.1,275.23 C647.5,287.55 662.8,292.14 677.2,288.46 C691.6,284.78 706.9,289.37 721.3,301.69 C735.7,314.01 751,318.6 765.4,314.92" stroke="url(#bh-wave-ink)" stroke-width="5.5" stroke-opacity=".78"/>
-        <path class="bh-wave-crest" d="M412.6,209.08 C427,205.4 442.3,209.99 456.7,222.31 C471.1,234.63 486.4,239.22 500.8,235.54 C515.2,231.86 530.5,236.45 544.9,248.77 C559.3,261.09 574.6,265.68 589,262 C603.4,258.32 618.7,262.91 633.1,275.23 C647.5,287.55 662.8,292.14 677.2,288.46 C691.6,284.78 706.9,289.37 721.3,301.69 C735.7,314.01 751,318.6 765.4,314.92" stroke="url(#bh-wave-ink)" stroke-width="1.8"/><path class="bh-wave-glow" d="M356.6,241.08 C371,253.4 386.3,257.99 400.7,254.31 C415.1,250.63 430.4,255.22 444.8,267.54 C459.2,279.86 474.5,284.45 488.9,280.77 C503.3,277.09 518.6,281.68 533,294 C547.4,306.32 562.7,310.91 577.1,307.23 C591.5,303.55 606.8,308.14 621.2,320.46 C635.6,332.78 650.9,337.37 665.3,333.69 C679.7,330.01 695,334.6 709.4,346.92" stroke="url(#bh-wave-ink)" stroke-width="13" stroke-opacity=".45" filter="url(#bh-wave-softness)"/>
-        <path class="bh-wave-ribbon" d="M356.6,241.08 C371,253.4 386.3,257.99 400.7,254.31 C415.1,250.63 430.4,255.22 444.8,267.54 C459.2,279.86 474.5,284.45 488.9,280.77 C503.3,277.09 518.6,281.68 533,294 C547.4,306.32 562.7,310.91 577.1,307.23 C591.5,303.55 606.8,308.14 621.2,320.46 C635.6,332.78 650.9,337.37 665.3,333.69 C679.7,330.01 695,334.6 709.4,346.92" stroke="url(#bh-wave-ink)" stroke-width="5.5" stroke-opacity=".78"/>
-        <path class="bh-wave-crest" d="M356.6,241.08 C371,253.4 386.3,257.99 400.7,254.31 C415.1,250.63 430.4,255.22 444.8,267.54 C459.2,279.86 474.5,284.45 488.9,280.77 C503.3,277.09 518.6,281.68 533,294 C547.4,306.32 562.7,310.91 577.1,307.23 C591.5,303.55 606.8,308.14 621.2,320.46 C635.6,332.78 650.9,337.37 665.3,333.69 C679.7,330.01 695,334.6 709.4,346.92" stroke="url(#bh-wave-ink)" stroke-width="1.8"/><path class="bh-wave-glow" d="M300.6,273.08 C315,269.4 330.3,273.99 344.7,286.31 C359.1,298.63 374.4,303.22 388.8,299.54 C403.2,295.86 418.5,300.45 432.9,312.77 C447.3,325.09 462.6,329.68 477,326 C491.4,322.32 506.7,326.91 521.1,339.23 C535.5,351.55 550.8,356.14 565.2,352.46 C579.6,348.78 594.9,353.37 609.3,365.69 C623.7,378.01 639,382.6 653.4,378.92" stroke="url(#bh-wave-ink)" stroke-width="13" stroke-opacity=".45" filter="url(#bh-wave-softness)"/>
-        <path class="bh-wave-ribbon" d="M300.6,273.08 C315,269.4 330.3,273.99 344.7,286.31 C359.1,298.63 374.4,303.22 388.8,299.54 C403.2,295.86 418.5,300.45 432.9,312.77 C447.3,325.09 462.6,329.68 477,326 C491.4,322.32 506.7,326.91 521.1,339.23 C535.5,351.55 550.8,356.14 565.2,352.46 C579.6,348.78 594.9,353.37 609.3,365.69 C623.7,378.01 639,382.6 653.4,378.92" stroke="url(#bh-wave-ink)" stroke-width="5.5" stroke-opacity=".78"/>
-        <path class="bh-wave-crest" d="M300.6,273.08 C315,269.4 330.3,273.99 344.7,286.31 C359.1,298.63 374.4,303.22 388.8,299.54 C403.2,295.86 418.5,300.45 432.9,312.77 C447.3,325.09 462.6,329.68 477,326 C491.4,322.32 506.7,326.91 521.1,339.23 C535.5,351.55 550.8,356.14 565.2,352.46 C579.6,348.78 594.9,353.37 609.3,365.69 C623.7,378.01 639,382.6 653.4,378.92" stroke="url(#bh-wave-ink)" stroke-width="1.8"/><path class="bh-wave-glow" d="M244.6,305.08 C259,317.4 274.3,321.99 288.7,318.31 C303.1,314.63 318.4,319.22 332.8,331.54 C347.2,343.86 362.5,348.45 376.9,344.77 C391.3,341.09 406.6,345.68 421,358 C435.4,370.32 450.7,374.91 465.1,371.23 C479.5,367.55 494.8,372.14 509.2,384.46 C523.6,396.78 538.9,401.37 553.3,397.69 C567.7,394.01 583,398.6 597.4,410.92" stroke="url(#bh-wave-ink)" stroke-width="13" stroke-opacity=".45" filter="url(#bh-wave-softness)"/>
-        <path class="bh-wave-ribbon" d="M244.6,305.08 C259,317.4 274.3,321.99 288.7,318.31 C303.1,314.63 318.4,319.22 332.8,331.54 C347.2,343.86 362.5,348.45 376.9,344.77 C391.3,341.09 406.6,345.68 421,358 C435.4,370.32 450.7,374.91 465.1,371.23 C479.5,367.55 494.8,372.14 509.2,384.46 C523.6,396.78 538.9,401.37 553.3,397.69 C567.7,394.01 583,398.6 597.4,410.92" stroke="url(#bh-wave-ink)" stroke-width="5.5" stroke-opacity=".78"/>
-        <path class="bh-wave-crest" d="M244.6,305.08 C259,317.4 274.3,321.99 288.7,318.31 C303.1,314.63 318.4,319.22 332.8,331.54 C347.2,343.86 362.5,348.45 376.9,344.77 C391.3,341.09 406.6,345.68 421,358 C435.4,370.32 450.7,374.91 465.1,371.23 C479.5,367.55 494.8,372.14 509.2,384.46 C523.6,396.78 538.9,401.37 553.3,397.69 C567.7,394.01 583,398.6 597.4,410.92" stroke="url(#bh-wave-ink)" stroke-width="1.8"/></g><g transform="translate(440,371.5)">
-      <ellipse class="bh-motion bh-reflection" rx="18" ry="7" fill="#ff537c" fill-opacity=".35" stroke="#ff537c" stroke-opacity=".8"/>
-      <g class="bh-motion bh-output" data-cell="0-0" data-channel="r" data-origin="440,371.5" data-tip="440,101.5" style="--output-distance:270px">
-        <g class="bh-motion bh-output-shaft">
-          <path d="M-4,0 L-4,-253 L4,-253 L4,0Z" fill="#ff537c" fill-opacity=".3" filter="url(#bh-beam-glow)"/>
-          <path class="bh-output-core" d="M0,0 L0,-256" stroke="#ff537c" stroke-width="5.5" stroke-linecap="butt" fill="none"/>
-        </g>
-        <path class="bh-motion bh-arrowhead" d="M0,-270 L-8,-253 L8,-253Z" fill="#ff537c"/>
+    <polygon points="220,528 580,600 580,630 220,558" class="bh-substrate-front" fill="url(#bh-substrate-front)" stroke="#627c97" stroke-width="1.1"/>
+    <polygon points="790,522 580,600 580,630 790,552" class="bh-substrate-side" fill="url(#bh-substrate-side)" stroke="#536d89" stroke-width="1.1"/>
+    <polygon points="430,450 790,522 580,600 220,528" class="bh-substrate-top" fill="url(#bh-base)" stroke="#8aa2ba" stroke-width="1.2"/>
+    <polygon points="220,534 580,606 580,608 220,536" fill="#a3b7c8" fill-opacity=".33"/>
+    <polygon points="790,528 580,606 580,608 790,530" fill="#8ca2b9" fill-opacity=".25"/>
+  </g><g class="bh-part bh-mirrors"><polygon points="432,453.9 504,468.3 448,489.1 376,474.7" fill="#ff493d" fill-opacity=".14" stroke="#ff493d" stroke-opacity=".5" stroke-width=".8"/><use href="#bh-pillar-r" transform="translate(435.4,460.88)"/><use href="#bh-pillar-r" transform="translate(456.1,465.02)"/><use href="#bh-pillar-r" transform="translate(476.8,469.16)"/><use href="#bh-pillar-r" transform="translate(419.3,466.86)"/><use href="#bh-pillar-r" transform="translate(440,471)"/><use href="#bh-pillar-r" transform="translate(460.7,475.14)"/><use href="#bh-pillar-r" transform="translate(403.2,472.84)"/><use href="#bh-pillar-r" transform="translate(423.9,476.98)"/><use href="#bh-pillar-r" transform="translate(444.6,481.12)"/><polygon points="522,471.9 594,486.3 538,507.1 466,492.7" fill="#33f590" fill-opacity=".14" stroke="#33f590" stroke-opacity=".5" stroke-width=".8"/><use href="#bh-pillar-g" transform="translate(525.4,478.88)"/><use href="#bh-pillar-g" transform="translate(546.1,483.02)"/><use href="#bh-pillar-g" transform="translate(566.8,487.16)"/><use href="#bh-pillar-g" transform="translate(509.3,484.86)"/><use href="#bh-pillar-g" transform="translate(530,489)"/><use href="#bh-pillar-g" transform="translate(550.7,493.14)"/><use href="#bh-pillar-g" transform="translate(493.2,490.84)"/><use href="#bh-pillar-g" transform="translate(513.9,494.98)"/><use href="#bh-pillar-g" transform="translate(534.6,499.12)"/><polygon points="612,489.9 684,504.3 628,525.1 556,510.7" fill="#ff493d" fill-opacity=".14" stroke="#ff493d" stroke-opacity=".5" stroke-width=".8"/><use href="#bh-pillar-r" transform="translate(615.4,496.88)"/><use href="#bh-pillar-r" transform="translate(636.1,501.02)"/><use href="#bh-pillar-r" transform="translate(656.8,505.16)"/><use href="#bh-pillar-r" transform="translate(599.3,502.86)"/><use href="#bh-pillar-r" transform="translate(620,507)"/><use href="#bh-pillar-r" transform="translate(640.7,511.14)"/><use href="#bh-pillar-r" transform="translate(583.2,508.84)"/><use href="#bh-pillar-r" transform="translate(603.9,512.98)"/><use href="#bh-pillar-r" transform="translate(624.6,517.12)"/><polygon points="702,507.9 774,522.3 718,543.1 646,528.7" fill="#33f590" fill-opacity=".14" stroke="#33f590" stroke-opacity=".5" stroke-width=".8"/><use href="#bh-pillar-g" transform="translate(705.4,514.88)"/><use href="#bh-pillar-g" transform="translate(726.1,519.02)"/><use href="#bh-pillar-g" transform="translate(746.8,523.16)"/><use href="#bh-pillar-g" transform="translate(689.3,520.86)"/><use href="#bh-pillar-g" transform="translate(710,525)"/><use href="#bh-pillar-g" transform="translate(730.7,529.14)"/><use href="#bh-pillar-g" transform="translate(673.2,526.84)"/><use href="#bh-pillar-g" transform="translate(693.9,530.98)"/><use href="#bh-pillar-g" transform="translate(714.6,535.12)"/><polygon points="362,479.9 434,494.3 378,515.1 306,500.7" fill="#33f590" fill-opacity=".14" stroke="#33f590" stroke-opacity=".5" stroke-width=".8"/><use href="#bh-pillar-g" transform="translate(365.4,486.88)"/><use href="#bh-pillar-g" transform="translate(386.1,491.02)"/><use href="#bh-pillar-g" transform="translate(406.8,495.16)"/><use href="#bh-pillar-g" transform="translate(349.3,492.86)"/><use href="#bh-pillar-g" transform="translate(370,497)"/><use href="#bh-pillar-g" transform="translate(390.7,501.14)"/><use href="#bh-pillar-g" transform="translate(333.2,498.84)"/><use href="#bh-pillar-g" transform="translate(353.9,502.98)"/><use href="#bh-pillar-g" transform="translate(374.6,507.12)"/><polygon points="452,497.9 524,512.3 468,533.1 396,518.7" fill="#388dff" fill-opacity=".14" stroke="#388dff" stroke-opacity=".5" stroke-width=".8"/><use href="#bh-pillar-b" transform="translate(455.4,504.88)"/><use href="#bh-pillar-b" transform="translate(476.1,509.02)"/><use href="#bh-pillar-b" transform="translate(496.8,513.16)"/><use href="#bh-pillar-b" transform="translate(439.3,510.86)"/><use href="#bh-pillar-b" transform="translate(460,515)"/><use href="#bh-pillar-b" transform="translate(480.7,519.14)"/><use href="#bh-pillar-b" transform="translate(423.2,516.84)"/><use href="#bh-pillar-b" transform="translate(443.9,520.98)"/><use href="#bh-pillar-b" transform="translate(464.6,525.12)"/><polygon points="542,515.9 614,530.3 558,551.1 486,536.7" fill="#33f590" fill-opacity=".14" stroke="#33f590" stroke-opacity=".5" stroke-width=".8"/><use href="#bh-pillar-g" transform="translate(545.4,522.88)"/><use href="#bh-pillar-g" transform="translate(566.1,527.02)"/><use href="#bh-pillar-g" transform="translate(586.8,531.16)"/><use href="#bh-pillar-g" transform="translate(529.3,528.86)"/><use href="#bh-pillar-g" transform="translate(550,533)"/><use href="#bh-pillar-g" transform="translate(570.7,537.14)"/><use href="#bh-pillar-g" transform="translate(513.2,534.84)"/><use href="#bh-pillar-g" transform="translate(533.9,538.98)"/><use href="#bh-pillar-g" transform="translate(554.6,543.12)"/><polygon points="632,533.9 704,548.3 648,569.1 576,554.7" fill="#388dff" fill-opacity=".14" stroke="#388dff" stroke-opacity=".5" stroke-width=".8"/><use href="#bh-pillar-b" transform="translate(635.4,540.88)"/><use href="#bh-pillar-b" transform="translate(656.1,545.02)"/><use href="#bh-pillar-b" transform="translate(676.8,549.16)"/><use href="#bh-pillar-b" transform="translate(619.3,546.86)"/><use href="#bh-pillar-b" transform="translate(640,551)"/><use href="#bh-pillar-b" transform="translate(660.7,555.14)"/><use href="#bh-pillar-b" transform="translate(603.2,552.84)"/><use href="#bh-pillar-b" transform="translate(623.9,556.98)"/><use href="#bh-pillar-b" transform="translate(644.6,561.12)"/><polygon points="292,505.9 364,520.3 308,541.1 236,526.7" fill="#ff493d" fill-opacity=".14" stroke="#ff493d" stroke-opacity=".5" stroke-width=".8"/><use href="#bh-pillar-r" transform="translate(295.4,512.88)"/><use href="#bh-pillar-r" transform="translate(316.1,517.02)"/><use href="#bh-pillar-r" transform="translate(336.8,521.16)"/><use href="#bh-pillar-r" transform="translate(279.3,518.86)"/><use href="#bh-pillar-r" transform="translate(300,523)"/><use href="#bh-pillar-r" transform="translate(320.7,527.14)"/><use href="#bh-pillar-r" transform="translate(263.2,524.84)"/><use href="#bh-pillar-r" transform="translate(283.9,528.98)"/><use href="#bh-pillar-r" transform="translate(304.6,533.12)"/><polygon points="382,523.9 454,538.3 398,559.1 326,544.7" fill="#33f590" fill-opacity=".14" stroke="#33f590" stroke-opacity=".5" stroke-width=".8"/><use href="#bh-pillar-g" transform="translate(385.4,530.88)"/><use href="#bh-pillar-g" transform="translate(406.1,535.02)"/><use href="#bh-pillar-g" transform="translate(426.8,539.16)"/><use href="#bh-pillar-g" transform="translate(369.3,536.86)"/><use href="#bh-pillar-g" transform="translate(390,541)"/><use href="#bh-pillar-g" transform="translate(410.7,545.14)"/><use href="#bh-pillar-g" transform="translate(353.2,542.84)"/><use href="#bh-pillar-g" transform="translate(373.9,546.98)"/><use href="#bh-pillar-g" transform="translate(394.6,551.12)"/><polygon points="472,541.9 544,556.3 488,577.1 416,562.7" fill="#ff493d" fill-opacity=".14" stroke="#ff493d" stroke-opacity=".5" stroke-width=".8"/><use href="#bh-pillar-r" transform="translate(475.4,548.88)"/><use href="#bh-pillar-r" transform="translate(496.1,553.02)"/><use href="#bh-pillar-r" transform="translate(516.8,557.16)"/><use href="#bh-pillar-r" transform="translate(459.3,554.86)"/><use href="#bh-pillar-r" transform="translate(480,559)"/><use href="#bh-pillar-r" transform="translate(500.7,563.14)"/><use href="#bh-pillar-r" transform="translate(443.2,560.84)"/><use href="#bh-pillar-r" transform="translate(463.9,564.98)"/><use href="#bh-pillar-r" transform="translate(484.6,569.12)"/><polygon points="562,559.9 634,574.3 578,595.1 506,580.7" fill="#33f590" fill-opacity=".14" stroke="#33f590" stroke-opacity=".5" stroke-width=".8"/><use href="#bh-pillar-g" transform="translate(565.4,566.88)"/><use href="#bh-pillar-g" transform="translate(586.1,571.02)"/><use href="#bh-pillar-g" transform="translate(606.8,575.16)"/><use href="#bh-pillar-g" transform="translate(549.3,572.86)"/><use href="#bh-pillar-g" transform="translate(570,577)"/><use href="#bh-pillar-g" transform="translate(590.7,581.14)"/><use href="#bh-pillar-g" transform="translate(533.2,578.84)"/><use href="#bh-pillar-g" transform="translate(553.9,582.98)"/><use href="#bh-pillar-g" transform="translate(574.6,587.12)"/></g><g class="bh-part bh-absorbers"><g class="bh-boundary-tracks"><polygon points="428.5,445.5 442,448.2 221.5,530.1 208,527.4" fill="#0a1422"/><polygon points="518.5,463.5 532,466.2 311.5,548.1 298,545.4" fill="#0a1422"/><polygon points="608.5,481.5 622,484.2 401.5,566.1 388,563.4" fill="#0a1422"/><polygon points="698.5,499.5 712,502.2 491.5,584.1 478,581.4" fill="#0a1422"/><polygon points="788.5,517.5 802,520.2 581.5,602.1 568,599.4" fill="#0a1422"/><polygon points="428.5,445.5 802,520.2 791.5,524.1 418,449.4" fill="#0a1422"/><polygon points="358.5,471.5 732,546.2 721.5,550.1 348,475.4" fill="#0a1422"/><polygon points="288.5,497.5 662,572.2 651.5,576.1 278,501.4" fill="#0a1422"/><polygon points="218.5,523.5 592,598.2 581.5,602.1 208,527.4" fill="#0a1422"/></g><g class="bh-boundary-units"><use href="#bh-ring-disk" transform="translate(430,448.5)"/><use href="#bh-ring-disk" transform="translate(448,452.1)"/><use href="#bh-ring-disk" transform="translate(416,453.7)"/><use href="#bh-ring-disk" transform="translate(466,455.7)"/><use href="#bh-ring-disk" transform="translate(402,458.9)"/><use href="#bh-ring-disk" transform="translate(484,459.3)"/><use href="#bh-ring-disk" transform="translate(502,462.9)"/><use href="#bh-ring-disk" transform="translate(388,464.1)"/><use href="#bh-ring-disk" transform="translate(520,466.5)"/><use href="#bh-ring-disk" transform="translate(374,469.3)"/><use href="#bh-ring-disk" transform="translate(538,470.1)"/><use href="#bh-ring-disk" transform="translate(506,471.7)"/><use href="#bh-ring-disk" transform="translate(556,473.7)"/><use href="#bh-ring-disk" transform="translate(360,474.5)"/><use href="#bh-ring-disk" transform="translate(492,476.9)"/><use href="#bh-ring-disk" transform="translate(574,477.3)"/><use href="#bh-ring-disk" transform="translate(378,478.1)"/><use href="#bh-ring-disk" transform="translate(346,479.7)"/><use href="#bh-ring-disk" transform="translate(592,480.9)"/><use href="#bh-ring-disk" transform="translate(396,481.7)"/><use href="#bh-ring-disk" transform="translate(478,482.1)"/><use href="#bh-ring-disk" transform="translate(610,484.5)"/><use href="#bh-ring-disk" transform="translate(332,484.9)"/><use href="#bh-ring-disk" transform="translate(414,485.3)"/><use href="#bh-ring-disk" transform="translate(464,487.3)"/><use href="#bh-ring-disk" transform="translate(628,488.1)"/><use href="#bh-ring-disk" transform="translate(432,488.9)"/><use href="#bh-ring-disk" transform="translate(596,489.7)"/><use href="#bh-ring-disk" transform="translate(318,490.1)"/><use href="#bh-ring-disk" transform="translate(646,491.7)"/><use href="#bh-ring-disk" transform="translate(450,492.5)"/><use href="#bh-ring-disk" transform="translate(582,494.9)"/><use href="#bh-ring-disk" transform="translate(304,495.3)"/><use href="#bh-ring-disk" transform="translate(664,495.3)"/><use href="#bh-ring-disk" transform="translate(468,496.1)"/><use href="#bh-ring-disk" transform="translate(436,497.7)"/><use href="#bh-ring-disk" transform="translate(682,498.9)"/><use href="#bh-ring-disk" transform="translate(486,499.7)"/><use href="#bh-ring-disk" transform="translate(568,500.1)"/><use href="#bh-ring-disk" transform="translate(290,500.5)"/><use href="#bh-ring-disk" transform="translate(700,502.5)"/><use href="#bh-ring-disk" transform="translate(422,502.9)"/><use href="#bh-ring-disk" transform="translate(504,503.3)"/><use href="#bh-ring-disk" transform="translate(308,504.1)"/><use href="#bh-ring-disk" transform="translate(554,505.3)"/><use href="#bh-ring-disk" transform="translate(276,505.7)"/><use href="#bh-ring-disk" transform="translate(718,506.1)"/><use href="#bh-ring-disk" transform="translate(522,506.9)"/><use href="#bh-ring-disk" transform="translate(686,507.7)"/><use href="#bh-ring-disk" transform="translate(326,507.7)"/><use href="#bh-ring-disk" transform="translate(408,508.1)"/><use href="#bh-ring-disk" transform="translate(736,509.7)"/><use href="#bh-ring-disk" transform="translate(540,510.5)"/><use href="#bh-ring-disk" transform="translate(262,510.9)"/><use href="#bh-ring-disk" transform="translate(344,511.3)"/><use href="#bh-ring-disk" transform="translate(672,512.9)"/><use href="#bh-ring-disk" transform="translate(394,513.3)"/><use href="#bh-ring-disk" transform="translate(754,513.3)"/><use href="#bh-ring-disk" transform="translate(558,514.1)"/><use href="#bh-ring-disk" transform="translate(362,514.9)"/><use href="#bh-ring-disk" transform="translate(526,515.7)"/><use href="#bh-ring-disk" transform="translate(248,516.1)"/><use href="#bh-ring-disk" transform="translate(772,516.9)"/><use href="#bh-ring-disk" transform="translate(576,517.7)"/><use href="#bh-ring-disk" transform="translate(658,518.1)"/><use href="#bh-ring-disk" transform="translate(380,518.5)"/><use href="#bh-ring-disk" transform="translate(790,520.5)"/><use href="#bh-ring-disk" transform="translate(512,520.9)"/><use href="#bh-ring-disk" transform="translate(234,521.3)"/><use href="#bh-ring-disk" transform="translate(594,521.3)"/><use href="#bh-ring-disk" transform="translate(398,522.1)"/><use href="#bh-ring-disk" transform="translate(644,523.3)"/><use href="#bh-ring-disk" transform="translate(366,523.7)"/><use href="#bh-ring-disk" transform="translate(612,524.9)"/><use href="#bh-ring-disk" transform="translate(776,525.7)"/><use href="#bh-ring-disk" transform="translate(416,525.7)"/><use href="#bh-ring-disk" transform="translate(498,526.1)"/><use href="#bh-ring-disk" transform="translate(220,526.5)"/><use href="#bh-ring-disk" transform="translate(630,528.5)"/><use href="#bh-ring-disk" transform="translate(352,528.9)"/><use href="#bh-ring-disk" transform="translate(434,529.3)"/><use href="#bh-ring-disk" transform="translate(238,530.1)"/><use href="#bh-ring-disk" transform="translate(762,530.9)"/><use href="#bh-ring-disk" transform="translate(484,531.3)"/><use href="#bh-ring-disk" transform="translate(648,532.1)"/><use href="#bh-ring-disk" transform="translate(452,532.9)"/><use href="#bh-ring-disk" transform="translate(616,533.7)"/><use href="#bh-ring-disk" transform="translate(256,533.7)"/><use href="#bh-ring-disk" transform="translate(338,534.1)"/><use href="#bh-ring-disk" transform="translate(666,535.7)"/><use href="#bh-ring-disk" transform="translate(748,536.1)"/><use href="#bh-ring-disk" transform="translate(470,536.5)"/><use href="#bh-ring-disk" transform="translate(274,537.3)"/><use href="#bh-ring-disk" transform="translate(602,538.9)"/><use href="#bh-ring-disk" transform="translate(324,539.3)"/><use href="#bh-ring-disk" transform="translate(684,539.3)"/><use href="#bh-ring-disk" transform="translate(488,540.1)"/><use href="#bh-ring-disk" transform="translate(292,540.9)"/><use href="#bh-ring-disk" transform="translate(734,541.3)"/><use href="#bh-ring-disk" transform="translate(456,541.7)"/><use href="#bh-ring-disk" transform="translate(702,542.9)"/><use href="#bh-ring-disk" transform="translate(506,543.7)"/><use href="#bh-ring-disk" transform="translate(588,544.1)"/><use href="#bh-ring-disk" transform="translate(310,544.5)"/><use href="#bh-ring-disk" transform="translate(720,546.5)"/><use href="#bh-ring-disk" transform="translate(442,546.9)"/><use href="#bh-ring-disk" transform="translate(524,547.3)"/><use href="#bh-ring-disk" transform="translate(328,548.1)"/><use href="#bh-ring-disk" transform="translate(574,549.3)"/><use href="#bh-ring-disk" transform="translate(542,550.9)"/><use href="#bh-ring-disk" transform="translate(706,551.7)"/><use href="#bh-ring-disk" transform="translate(346,551.7)"/><use href="#bh-ring-disk" transform="translate(428,552.1)"/><use href="#bh-ring-disk" transform="translate(560,554.5)"/><use href="#bh-ring-disk" transform="translate(364,555.3)"/><use href="#bh-ring-disk" transform="translate(692,556.9)"/><use href="#bh-ring-disk" transform="translate(414,557.3)"/><use href="#bh-ring-disk" transform="translate(578,558.1)"/><use href="#bh-ring-disk" transform="translate(382,558.9)"/><use href="#bh-ring-disk" transform="translate(546,559.7)"/><use href="#bh-ring-disk" transform="translate(596,561.7)"/><use href="#bh-ring-disk" transform="translate(678,562.1)"/><use href="#bh-ring-disk" transform="translate(400,562.5)"/><use href="#bh-ring-disk" transform="translate(532,564.9)"/><use href="#bh-ring-disk" transform="translate(614,565.3)"/><use href="#bh-ring-disk" transform="translate(418,566.1)"/><use href="#bh-ring-disk" transform="translate(664,567.3)"/><use href="#bh-ring-disk" transform="translate(632,568.9)"/><use href="#bh-ring-disk" transform="translate(436,569.7)"/><use href="#bh-ring-disk" transform="translate(518,570.1)"/><use href="#bh-ring-disk" transform="translate(650,572.5)"/><use href="#bh-ring-disk" transform="translate(454,573.3)"/><use href="#bh-ring-disk" transform="translate(504,575.3)"/><use href="#bh-ring-disk" transform="translate(472,576.9)"/><use href="#bh-ring-disk" transform="translate(636,577.7)"/><use href="#bh-ring-disk" transform="translate(490,580.5)"/><use href="#bh-ring-disk" transform="translate(622,582.9)"/><use href="#bh-ring-disk" transform="translate(508,584.1)"/><use href="#bh-ring-disk" transform="translate(526,587.7)"/><use href="#bh-ring-disk" transform="translate(608,588.1)"/><use href="#bh-ring-disk" transform="translate(544,591.3)"/><use href="#bh-ring-disk" transform="translate(594,593.3)"/><use href="#bh-ring-disk" transform="translate(562,594.9)"/><use href="#bh-ring-disk" transform="translate(580,598.5)"/></g></g><g class="bh-spacer" fill="#8cbacc" fill-opacity=".025">
+    <polygon points="220,516 580,588 580,322 220,250" />
+    <polygon points="790,510 580,588 580,322 790,244" />
+  </g><g class="bh-part bh-white-light"><g class="bh-motion bh-wavefront" data-front="0" data-start-plane="286" data-end-plane="12" style="--wave-distance:274px;--wave-rest:30px">
+      <g mask="url(#bh-wave-envelope-0)"><polygon points="430,164 790,236 580,314 220,242" class="bh-wave-surface" fill="#ffffff"/></g>
+    </g><g class="bh-motion bh-wavefront" data-front="1" data-start-plane="286" data-end-plane="12" style="--wave-distance:274px;--wave-rest:60px">
+      <g mask="url(#bh-wave-envelope-1)"><polygon points="430,164 790,236 580,314 220,242" class="bh-wave-surface" fill="#ffffff"/></g>
+    </g><g class="bh-motion bh-wavefront" data-front="2" data-start-plane="286" data-end-plane="12" style="--wave-distance:274px;--wave-rest:90px">
+      <g mask="url(#bh-wave-envelope-2)"><polygon points="430,164 790,236 580,314 220,242" class="bh-wave-surface" fill="#ffffff"/></g>
+    </g></g><g class="bh-part bh-boundary-light"><path class="bh-motion bh-absorption-surface" d="M430,438L790,510L580,588L220,516ZM432,442.4L504,456.8L448,477.6L376,463.2ZM522,460.4L594,474.8L538,495.6L466,481.2ZM612,478.4L684,492.8L628,513.6L556,499.2ZM702,496.4L774,510.8L718,531.6L646,517.2ZM362,468.4L434,482.8L378,503.6L306,489.2ZM452,486.4L524,500.8L468,521.6L396,507.2ZM542,504.4L614,518.8L558,539.6L486,525.2ZM632,522.4L704,536.8L648,557.6L576,543.2ZM292,494.4L364,508.8L308,529.6L236,515.2ZM382,512.4L454,526.8L398,547.6L326,533.2ZM472,530.4L544,544.8L488,565.6L416,551.2ZM562,548.4L634,562.8L578,583.6L506,569.2Z" fill="#02070d" fill-opacity=".65" fill-rule="evenodd"/></g><g class="bh-part bh-cavity-light"><g class="bh-cavity-cell" data-cell="0-0" data-channel="r" data-lower-plane="12" data-upper-plane="300" data-exit-plane="300">
+      <g transform="translate(440,460)"><g class="bh-motion bh-cavity-color" style="--channel:#ff493d;--channel-light:#ffd8d1"><g class="bh-motion bh-cavity-loop">
+        <path d="M0,0A18,144 0 0 1 0,-288 M0,-288A18,144 0 0 1 0,0" fill="none" stroke="currentColor" stroke-width="7" opacity=".1" filter="url(#bh-soft-glow)"/>
+        <path class="bh-cavity-path" data-direction="up" d="M0,0A18,144 0 0 1 0,-288" fill="none" stroke="currentColor" stroke-width="2.1" opacity=".48"/>
+        <path class="bh-cavity-path" data-direction="down" d="M0,-288A18,144 0 0 1 0,0" fill="none" stroke="currentColor" stroke-width="2.1" opacity=".48"/>
+        <g class="bh-motion bh-cavity-cursor"><g class="bh-motion bh-cavity-arrow">
+          <path d="M-18,0H-5" fill="none" stroke="currentColor" stroke-width="6" opacity=".65" filter="url(#bh-arrow-glow)"/>
+          <path d="M-18,0H-5" fill="none" stroke="currentColor" stroke-width="3.8" stroke-linecap="round"/>
+          <path class="bh-cavity-arrowhead" d="M-8,-6L5,0L-8,6Z" fill="currentColor"/>
+        </g></g>
+      </g></g></g>
+    </g><g class="bh-cavity-cell" data-cell="0-1" data-channel="g" data-lower-plane="12" data-upper-plane="300" data-exit-plane="300">
+      <g transform="translate(530,478)"><g class="bh-motion bh-cavity-color" style="--channel:#33f590;--channel-light:#d5ffe4"><g class="bh-motion bh-cavity-loop">
+        <path d="M0,0A18,144 0 0 1 0,-288 M0,-288A18,144 0 0 1 0,0" fill="none" stroke="currentColor" stroke-width="7" opacity=".1" filter="url(#bh-soft-glow)"/>
+        <path class="bh-cavity-path" data-direction="up" d="M0,0A18,144 0 0 1 0,-288" fill="none" stroke="currentColor" stroke-width="2.1" opacity=".48"/>
+        <path class="bh-cavity-path" data-direction="down" d="M0,-288A18,144 0 0 1 0,0" fill="none" stroke="currentColor" stroke-width="2.1" opacity=".48"/>
+        <g class="bh-motion bh-cavity-cursor"><g class="bh-motion bh-cavity-arrow">
+          <path d="M-18,0H-5" fill="none" stroke="currentColor" stroke-width="6" opacity=".65" filter="url(#bh-arrow-glow)"/>
+          <path d="M-18,0H-5" fill="none" stroke="currentColor" stroke-width="3.8" stroke-linecap="round"/>
+          <path class="bh-cavity-arrowhead" d="M-8,-6L5,0L-8,6Z" fill="currentColor"/>
+        </g></g>
+      </g></g></g>
+    </g><g class="bh-cavity-cell" data-cell="1-0" data-channel="g" data-lower-plane="12" data-upper-plane="300" data-exit-plane="300">
+      <g transform="translate(370,486)"><g class="bh-motion bh-cavity-color" style="--channel:#33f590;--channel-light:#d5ffe4"><g class="bh-motion bh-cavity-loop">
+        <path d="M0,0A18,144 0 0 1 0,-288 M0,-288A18,144 0 0 1 0,0" fill="none" stroke="currentColor" stroke-width="7" opacity=".1" filter="url(#bh-soft-glow)"/>
+        <path class="bh-cavity-path" data-direction="up" d="M0,0A18,144 0 0 1 0,-288" fill="none" stroke="currentColor" stroke-width="2.1" opacity=".48"/>
+        <path class="bh-cavity-path" data-direction="down" d="M0,-288A18,144 0 0 1 0,0" fill="none" stroke="currentColor" stroke-width="2.1" opacity=".48"/>
+        <g class="bh-motion bh-cavity-cursor"><g class="bh-motion bh-cavity-arrow">
+          <path d="M-18,0H-5" fill="none" stroke="currentColor" stroke-width="6" opacity=".65" filter="url(#bh-arrow-glow)"/>
+          <path d="M-18,0H-5" fill="none" stroke="currentColor" stroke-width="3.8" stroke-linecap="round"/>
+          <path class="bh-cavity-arrowhead" d="M-8,-6L5,0L-8,6Z" fill="currentColor"/>
+        </g></g>
+      </g></g></g>
+    </g><g class="bh-cavity-cell" data-cell="0-2" data-channel="r" data-lower-plane="12" data-upper-plane="300" data-exit-plane="300">
+      <g transform="translate(620,496)"><g class="bh-motion bh-cavity-color" style="--channel:#ff493d;--channel-light:#ffd8d1"><g class="bh-motion bh-cavity-loop">
+        <path d="M0,0A18,144 0 0 1 0,-288 M0,-288A18,144 0 0 1 0,0" fill="none" stroke="currentColor" stroke-width="7" opacity=".1" filter="url(#bh-soft-glow)"/>
+        <path class="bh-cavity-path" data-direction="up" d="M0,0A18,144 0 0 1 0,-288" fill="none" stroke="currentColor" stroke-width="2.1" opacity=".48"/>
+        <path class="bh-cavity-path" data-direction="down" d="M0,-288A18,144 0 0 1 0,0" fill="none" stroke="currentColor" stroke-width="2.1" opacity=".48"/>
+        <g class="bh-motion bh-cavity-cursor"><g class="bh-motion bh-cavity-arrow">
+          <path d="M-18,0H-5" fill="none" stroke="currentColor" stroke-width="6" opacity=".65" filter="url(#bh-arrow-glow)"/>
+          <path d="M-18,0H-5" fill="none" stroke="currentColor" stroke-width="3.8" stroke-linecap="round"/>
+          <path class="bh-cavity-arrowhead" d="M-8,-6L5,0L-8,6Z" fill="currentColor"/>
+        </g></g>
+      </g></g></g>
+    </g><g class="bh-cavity-cell" data-cell="1-1" data-channel="b" data-lower-plane="12" data-upper-plane="300" data-exit-plane="300">
+      <g transform="translate(460,504)"><g class="bh-motion bh-cavity-color" style="--channel:#388dff;--channel-light:#dbedff"><g class="bh-motion bh-cavity-loop">
+        <path d="M0,0A18,144 0 0 1 0,-288 M0,-288A18,144 0 0 1 0,0" fill="none" stroke="currentColor" stroke-width="7" opacity=".1" filter="url(#bh-soft-glow)"/>
+        <path class="bh-cavity-path" data-direction="up" d="M0,0A18,144 0 0 1 0,-288" fill="none" stroke="currentColor" stroke-width="2.1" opacity=".48"/>
+        <path class="bh-cavity-path" data-direction="down" d="M0,-288A18,144 0 0 1 0,0" fill="none" stroke="currentColor" stroke-width="2.1" opacity=".48"/>
+        <g class="bh-motion bh-cavity-cursor"><g class="bh-motion bh-cavity-arrow">
+          <path d="M-18,0H-5" fill="none" stroke="currentColor" stroke-width="6" opacity=".65" filter="url(#bh-arrow-glow)"/>
+          <path d="M-18,0H-5" fill="none" stroke="currentColor" stroke-width="3.8" stroke-linecap="round"/>
+          <path class="bh-cavity-arrowhead" d="M-8,-6L5,0L-8,6Z" fill="currentColor"/>
+        </g></g>
+      </g></g></g>
+    </g><g class="bh-cavity-cell" data-cell="2-0" data-channel="r" data-lower-plane="12" data-upper-plane="300" data-exit-plane="300">
+      <g transform="translate(300,512)"><g class="bh-motion bh-cavity-color" style="--channel:#ff493d;--channel-light:#ffd8d1"><g class="bh-motion bh-cavity-loop">
+        <path d="M0,0A18,144 0 0 1 0,-288 M0,-288A18,144 0 0 1 0,0" fill="none" stroke="currentColor" stroke-width="7" opacity=".1" filter="url(#bh-soft-glow)"/>
+        <path class="bh-cavity-path" data-direction="up" d="M0,0A18,144 0 0 1 0,-288" fill="none" stroke="currentColor" stroke-width="2.1" opacity=".48"/>
+        <path class="bh-cavity-path" data-direction="down" d="M0,-288A18,144 0 0 1 0,0" fill="none" stroke="currentColor" stroke-width="2.1" opacity=".48"/>
+        <g class="bh-motion bh-cavity-cursor"><g class="bh-motion bh-cavity-arrow">
+          <path d="M-18,0H-5" fill="none" stroke="currentColor" stroke-width="6" opacity=".65" filter="url(#bh-arrow-glow)"/>
+          <path d="M-18,0H-5" fill="none" stroke="currentColor" stroke-width="3.8" stroke-linecap="round"/>
+          <path class="bh-cavity-arrowhead" d="M-8,-6L5,0L-8,6Z" fill="currentColor"/>
+        </g></g>
+      </g></g></g>
+    </g><g class="bh-cavity-cell" data-cell="0-3" data-channel="g" data-lower-plane="12" data-upper-plane="300" data-exit-plane="300">
+      <g transform="translate(710,514)"><g class="bh-motion bh-cavity-color" style="--channel:#33f590;--channel-light:#d5ffe4"><g class="bh-motion bh-cavity-loop">
+        <path d="M0,0A18,144 0 0 1 0,-288 M0,-288A18,144 0 0 1 0,0" fill="none" stroke="currentColor" stroke-width="7" opacity=".1" filter="url(#bh-soft-glow)"/>
+        <path class="bh-cavity-path" data-direction="up" d="M0,0A18,144 0 0 1 0,-288" fill="none" stroke="currentColor" stroke-width="2.1" opacity=".48"/>
+        <path class="bh-cavity-path" data-direction="down" d="M0,-288A18,144 0 0 1 0,0" fill="none" stroke="currentColor" stroke-width="2.1" opacity=".48"/>
+        <g class="bh-motion bh-cavity-cursor"><g class="bh-motion bh-cavity-arrow">
+          <path d="M-18,0H-5" fill="none" stroke="currentColor" stroke-width="6" opacity=".65" filter="url(#bh-arrow-glow)"/>
+          <path d="M-18,0H-5" fill="none" stroke="currentColor" stroke-width="3.8" stroke-linecap="round"/>
+          <path class="bh-cavity-arrowhead" d="M-8,-6L5,0L-8,6Z" fill="currentColor"/>
+        </g></g>
+      </g></g></g>
+    </g><g class="bh-cavity-cell" data-cell="1-2" data-channel="g" data-lower-plane="12" data-upper-plane="300" data-exit-plane="300">
+      <g transform="translate(550,522)"><g class="bh-motion bh-cavity-color" style="--channel:#33f590;--channel-light:#d5ffe4"><g class="bh-motion bh-cavity-loop">
+        <path d="M0,0A18,144 0 0 1 0,-288 M0,-288A18,144 0 0 1 0,0" fill="none" stroke="currentColor" stroke-width="7" opacity=".1" filter="url(#bh-soft-glow)"/>
+        <path class="bh-cavity-path" data-direction="up" d="M0,0A18,144 0 0 1 0,-288" fill="none" stroke="currentColor" stroke-width="2.1" opacity=".48"/>
+        <path class="bh-cavity-path" data-direction="down" d="M0,-288A18,144 0 0 1 0,0" fill="none" stroke="currentColor" stroke-width="2.1" opacity=".48"/>
+        <g class="bh-motion bh-cavity-cursor"><g class="bh-motion bh-cavity-arrow">
+          <path d="M-18,0H-5" fill="none" stroke="currentColor" stroke-width="6" opacity=".65" filter="url(#bh-arrow-glow)"/>
+          <path d="M-18,0H-5" fill="none" stroke="currentColor" stroke-width="3.8" stroke-linecap="round"/>
+          <path class="bh-cavity-arrowhead" d="M-8,-6L5,0L-8,6Z" fill="currentColor"/>
+        </g></g>
+      </g></g></g>
+    </g><g class="bh-cavity-cell" data-cell="2-1" data-channel="g" data-lower-plane="12" data-upper-plane="300" data-exit-plane="300">
+      <g transform="translate(390,530)"><g class="bh-motion bh-cavity-color" style="--channel:#33f590;--channel-light:#d5ffe4"><g class="bh-motion bh-cavity-loop">
+        <path d="M0,0A18,144 0 0 1 0,-288 M0,-288A18,144 0 0 1 0,0" fill="none" stroke="currentColor" stroke-width="7" opacity=".1" filter="url(#bh-soft-glow)"/>
+        <path class="bh-cavity-path" data-direction="up" d="M0,0A18,144 0 0 1 0,-288" fill="none" stroke="currentColor" stroke-width="2.1" opacity=".48"/>
+        <path class="bh-cavity-path" data-direction="down" d="M0,-288A18,144 0 0 1 0,0" fill="none" stroke="currentColor" stroke-width="2.1" opacity=".48"/>
+        <g class="bh-motion bh-cavity-cursor"><g class="bh-motion bh-cavity-arrow">
+          <path d="M-18,0H-5" fill="none" stroke="currentColor" stroke-width="6" opacity=".65" filter="url(#bh-arrow-glow)"/>
+          <path d="M-18,0H-5" fill="none" stroke="currentColor" stroke-width="3.8" stroke-linecap="round"/>
+          <path class="bh-cavity-arrowhead" d="M-8,-6L5,0L-8,6Z" fill="currentColor"/>
+        </g></g>
+      </g></g></g>
+    </g><g class="bh-cavity-cell" data-cell="1-3" data-channel="b" data-lower-plane="12" data-upper-plane="300" data-exit-plane="300">
+      <g transform="translate(640,540)"><g class="bh-motion bh-cavity-color" style="--channel:#388dff;--channel-light:#dbedff"><g class="bh-motion bh-cavity-loop">
+        <path d="M0,0A18,144 0 0 1 0,-288 M0,-288A18,144 0 0 1 0,0" fill="none" stroke="currentColor" stroke-width="7" opacity=".1" filter="url(#bh-soft-glow)"/>
+        <path class="bh-cavity-path" data-direction="up" d="M0,0A18,144 0 0 1 0,-288" fill="none" stroke="currentColor" stroke-width="2.1" opacity=".48"/>
+        <path class="bh-cavity-path" data-direction="down" d="M0,-288A18,144 0 0 1 0,0" fill="none" stroke="currentColor" stroke-width="2.1" opacity=".48"/>
+        <g class="bh-motion bh-cavity-cursor"><g class="bh-motion bh-cavity-arrow">
+          <path d="M-18,0H-5" fill="none" stroke="currentColor" stroke-width="6" opacity=".65" filter="url(#bh-arrow-glow)"/>
+          <path d="M-18,0H-5" fill="none" stroke="currentColor" stroke-width="3.8" stroke-linecap="round"/>
+          <path class="bh-cavity-arrowhead" d="M-8,-6L5,0L-8,6Z" fill="currentColor"/>
+        </g></g>
+      </g></g></g>
+    </g><g class="bh-cavity-cell" data-cell="2-2" data-channel="r" data-lower-plane="12" data-upper-plane="300" data-exit-plane="300">
+      <g transform="translate(480,548)"><g class="bh-motion bh-cavity-color" style="--channel:#ff493d;--channel-light:#ffd8d1"><g class="bh-motion bh-cavity-loop">
+        <path d="M0,0A18,144 0 0 1 0,-288 M0,-288A18,144 0 0 1 0,0" fill="none" stroke="currentColor" stroke-width="7" opacity=".1" filter="url(#bh-soft-glow)"/>
+        <path class="bh-cavity-path" data-direction="up" d="M0,0A18,144 0 0 1 0,-288" fill="none" stroke="currentColor" stroke-width="2.1" opacity=".48"/>
+        <path class="bh-cavity-path" data-direction="down" d="M0,-288A18,144 0 0 1 0,0" fill="none" stroke="currentColor" stroke-width="2.1" opacity=".48"/>
+        <g class="bh-motion bh-cavity-cursor"><g class="bh-motion bh-cavity-arrow">
+          <path d="M-18,0H-5" fill="none" stroke="currentColor" stroke-width="6" opacity=".65" filter="url(#bh-arrow-glow)"/>
+          <path d="M-18,0H-5" fill="none" stroke="currentColor" stroke-width="3.8" stroke-linecap="round"/>
+          <path class="bh-cavity-arrowhead" d="M-8,-6L5,0L-8,6Z" fill="currentColor"/>
+        </g></g>
+      </g></g></g>
+    </g><g class="bh-cavity-cell" data-cell="2-3" data-channel="g" data-lower-plane="12" data-upper-plane="300" data-exit-plane="300">
+      <g transform="translate(570,566)"><g class="bh-motion bh-cavity-color" style="--channel:#33f590;--channel-light:#d5ffe4"><g class="bh-motion bh-cavity-loop">
+        <path d="M0,0A18,144 0 0 1 0,-288 M0,-288A18,144 0 0 1 0,0" fill="none" stroke="currentColor" stroke-width="7" opacity=".1" filter="url(#bh-soft-glow)"/>
+        <path class="bh-cavity-path" data-direction="up" d="M0,0A18,144 0 0 1 0,-288" fill="none" stroke="currentColor" stroke-width="2.1" opacity=".48"/>
+        <path class="bh-cavity-path" data-direction="down" d="M0,-288A18,144 0 0 1 0,0" fill="none" stroke="currentColor" stroke-width="2.1" opacity=".48"/>
+        <g class="bh-motion bh-cavity-cursor"><g class="bh-motion bh-cavity-arrow">
+          <path d="M-18,0H-5" fill="none" stroke="currentColor" stroke-width="6" opacity=".65" filter="url(#bh-arrow-glow)"/>
+          <path d="M-18,0H-5" fill="none" stroke="currentColor" stroke-width="3.8" stroke-linecap="round"/>
+          <path class="bh-cavity-arrowhead" d="M-8,-6L5,0L-8,6Z" fill="currentColor"/>
+        </g></g>
+      </g></g></g>
+    </g></g><g class="bh-oled-occluder" fill="#223348" stroke-linejoin="round">
+    <polygon points="220,250 580,322 580,300 220,228" />
+    <polygon points="790,244 580,322 580,300 790,222" />
+    <polygon points="430,150 790,222 580,300 220,228" />
+  </g><g class="bh-part bh-oled" stroke-linejoin="round"><g class="bh-oled-layer" data-layer="lower-interface" data-bottom="278" data-top="282">
+      <polygon points="220,250 580,322 580,318 220,246" fill="#34475b"/>
+      <polygon points="790,244 580,322 580,318 790,240" fill="#34475b"/>
+      <polygon points="790,244 580,322 580,318 790,240" fill="#11233d" fill-opacity=".25"/>
+    </g><g class="bh-oled-layer" data-layer="emissive-region" data-bottom="282" data-top="288">
+      <polygon points="220,246 580,318 580,312 220,240" fill="#dfedf6"/>
+      <polygon points="790,240 580,318 580,312 790,234" fill="#dfedf6"/>
+      <polygon points="790,240 580,318 580,312 790,234" fill="#11233d" fill-opacity=".25"/>
+    </g><g class="bh-motion bh-el-glow">
+      <polygon points="220,245 580,317 580,313 220,241" fill="#f1faff" filter="url(#bh-soft-glow)"/>
+      <polygon points="790,239 580,317 580,313 790,235" fill="#f1faff" filter="url(#bh-soft-glow)"/>
+    </g><g class="bh-oled-layer" data-layer="transport-region" data-bottom="288" data-top="294">
+      <polygon points="220,240 580,312 580,306 220,234" fill="#506174"/>
+      <polygon points="790,234 580,312 580,306 790,228" fill="#506174"/>
+      <polygon points="790,234 580,312 580,306 790,228" fill="#11233d" fill-opacity=".25"/>
+    </g><g class="bh-oled-layer" data-layer="upper-interface" data-bottom="294" data-top="300">
+      <polygon points="220,234 580,306 580,300 220,228" fill="#8596a9"/>
+      <polygon points="790,228 580,306 580,300 790,222" fill="#8596a9"/>
+      <polygon points="790,228 580,306 580,300 790,222" fill="#11233d" fill-opacity=".25"/>
+    </g><polygon points="430,150 790,222 580,300 220,228" class="bh-oled-top" fill="url(#bh-stack-top)" stroke="url(#bh-stack-edge)" stroke-width="1.2"/><path d="M430.7,151.54L784.4,222.28L579.3,298.46L225.6,227.72Z" fill="none" stroke="#c4d6e5" stroke-opacity=".12" stroke-width=".65"/></g><g class="bh-part bh-rgb-light"><g transform="translate(440,172)">
+      <g class="bh-motion bh-exit-glow">
+        <ellipse rx="23" ry="8" fill="#ff493d" fill-opacity=".5" filter="url(#bh-soft-glow)"/>
       </g>
-    </g><g transform="translate(530,398.5)">
-      <ellipse class="bh-motion bh-reflection" rx="18" ry="7" fill="#50efb0" fill-opacity=".35" stroke="#50efb0" stroke-opacity=".8"/>
-      <g class="bh-motion bh-output" data-cell="0-1" data-channel="g" data-origin="530,398.5" data-tip="530,128.5" style="--output-distance:270px">
-        <g class="bh-motion bh-output-shaft">
-          <path d="M-4,0 L-4,-253 L4,-253 L4,0Z" fill="#50efb0" fill-opacity=".3" filter="url(#bh-beam-glow)"/>
-          <path class="bh-output-core" d="M0,0 L0,-256" stroke="#50efb0" stroke-width="5.5" stroke-linecap="butt" fill="none"/>
+      <g class="bh-motion bh-output" data-cell="0-0" data-channel="r" data-origin="440,172" data-tip="440,46" style="--beam-distance:126px">
+        <g class="bh-motion bh-beam-volume" mask="url(#bh-beam-envelope)">
+          <path d="M-11,0 L-22,-126 A22,7 0 0 1 22,-126 L11,0 A11,4 0 0 1 -11,0Z" fill="#ff493d" fill-opacity=".32" filter="url(#bh-soft-glow)"/>
+          <path class="bh-beam-body" d="M-11,0 L-22,-126 A22,7 0 0 1 22,-126 L11,0 A11,4 0 0 1 -11,0Z" fill="url(#bh-volume-r)"/>
+          <path class="bh-beam-core" d="M-2,0 L-4,-126 L1,-126 L2,0Z" fill="#ffd8d1" fill-opacity=".85" filter="url(#bh-soft-glow)"/>
         </g>
-        <path class="bh-motion bh-arrowhead" d="M0,-270 L-8,-253 L8,-253Z" fill="#50efb0"/>
+        <g class="bh-motion bh-beam-end"><ellipse class="bh-beam-cap" cy="-126" rx="20" ry="6" fill="#ff493d" fill-opacity=".06" filter="url(#bh-soft-glow)"/></g>
       </g>
-    </g><g transform="translate(620,425.5)">
-      <ellipse class="bh-motion bh-reflection" rx="18" ry="7" fill="#639dff" fill-opacity=".35" stroke="#639dff" stroke-opacity=".8"/>
-      <g class="bh-motion bh-output" data-cell="0-2" data-channel="b" data-origin="620,425.5" data-tip="620,155.5" style="--output-distance:270px">
-        <g class="bh-motion bh-output-shaft">
-          <path d="M-4,0 L-4,-253 L4,-253 L4,0Z" fill="#639dff" fill-opacity=".3" filter="url(#bh-beam-glow)"/>
-          <path class="bh-output-core" d="M0,0 L0,-256" stroke="#639dff" stroke-width="5.5" stroke-linecap="butt" fill="none"/>
-        </g>
-        <path class="bh-motion bh-arrowhead" d="M0,-270 L-8,-253 L8,-253Z" fill="#639dff"/>
+    </g><g transform="translate(530,190)">
+      <g class="bh-motion bh-exit-glow">
+        <ellipse rx="23" ry="8" fill="#33f590" fill-opacity=".5" filter="url(#bh-soft-glow)"/>
       </g>
-    </g><g transform="translate(710,452.5)">
-      <ellipse class="bh-motion bh-reflection" rx="18" ry="7" fill="#50efb0" fill-opacity=".35" stroke="#50efb0" stroke-opacity=".8"/>
-      <g class="bh-motion bh-output" data-cell="0-3" data-channel="g" data-origin="710,452.5" data-tip="710,182.5" style="--output-distance:270px">
-        <g class="bh-motion bh-output-shaft">
-          <path d="M-4,0 L-4,-253 L4,-253 L4,0Z" fill="#50efb0" fill-opacity=".3" filter="url(#bh-beam-glow)"/>
-          <path class="bh-output-core" d="M0,0 L0,-256" stroke="#50efb0" stroke-width="5.5" stroke-linecap="butt" fill="none"/>
+      <g class="bh-motion bh-output" data-cell="0-1" data-channel="g" data-origin="530,190" data-tip="530,64" style="--beam-distance:126px">
+        <g class="bh-motion bh-beam-volume" mask="url(#bh-beam-envelope)">
+          <path d="M-11,0 L-22,-126 A22,7 0 0 1 22,-126 L11,0 A11,4 0 0 1 -11,0Z" fill="#33f590" fill-opacity=".32" filter="url(#bh-soft-glow)"/>
+          <path class="bh-beam-body" d="M-11,0 L-22,-126 A22,7 0 0 1 22,-126 L11,0 A11,4 0 0 1 -11,0Z" fill="url(#bh-volume-g)"/>
+          <path class="bh-beam-core" d="M-2,0 L-4,-126 L1,-126 L2,0Z" fill="#d5ffe4" fill-opacity=".85" filter="url(#bh-soft-glow)"/>
         </g>
-        <path class="bh-motion bh-arrowhead" d="M0,-270 L-8,-253 L8,-253Z" fill="#50efb0"/>
+        <g class="bh-motion bh-beam-end"><ellipse class="bh-beam-cap" cy="-126" rx="20" ry="6" fill="#33f590" fill-opacity=".06" filter="url(#bh-soft-glow)"/></g>
       </g>
-    </g><g transform="translate(370,411.5)">
-      <ellipse class="bh-motion bh-reflection" rx="18" ry="7" fill="#639dff" fill-opacity=".35" stroke="#639dff" stroke-opacity=".8"/>
-      <g class="bh-motion bh-output" data-cell="1-0" data-channel="b" data-origin="370,411.5" data-tip="370,141.5" style="--output-distance:270px">
-        <g class="bh-motion bh-output-shaft">
-          <path d="M-4,0 L-4,-253 L4,-253 L4,0Z" fill="#639dff" fill-opacity=".3" filter="url(#bh-beam-glow)"/>
-          <path class="bh-output-core" d="M0,0 L0,-256" stroke="#639dff" stroke-width="5.5" stroke-linecap="butt" fill="none"/>
-        </g>
-        <path class="bh-motion bh-arrowhead" d="M0,-270 L-8,-253 L8,-253Z" fill="#639dff"/>
+    </g><g transform="translate(370,198)">
+      <g class="bh-motion bh-exit-glow">
+        <ellipse rx="23" ry="8" fill="#33f590" fill-opacity=".5" filter="url(#bh-soft-glow)"/>
       </g>
-    </g><g transform="translate(460,438.5)">
-      <ellipse class="bh-motion bh-reflection" rx="18" ry="7" fill="#50efb0" fill-opacity=".35" stroke="#50efb0" stroke-opacity=".8"/>
-      <g class="bh-motion bh-output" data-cell="1-1" data-channel="g" data-origin="460,438.5" data-tip="460,168.5" style="--output-distance:270px">
-        <g class="bh-motion bh-output-shaft">
-          <path d="M-4,0 L-4,-253 L4,-253 L4,0Z" fill="#50efb0" fill-opacity=".3" filter="url(#bh-beam-glow)"/>
-          <path class="bh-output-core" d="M0,0 L0,-256" stroke="#50efb0" stroke-width="5.5" stroke-linecap="butt" fill="none"/>
+      <g class="bh-motion bh-output" data-cell="1-0" data-channel="g" data-origin="370,198" data-tip="370,72" style="--beam-distance:126px">
+        <g class="bh-motion bh-beam-volume" mask="url(#bh-beam-envelope)">
+          <path d="M-11,0 L-22,-126 A22,7 0 0 1 22,-126 L11,0 A11,4 0 0 1 -11,0Z" fill="#33f590" fill-opacity=".32" filter="url(#bh-soft-glow)"/>
+          <path class="bh-beam-body" d="M-11,0 L-22,-126 A22,7 0 0 1 22,-126 L11,0 A11,4 0 0 1 -11,0Z" fill="url(#bh-volume-g)"/>
+          <path class="bh-beam-core" d="M-2,0 L-4,-126 L1,-126 L2,0Z" fill="#d5ffe4" fill-opacity=".85" filter="url(#bh-soft-glow)"/>
         </g>
-        <path class="bh-motion bh-arrowhead" d="M0,-270 L-8,-253 L8,-253Z" fill="#50efb0"/>
+        <g class="bh-motion bh-beam-end"><ellipse class="bh-beam-cap" cy="-126" rx="20" ry="6" fill="#33f590" fill-opacity=".06" filter="url(#bh-soft-glow)"/></g>
       </g>
-    </g><g transform="translate(550,465.5)">
-      <ellipse class="bh-motion bh-reflection" rx="18" ry="7" fill="#ff537c" fill-opacity=".35" stroke="#ff537c" stroke-opacity=".8"/>
-      <g class="bh-motion bh-output" data-cell="1-2" data-channel="r" data-origin="550,465.5" data-tip="550,195.5" style="--output-distance:270px">
-        <g class="bh-motion bh-output-shaft">
-          <path d="M-4,0 L-4,-253 L4,-253 L4,0Z" fill="#ff537c" fill-opacity=".3" filter="url(#bh-beam-glow)"/>
-          <path class="bh-output-core" d="M0,0 L0,-256" stroke="#ff537c" stroke-width="5.5" stroke-linecap="butt" fill="none"/>
-        </g>
-        <path class="bh-motion bh-arrowhead" d="M0,-270 L-8,-253 L8,-253Z" fill="#ff537c"/>
+    </g><g transform="translate(620,208)">
+      <g class="bh-motion bh-exit-glow">
+        <ellipse rx="23" ry="8" fill="#ff493d" fill-opacity=".5" filter="url(#bh-soft-glow)"/>
       </g>
-    </g><g transform="translate(640,492.5)">
-      <ellipse class="bh-motion bh-reflection" rx="18" ry="7" fill="#639dff" fill-opacity=".35" stroke="#639dff" stroke-opacity=".8"/>
-      <g class="bh-motion bh-output" data-cell="1-3" data-channel="b" data-origin="640,492.5" data-tip="640,222.5" style="--output-distance:270px">
-        <g class="bh-motion bh-output-shaft">
-          <path d="M-4,0 L-4,-253 L4,-253 L4,0Z" fill="#639dff" fill-opacity=".3" filter="url(#bh-beam-glow)"/>
-          <path class="bh-output-core" d="M0,0 L0,-256" stroke="#639dff" stroke-width="5.5" stroke-linecap="butt" fill="none"/>
+      <g class="bh-motion bh-output" data-cell="0-2" data-channel="r" data-origin="620,208" data-tip="620,82" style="--beam-distance:126px">
+        <g class="bh-motion bh-beam-volume" mask="url(#bh-beam-envelope)">
+          <path d="M-11,0 L-22,-126 A22,7 0 0 1 22,-126 L11,0 A11,4 0 0 1 -11,0Z" fill="#ff493d" fill-opacity=".32" filter="url(#bh-soft-glow)"/>
+          <path class="bh-beam-body" d="M-11,0 L-22,-126 A22,7 0 0 1 22,-126 L11,0 A11,4 0 0 1 -11,0Z" fill="url(#bh-volume-r)"/>
+          <path class="bh-beam-core" d="M-2,0 L-4,-126 L1,-126 L2,0Z" fill="#ffd8d1" fill-opacity=".85" filter="url(#bh-soft-glow)"/>
         </g>
-        <path class="bh-motion bh-arrowhead" d="M0,-270 L-8,-253 L8,-253Z" fill="#639dff"/>
+        <g class="bh-motion bh-beam-end"><ellipse class="bh-beam-cap" cy="-126" rx="20" ry="6" fill="#ff493d" fill-opacity=".06" filter="url(#bh-soft-glow)"/></g>
       </g>
-    </g><g transform="translate(300,451.5)">
-      <ellipse class="bh-motion bh-reflection" rx="18" ry="7" fill="#50efb0" fill-opacity=".35" stroke="#50efb0" stroke-opacity=".8"/>
-      <g class="bh-motion bh-output" data-cell="2-0" data-channel="g" data-origin="300,451.5" data-tip="300,181.5" style="--output-distance:270px">
-        <g class="bh-motion bh-output-shaft">
-          <path d="M-4,0 L-4,-253 L4,-253 L4,0Z" fill="#50efb0" fill-opacity=".3" filter="url(#bh-beam-glow)"/>
-          <path class="bh-output-core" d="M0,0 L0,-256" stroke="#50efb0" stroke-width="5.5" stroke-linecap="butt" fill="none"/>
-        </g>
-        <path class="bh-motion bh-arrowhead" d="M0,-270 L-8,-253 L8,-253Z" fill="#50efb0"/>
+    </g><g transform="translate(460,216)">
+      <g class="bh-motion bh-exit-glow">
+        <ellipse rx="23" ry="8" fill="#388dff" fill-opacity=".5" filter="url(#bh-soft-glow)"/>
       </g>
-    </g><g transform="translate(390,478.5)">
-      <ellipse class="bh-motion bh-reflection" rx="18" ry="7" fill="#ff537c" fill-opacity=".35" stroke="#ff537c" stroke-opacity=".8"/>
-      <g class="bh-motion bh-output" data-cell="2-1" data-channel="r" data-origin="390,478.5" data-tip="390,208.5" style="--output-distance:270px">
-        <g class="bh-motion bh-output-shaft">
-          <path d="M-4,0 L-4,-253 L4,-253 L4,0Z" fill="#ff537c" fill-opacity=".3" filter="url(#bh-beam-glow)"/>
-          <path class="bh-output-core" d="M0,0 L0,-256" stroke="#ff537c" stroke-width="5.5" stroke-linecap="butt" fill="none"/>
+      <g class="bh-motion bh-output" data-cell="1-1" data-channel="b" data-origin="460,216" data-tip="460,90" style="--beam-distance:126px">
+        <g class="bh-motion bh-beam-volume" mask="url(#bh-beam-envelope)">
+          <path d="M-11,0 L-22,-126 A22,7 0 0 1 22,-126 L11,0 A11,4 0 0 1 -11,0Z" fill="#388dff" fill-opacity=".32" filter="url(#bh-soft-glow)"/>
+          <path class="bh-beam-body" d="M-11,0 L-22,-126 A22,7 0 0 1 22,-126 L11,0 A11,4 0 0 1 -11,0Z" fill="url(#bh-volume-b)"/>
+          <path class="bh-beam-core" d="M-2,0 L-4,-126 L1,-126 L2,0Z" fill="#dbedff" fill-opacity=".85" filter="url(#bh-soft-glow)"/>
         </g>
-        <path class="bh-motion bh-arrowhead" d="M0,-270 L-8,-253 L8,-253Z" fill="#ff537c"/>
+        <g class="bh-motion bh-beam-end"><ellipse class="bh-beam-cap" cy="-126" rx="20" ry="6" fill="#388dff" fill-opacity=".06" filter="url(#bh-soft-glow)"/></g>
       </g>
-    </g><g transform="translate(480,505.5)">
-      <ellipse class="bh-motion bh-reflection" rx="18" ry="7" fill="#50efb0" fill-opacity=".35" stroke="#50efb0" stroke-opacity=".8"/>
-      <g class="bh-motion bh-output" data-cell="2-2" data-channel="g" data-origin="480,505.5" data-tip="480,235.5" style="--output-distance:270px">
-        <g class="bh-motion bh-output-shaft">
-          <path d="M-4,0 L-4,-253 L4,-253 L4,0Z" fill="#50efb0" fill-opacity=".3" filter="url(#bh-beam-glow)"/>
-          <path class="bh-output-core" d="M0,0 L0,-256" stroke="#50efb0" stroke-width="5.5" stroke-linecap="butt" fill="none"/>
-        </g>
-        <path class="bh-motion bh-arrowhead" d="M0,-270 L-8,-253 L8,-253Z" fill="#50efb0"/>
+    </g><g transform="translate(300,224)">
+      <g class="bh-motion bh-exit-glow">
+        <ellipse rx="23" ry="8" fill="#ff493d" fill-opacity=".5" filter="url(#bh-soft-glow)"/>
       </g>
-    </g><g transform="translate(570,532.5)">
-      <ellipse class="bh-motion bh-reflection" rx="18" ry="7" fill="#639dff" fill-opacity=".35" stroke="#639dff" stroke-opacity=".8"/>
-      <g class="bh-motion bh-output" data-cell="2-3" data-channel="b" data-origin="570,532.5" data-tip="570,262.5" style="--output-distance:270px">
-        <g class="bh-motion bh-output-shaft">
-          <path d="M-4,0 L-4,-253 L4,-253 L4,0Z" fill="#639dff" fill-opacity=".3" filter="url(#bh-beam-glow)"/>
-          <path class="bh-output-core" d="M0,0 L0,-256" stroke="#639dff" stroke-width="5.5" stroke-linecap="butt" fill="none"/>
+      <g class="bh-motion bh-output" data-cell="2-0" data-channel="r" data-origin="300,224" data-tip="300,98" style="--beam-distance:126px">
+        <g class="bh-motion bh-beam-volume" mask="url(#bh-beam-envelope)">
+          <path d="M-11,0 L-22,-126 A22,7 0 0 1 22,-126 L11,0 A11,4 0 0 1 -11,0Z" fill="#ff493d" fill-opacity=".32" filter="url(#bh-soft-glow)"/>
+          <path class="bh-beam-body" d="M-11,0 L-22,-126 A22,7 0 0 1 22,-126 L11,0 A11,4 0 0 1 -11,0Z" fill="url(#bh-volume-r)"/>
+          <path class="bh-beam-core" d="M-2,0 L-4,-126 L1,-126 L2,0Z" fill="#ffd8d1" fill-opacity=".85" filter="url(#bh-soft-glow)"/>
         </g>
-        <path class="bh-motion bh-arrowhead" d="M0,-270 L-8,-253 L8,-253Z" fill="#639dff"/>
+        <g class="bh-motion bh-beam-end"><ellipse class="bh-beam-cap" cy="-126" rx="20" ry="6" fill="#ff493d" fill-opacity=".06" filter="url(#bh-soft-glow)"/></g>
       </g>
-    </g></g><g class="bh-part bh-boundary-light"><g class="bh-radial-ray" data-cell="0-0" data-channel="r" data-direction="north" data-origin="440,287.5" data-branch-plane="96" data-boundary="0.4,0" data-end="466,355.3">
-        <g transform="translate(440,287.5)">
-          <g class="bh-motion bh-branch" style="--branch-start:-72.61px">
-            <g class="bh-branch-geometry" transform="rotate(69.02)">
-              <path class="bh-motion bh-branch-shaft" d="M0,0 L65.61,0" stroke="#ff537c" stroke-width="2.1" stroke-linecap="butt" fill="none"/>
-              <path class="bh-motion bh-radial-arrow" d="M72.61,0 L64.61,-4.2 L64.61,4.2Z" fill="#ff537c"/>
-            </g>
-          </g>
+    </g><g transform="translate(710,226)">
+      <g class="bh-motion bh-exit-glow">
+        <ellipse rx="23" ry="8" fill="#33f590" fill-opacity=".5" filter="url(#bh-soft-glow)"/>
+      </g>
+      <g class="bh-motion bh-output" data-cell="0-3" data-channel="g" data-origin="710,226" data-tip="710,100" style="--beam-distance:126px">
+        <g class="bh-motion bh-beam-volume" mask="url(#bh-beam-envelope)">
+          <path d="M-11,0 L-22,-126 A22,7 0 0 1 22,-126 L11,0 A11,4 0 0 1 -11,0Z" fill="#33f590" fill-opacity=".32" filter="url(#bh-soft-glow)"/>
+          <path class="bh-beam-body" d="M-11,0 L-22,-126 A22,7 0 0 1 22,-126 L11,0 A11,4 0 0 1 -11,0Z" fill="url(#bh-volume-g)"/>
+          <path class="bh-beam-core" d="M-2,0 L-4,-126 L1,-126 L2,0Z" fill="#d5ffe4" fill-opacity=".85" filter="url(#bh-soft-glow)"/>
         </g>
-        <g transform="translate(466,355.3)"><ellipse class="bh-motion bh-absorption" rx="7.5" ry="3.8" fill="none" stroke="#ff537c" stroke-width="1.1"/></g>
-      </g><g class="bh-radial-ray" data-cell="0-0" data-channel="r" data-direction="east" data-origin="440,287.5" data-branch-plane="96" data-boundary="1,0.4" data-end="492,387.5">
-        <g transform="translate(440,287.5)">
-          <g class="bh-motion bh-branch" style="--branch-start:-112.71px">
-            <g class="bh-branch-geometry" transform="rotate(62.53)">
-              <path class="bh-motion bh-branch-shaft" d="M0,0 L105.71,0" stroke="#ff537c" stroke-width="2.1" stroke-linecap="butt" fill="none"/>
-              <path class="bh-motion bh-radial-arrow" d="M112.71,0 L104.71,-4.2 L104.71,4.2Z" fill="#ff537c"/>
-            </g>
-          </g>
+        <g class="bh-motion bh-beam-end"><ellipse class="bh-beam-cap" cy="-126" rx="20" ry="6" fill="#33f590" fill-opacity=".06" filter="url(#bh-soft-glow)"/></g>
+      </g>
+    </g><g transform="translate(550,234)">
+      <g class="bh-motion bh-exit-glow">
+        <ellipse rx="23" ry="8" fill="#33f590" fill-opacity=".5" filter="url(#bh-soft-glow)"/>
+      </g>
+      <g class="bh-motion bh-output" data-cell="1-2" data-channel="g" data-origin="550,234" data-tip="550,108" style="--beam-distance:126px">
+        <g class="bh-motion bh-beam-volume" mask="url(#bh-beam-envelope)">
+          <path d="M-11,0 L-22,-126 A22,7 0 0 1 22,-126 L11,0 A11,4 0 0 1 -11,0Z" fill="#33f590" fill-opacity=".32" filter="url(#bh-soft-glow)"/>
+          <path class="bh-beam-body" d="M-11,0 L-22,-126 A22,7 0 0 1 22,-126 L11,0 A11,4 0 0 1 -11,0Z" fill="url(#bh-volume-g)"/>
+          <path class="bh-beam-core" d="M-2,0 L-4,-126 L1,-126 L2,0Z" fill="#d5ffe4" fill-opacity=".85" filter="url(#bh-soft-glow)"/>
         </g>
-        <g transform="translate(492,387.5)"><ellipse class="bh-motion bh-absorption" rx="7.5" ry="3.8" fill="none" stroke="#ff537c" stroke-width="1.1"/></g>
-      </g><g class="bh-radial-ray" data-cell="0-0" data-channel="r" data-direction="south" data-origin="440,287.5" data-branch-plane="96" data-boundary="0.6,1" data-end="414,400.7">
-        <g transform="translate(440,287.5)">
-          <g class="bh-motion bh-branch" style="--branch-start:-116.15px">
-            <g class="bh-branch-geometry" transform="rotate(102.94)">
-              <path class="bh-motion bh-branch-shaft" d="M0,0 L109.15,0" stroke="#ff537c" stroke-width="2.1" stroke-linecap="butt" fill="none"/>
-              <path class="bh-motion bh-radial-arrow" d="M116.15,0 L108.15,-4.2 L108.15,4.2Z" fill="#ff537c"/>
-            </g>
-          </g>
+        <g class="bh-motion bh-beam-end"><ellipse class="bh-beam-cap" cy="-126" rx="20" ry="6" fill="#33f590" fill-opacity=".06" filter="url(#bh-soft-glow)"/></g>
+      </g>
+    </g><g transform="translate(390,242)">
+      <g class="bh-motion bh-exit-glow">
+        <ellipse rx="23" ry="8" fill="#33f590" fill-opacity=".5" filter="url(#bh-soft-glow)"/>
+      </g>
+      <g class="bh-motion bh-output" data-cell="2-1" data-channel="g" data-origin="390,242" data-tip="390,116" style="--beam-distance:126px">
+        <g class="bh-motion bh-beam-volume" mask="url(#bh-beam-envelope)">
+          <path d="M-11,0 L-22,-126 A22,7 0 0 1 22,-126 L11,0 A11,4 0 0 1 -11,0Z" fill="#33f590" fill-opacity=".32" filter="url(#bh-soft-glow)"/>
+          <path class="bh-beam-body" d="M-11,0 L-22,-126 A22,7 0 0 1 22,-126 L11,0 A11,4 0 0 1 -11,0Z" fill="url(#bh-volume-g)"/>
+          <path class="bh-beam-core" d="M-2,0 L-4,-126 L1,-126 L2,0Z" fill="#d5ffe4" fill-opacity=".85" filter="url(#bh-soft-glow)"/>
         </g>
-        <g transform="translate(414,400.7)"><ellipse class="bh-motion bh-absorption" rx="7.5" ry="3.8" fill="none" stroke="#ff537c" stroke-width="1.1"/></g>
-      </g><g class="bh-radial-ray" data-cell="0-0" data-channel="r" data-direction="west" data-origin="440,287.5" data-branch-plane="96" data-boundary="0,0.6" data-end="388,368.5">
-        <g transform="translate(440,287.5)">
-          <g class="bh-motion bh-branch" style="--branch-start:-96.25px">
-            <g class="bh-branch-geometry" transform="rotate(122.7)">
-              <path class="bh-motion bh-branch-shaft" d="M0,0 L89.25,0" stroke="#ff537c" stroke-width="2.1" stroke-linecap="butt" fill="none"/>
-              <path class="bh-motion bh-radial-arrow" d="M96.25,0 L88.25,-4.2 L88.25,4.2Z" fill="#ff537c"/>
-            </g>
-          </g>
+        <g class="bh-motion bh-beam-end"><ellipse class="bh-beam-cap" cy="-126" rx="20" ry="6" fill="#33f590" fill-opacity=".06" filter="url(#bh-soft-glow)"/></g>
+      </g>
+    </g><g transform="translate(640,252)">
+      <g class="bh-motion bh-exit-glow">
+        <ellipse rx="23" ry="8" fill="#388dff" fill-opacity=".5" filter="url(#bh-soft-glow)"/>
+      </g>
+      <g class="bh-motion bh-output" data-cell="1-3" data-channel="b" data-origin="640,252" data-tip="640,126" style="--beam-distance:126px">
+        <g class="bh-motion bh-beam-volume" mask="url(#bh-beam-envelope)">
+          <path d="M-11,0 L-22,-126 A22,7 0 0 1 22,-126 L11,0 A11,4 0 0 1 -11,0Z" fill="#388dff" fill-opacity=".32" filter="url(#bh-soft-glow)"/>
+          <path class="bh-beam-body" d="M-11,0 L-22,-126 A22,7 0 0 1 22,-126 L11,0 A11,4 0 0 1 -11,0Z" fill="url(#bh-volume-b)"/>
+          <path class="bh-beam-core" d="M-2,0 L-4,-126 L1,-126 L2,0Z" fill="#dbedff" fill-opacity=".85" filter="url(#bh-soft-glow)"/>
         </g>
-        <g transform="translate(388,368.5)"><ellipse class="bh-motion bh-absorption" rx="7.5" ry="3.8" fill="none" stroke="#ff537c" stroke-width="1.1"/></g>
-      </g><g class="bh-radial-ray" data-cell="0-1" data-channel="g" data-direction="north" data-origin="530,314.5" data-branch-plane="96" data-boundary="1.4,0" data-end="556,382.3">
-        <g transform="translate(530,314.5)">
-          <g class="bh-motion bh-branch" style="--branch-start:-72.61px">
-            <g class="bh-branch-geometry" transform="rotate(69.02)">
-              <path class="bh-motion bh-branch-shaft" d="M0,0 L65.61,0" stroke="#50efb0" stroke-width="2.1" stroke-linecap="butt" fill="none"/>
-              <path class="bh-motion bh-radial-arrow" d="M72.61,0 L64.61,-4.2 L64.61,4.2Z" fill="#50efb0"/>
-            </g>
-          </g>
+        <g class="bh-motion bh-beam-end"><ellipse class="bh-beam-cap" cy="-126" rx="20" ry="6" fill="#388dff" fill-opacity=".06" filter="url(#bh-soft-glow)"/></g>
+      </g>
+    </g><g transform="translate(480,260)">
+      <g class="bh-motion bh-exit-glow">
+        <ellipse rx="23" ry="8" fill="#ff493d" fill-opacity=".5" filter="url(#bh-soft-glow)"/>
+      </g>
+      <g class="bh-motion bh-output" data-cell="2-2" data-channel="r" data-origin="480,260" data-tip="480,134" style="--beam-distance:126px">
+        <g class="bh-motion bh-beam-volume" mask="url(#bh-beam-envelope)">
+          <path d="M-11,0 L-22,-126 A22,7 0 0 1 22,-126 L11,0 A11,4 0 0 1 -11,0Z" fill="#ff493d" fill-opacity=".32" filter="url(#bh-soft-glow)"/>
+          <path class="bh-beam-body" d="M-11,0 L-22,-126 A22,7 0 0 1 22,-126 L11,0 A11,4 0 0 1 -11,0Z" fill="url(#bh-volume-r)"/>
+          <path class="bh-beam-core" d="M-2,0 L-4,-126 L1,-126 L2,0Z" fill="#ffd8d1" fill-opacity=".85" filter="url(#bh-soft-glow)"/>
         </g>
-        <g transform="translate(556,382.3)"><ellipse class="bh-motion bh-absorption" rx="7.5" ry="3.8" fill="none" stroke="#50efb0" stroke-width="1.1"/></g>
-      </g><g class="bh-radial-ray" data-cell="0-1" data-channel="g" data-direction="east" data-origin="530,314.5" data-branch-plane="96" data-boundary="2,0.4" data-end="582,414.5">
-        <g transform="translate(530,314.5)">
-          <g class="bh-motion bh-branch" style="--branch-start:-112.71px">
-            <g class="bh-branch-geometry" transform="rotate(62.53)">
-              <path class="bh-motion bh-branch-shaft" d="M0,0 L105.71,0" stroke="#50efb0" stroke-width="2.1" stroke-linecap="butt" fill="none"/>
-              <path class="bh-motion bh-radial-arrow" d="M112.71,0 L104.71,-4.2 L104.71,4.2Z" fill="#50efb0"/>
-            </g>
-          </g>
+        <g class="bh-motion bh-beam-end"><ellipse class="bh-beam-cap" cy="-126" rx="20" ry="6" fill="#ff493d" fill-opacity=".06" filter="url(#bh-soft-glow)"/></g>
+      </g>
+    </g><g transform="translate(570,278)">
+      <g class="bh-motion bh-exit-glow">
+        <ellipse rx="23" ry="8" fill="#33f590" fill-opacity=".5" filter="url(#bh-soft-glow)"/>
+      </g>
+      <g class="bh-motion bh-output" data-cell="2-3" data-channel="g" data-origin="570,278" data-tip="570,152" style="--beam-distance:126px">
+        <g class="bh-motion bh-beam-volume" mask="url(#bh-beam-envelope)">
+          <path d="M-11,0 L-22,-126 A22,7 0 0 1 22,-126 L11,0 A11,4 0 0 1 -11,0Z" fill="#33f590" fill-opacity=".32" filter="url(#bh-soft-glow)"/>
+          <path class="bh-beam-body" d="M-11,0 L-22,-126 A22,7 0 0 1 22,-126 L11,0 A11,4 0 0 1 -11,0Z" fill="url(#bh-volume-g)"/>
+          <path class="bh-beam-core" d="M-2,0 L-4,-126 L1,-126 L2,0Z" fill="#d5ffe4" fill-opacity=".85" filter="url(#bh-soft-glow)"/>
         </g>
-        <g transform="translate(582,414.5)"><ellipse class="bh-motion bh-absorption" rx="7.5" ry="3.8" fill="none" stroke="#50efb0" stroke-width="1.1"/></g>
-      </g><g class="bh-radial-ray" data-cell="0-1" data-channel="g" data-direction="south" data-origin="530,314.5" data-branch-plane="96" data-boundary="1.6,1" data-end="504,427.7">
-        <g transform="translate(530,314.5)">
-          <g class="bh-motion bh-branch" style="--branch-start:-116.15px">
-            <g class="bh-branch-geometry" transform="rotate(102.94)">
-              <path class="bh-motion bh-branch-shaft" d="M0,0 L109.15,0" stroke="#50efb0" stroke-width="2.1" stroke-linecap="butt" fill="none"/>
-              <path class="bh-motion bh-radial-arrow" d="M116.15,0 L108.15,-4.2 L108.15,4.2Z" fill="#50efb0"/>
-            </g>
-          </g>
-        </g>
-        <g transform="translate(504,427.7)"><ellipse class="bh-motion bh-absorption" rx="7.5" ry="3.8" fill="none" stroke="#50efb0" stroke-width="1.1"/></g>
-      </g><g class="bh-radial-ray" data-cell="0-1" data-channel="g" data-direction="west" data-origin="530,314.5" data-branch-plane="96" data-boundary="1,0.6" data-end="478,395.5">
-        <g transform="translate(530,314.5)">
-          <g class="bh-motion bh-branch" style="--branch-start:-96.25px">
-            <g class="bh-branch-geometry" transform="rotate(122.7)">
-              <path class="bh-motion bh-branch-shaft" d="M0,0 L89.25,0" stroke="#50efb0" stroke-width="2.1" stroke-linecap="butt" fill="none"/>
-              <path class="bh-motion bh-radial-arrow" d="M96.25,0 L88.25,-4.2 L88.25,4.2Z" fill="#50efb0"/>
-            </g>
-          </g>
-        </g>
-        <g transform="translate(478,395.5)"><ellipse class="bh-motion bh-absorption" rx="7.5" ry="3.8" fill="none" stroke="#50efb0" stroke-width="1.1"/></g>
-      </g><g class="bh-radial-ray" data-cell="0-2" data-channel="b" data-direction="north" data-origin="620,341.5" data-branch-plane="96" data-boundary="2.4,0" data-end="646,409.3">
-        <g transform="translate(620,341.5)">
-          <g class="bh-motion bh-branch" style="--branch-start:-72.61px">
-            <g class="bh-branch-geometry" transform="rotate(69.02)">
-              <path class="bh-motion bh-branch-shaft" d="M0,0 L65.61,0" stroke="#639dff" stroke-width="2.1" stroke-linecap="butt" fill="none"/>
-              <path class="bh-motion bh-radial-arrow" d="M72.61,0 L64.61,-4.2 L64.61,4.2Z" fill="#639dff"/>
-            </g>
-          </g>
-        </g>
-        <g transform="translate(646,409.3)"><ellipse class="bh-motion bh-absorption" rx="7.5" ry="3.8" fill="none" stroke="#639dff" stroke-width="1.1"/></g>
-      </g><g class="bh-radial-ray" data-cell="0-2" data-channel="b" data-direction="east" data-origin="620,341.5" data-branch-plane="96" data-boundary="3,0.4" data-end="672,441.5">
-        <g transform="translate(620,341.5)">
-          <g class="bh-motion bh-branch" style="--branch-start:-112.71px">
-            <g class="bh-branch-geometry" transform="rotate(62.53)">
-              <path class="bh-motion bh-branch-shaft" d="M0,0 L105.71,0" stroke="#639dff" stroke-width="2.1" stroke-linecap="butt" fill="none"/>
-              <path class="bh-motion bh-radial-arrow" d="M112.71,0 L104.71,-4.2 L104.71,4.2Z" fill="#639dff"/>
-            </g>
-          </g>
-        </g>
-        <g transform="translate(672,441.5)"><ellipse class="bh-motion bh-absorption" rx="7.5" ry="3.8" fill="none" stroke="#639dff" stroke-width="1.1"/></g>
-      </g><g class="bh-radial-ray" data-cell="0-2" data-channel="b" data-direction="south" data-origin="620,341.5" data-branch-plane="96" data-boundary="2.6,1" data-end="594,454.7">
-        <g transform="translate(620,341.5)">
-          <g class="bh-motion bh-branch" style="--branch-start:-116.15px">
-            <g class="bh-branch-geometry" transform="rotate(102.94)">
-              <path class="bh-motion bh-branch-shaft" d="M0,0 L109.15,0" stroke="#639dff" stroke-width="2.1" stroke-linecap="butt" fill="none"/>
-              <path class="bh-motion bh-radial-arrow" d="M116.15,0 L108.15,-4.2 L108.15,4.2Z" fill="#639dff"/>
-            </g>
-          </g>
-        </g>
-        <g transform="translate(594,454.7)"><ellipse class="bh-motion bh-absorption" rx="7.5" ry="3.8" fill="none" stroke="#639dff" stroke-width="1.1"/></g>
-      </g><g class="bh-radial-ray" data-cell="0-2" data-channel="b" data-direction="west" data-origin="620,341.5" data-branch-plane="96" data-boundary="2,0.6" data-end="568,422.5">
-        <g transform="translate(620,341.5)">
-          <g class="bh-motion bh-branch" style="--branch-start:-96.25px">
-            <g class="bh-branch-geometry" transform="rotate(122.7)">
-              <path class="bh-motion bh-branch-shaft" d="M0,0 L89.25,0" stroke="#639dff" stroke-width="2.1" stroke-linecap="butt" fill="none"/>
-              <path class="bh-motion bh-radial-arrow" d="M96.25,0 L88.25,-4.2 L88.25,4.2Z" fill="#639dff"/>
-            </g>
-          </g>
-        </g>
-        <g transform="translate(568,422.5)"><ellipse class="bh-motion bh-absorption" rx="7.5" ry="3.8" fill="none" stroke="#639dff" stroke-width="1.1"/></g>
-      </g><g class="bh-radial-ray" data-cell="0-3" data-channel="g" data-direction="north" data-origin="710,368.5" data-branch-plane="96" data-boundary="3.4,0" data-end="736,436.3">
-        <g transform="translate(710,368.5)">
-          <g class="bh-motion bh-branch" style="--branch-start:-72.61px">
-            <g class="bh-branch-geometry" transform="rotate(69.02)">
-              <path class="bh-motion bh-branch-shaft" d="M0,0 L65.61,0" stroke="#50efb0" stroke-width="2.1" stroke-linecap="butt" fill="none"/>
-              <path class="bh-motion bh-radial-arrow" d="M72.61,0 L64.61,-4.2 L64.61,4.2Z" fill="#50efb0"/>
-            </g>
-          </g>
-        </g>
-        <g transform="translate(736,436.3)"><ellipse class="bh-motion bh-absorption" rx="7.5" ry="3.8" fill="none" stroke="#50efb0" stroke-width="1.1"/></g>
-      </g><g class="bh-radial-ray" data-cell="0-3" data-channel="g" data-direction="east" data-origin="710,368.5" data-branch-plane="96" data-boundary="4,0.4" data-end="762,468.5">
-        <g transform="translate(710,368.5)">
-          <g class="bh-motion bh-branch" style="--branch-start:-112.71px">
-            <g class="bh-branch-geometry" transform="rotate(62.53)">
-              <path class="bh-motion bh-branch-shaft" d="M0,0 L105.71,0" stroke="#50efb0" stroke-width="2.1" stroke-linecap="butt" fill="none"/>
-              <path class="bh-motion bh-radial-arrow" d="M112.71,0 L104.71,-4.2 L104.71,4.2Z" fill="#50efb0"/>
-            </g>
-          </g>
-        </g>
-        <g transform="translate(762,468.5)"><ellipse class="bh-motion bh-absorption" rx="7.5" ry="3.8" fill="none" stroke="#50efb0" stroke-width="1.1"/></g>
-      </g><g class="bh-radial-ray" data-cell="0-3" data-channel="g" data-direction="south" data-origin="710,368.5" data-branch-plane="96" data-boundary="3.6,1" data-end="684,481.7">
-        <g transform="translate(710,368.5)">
-          <g class="bh-motion bh-branch" style="--branch-start:-116.15px">
-            <g class="bh-branch-geometry" transform="rotate(102.94)">
-              <path class="bh-motion bh-branch-shaft" d="M0,0 L109.15,0" stroke="#50efb0" stroke-width="2.1" stroke-linecap="butt" fill="none"/>
-              <path class="bh-motion bh-radial-arrow" d="M116.15,0 L108.15,-4.2 L108.15,4.2Z" fill="#50efb0"/>
-            </g>
-          </g>
-        </g>
-        <g transform="translate(684,481.7)"><ellipse class="bh-motion bh-absorption" rx="7.5" ry="3.8" fill="none" stroke="#50efb0" stroke-width="1.1"/></g>
-      </g><g class="bh-radial-ray" data-cell="0-3" data-channel="g" data-direction="west" data-origin="710,368.5" data-branch-plane="96" data-boundary="3,0.6" data-end="658,449.5">
-        <g transform="translate(710,368.5)">
-          <g class="bh-motion bh-branch" style="--branch-start:-96.25px">
-            <g class="bh-branch-geometry" transform="rotate(122.7)">
-              <path class="bh-motion bh-branch-shaft" d="M0,0 L89.25,0" stroke="#50efb0" stroke-width="2.1" stroke-linecap="butt" fill="none"/>
-              <path class="bh-motion bh-radial-arrow" d="M96.25,0 L88.25,-4.2 L88.25,4.2Z" fill="#50efb0"/>
-            </g>
-          </g>
-        </g>
-        <g transform="translate(658,449.5)"><ellipse class="bh-motion bh-absorption" rx="7.5" ry="3.8" fill="none" stroke="#50efb0" stroke-width="1.1"/></g>
-      </g><g class="bh-radial-ray" data-cell="1-0" data-channel="b" data-direction="north" data-origin="370,327.5" data-branch-plane="96" data-boundary="0.4,1" data-end="396,395.3">
-        <g transform="translate(370,327.5)">
-          <g class="bh-motion bh-branch" style="--branch-start:-72.61px">
-            <g class="bh-branch-geometry" transform="rotate(69.02)">
-              <path class="bh-motion bh-branch-shaft" d="M0,0 L65.61,0" stroke="#639dff" stroke-width="2.1" stroke-linecap="butt" fill="none"/>
-              <path class="bh-motion bh-radial-arrow" d="M72.61,0 L64.61,-4.2 L64.61,4.2Z" fill="#639dff"/>
-            </g>
-          </g>
-        </g>
-        <g transform="translate(396,395.3)"><ellipse class="bh-motion bh-absorption" rx="7.5" ry="3.8" fill="none" stroke="#639dff" stroke-width="1.1"/></g>
-      </g><g class="bh-radial-ray" data-cell="1-0" data-channel="b" data-direction="east" data-origin="370,327.5" data-branch-plane="96" data-boundary="1,1.4" data-end="422,427.5">
-        <g transform="translate(370,327.5)">
-          <g class="bh-motion bh-branch" style="--branch-start:-112.71px">
-            <g class="bh-branch-geometry" transform="rotate(62.53)">
-              <path class="bh-motion bh-branch-shaft" d="M0,0 L105.71,0" stroke="#639dff" stroke-width="2.1" stroke-linecap="butt" fill="none"/>
-              <path class="bh-motion bh-radial-arrow" d="M112.71,0 L104.71,-4.2 L104.71,4.2Z" fill="#639dff"/>
-            </g>
-          </g>
-        </g>
-        <g transform="translate(422,427.5)"><ellipse class="bh-motion bh-absorption" rx="7.5" ry="3.8" fill="none" stroke="#639dff" stroke-width="1.1"/></g>
-      </g><g class="bh-radial-ray" data-cell="1-0" data-channel="b" data-direction="south" data-origin="370,327.5" data-branch-plane="96" data-boundary="0.6,2" data-end="344,440.7">
-        <g transform="translate(370,327.5)">
-          <g class="bh-motion bh-branch" style="--branch-start:-116.15px">
-            <g class="bh-branch-geometry" transform="rotate(102.94)">
-              <path class="bh-motion bh-branch-shaft" d="M0,0 L109.15,0" stroke="#639dff" stroke-width="2.1" stroke-linecap="butt" fill="none"/>
-              <path class="bh-motion bh-radial-arrow" d="M116.15,0 L108.15,-4.2 L108.15,4.2Z" fill="#639dff"/>
-            </g>
-          </g>
-        </g>
-        <g transform="translate(344,440.7)"><ellipse class="bh-motion bh-absorption" rx="7.5" ry="3.8" fill="none" stroke="#639dff" stroke-width="1.1"/></g>
-      </g><g class="bh-radial-ray" data-cell="1-0" data-channel="b" data-direction="west" data-origin="370,327.5" data-branch-plane="96" data-boundary="0,1.6" data-end="318,408.5">
-        <g transform="translate(370,327.5)">
-          <g class="bh-motion bh-branch" style="--branch-start:-96.25px">
-            <g class="bh-branch-geometry" transform="rotate(122.7)">
-              <path class="bh-motion bh-branch-shaft" d="M0,0 L89.25,0" stroke="#639dff" stroke-width="2.1" stroke-linecap="butt" fill="none"/>
-              <path class="bh-motion bh-radial-arrow" d="M96.25,0 L88.25,-4.2 L88.25,4.2Z" fill="#639dff"/>
-            </g>
-          </g>
-        </g>
-        <g transform="translate(318,408.5)"><ellipse class="bh-motion bh-absorption" rx="7.5" ry="3.8" fill="none" stroke="#639dff" stroke-width="1.1"/></g>
-      </g><g class="bh-radial-ray" data-cell="1-1" data-channel="g" data-direction="north" data-origin="460,354.5" data-branch-plane="96" data-boundary="1.4,1" data-end="486,422.3">
-        <g transform="translate(460,354.5)">
-          <g class="bh-motion bh-branch" style="--branch-start:-72.61px">
-            <g class="bh-branch-geometry" transform="rotate(69.02)">
-              <path class="bh-motion bh-branch-shaft" d="M0,0 L65.61,0" stroke="#50efb0" stroke-width="2.1" stroke-linecap="butt" fill="none"/>
-              <path class="bh-motion bh-radial-arrow" d="M72.61,0 L64.61,-4.2 L64.61,4.2Z" fill="#50efb0"/>
-            </g>
-          </g>
-        </g>
-        <g transform="translate(486,422.3)"><ellipse class="bh-motion bh-absorption" rx="7.5" ry="3.8" fill="none" stroke="#50efb0" stroke-width="1.1"/></g>
-      </g><g class="bh-radial-ray" data-cell="1-1" data-channel="g" data-direction="east" data-origin="460,354.5" data-branch-plane="96" data-boundary="2,1.4" data-end="512,454.5">
-        <g transform="translate(460,354.5)">
-          <g class="bh-motion bh-branch" style="--branch-start:-112.71px">
-            <g class="bh-branch-geometry" transform="rotate(62.53)">
-              <path class="bh-motion bh-branch-shaft" d="M0,0 L105.71,0" stroke="#50efb0" stroke-width="2.1" stroke-linecap="butt" fill="none"/>
-              <path class="bh-motion bh-radial-arrow" d="M112.71,0 L104.71,-4.2 L104.71,4.2Z" fill="#50efb0"/>
-            </g>
-          </g>
-        </g>
-        <g transform="translate(512,454.5)"><ellipse class="bh-motion bh-absorption" rx="7.5" ry="3.8" fill="none" stroke="#50efb0" stroke-width="1.1"/></g>
-      </g><g class="bh-radial-ray" data-cell="1-1" data-channel="g" data-direction="south" data-origin="460,354.5" data-branch-plane="96" data-boundary="1.6,2" data-end="434,467.7">
-        <g transform="translate(460,354.5)">
-          <g class="bh-motion bh-branch" style="--branch-start:-116.15px">
-            <g class="bh-branch-geometry" transform="rotate(102.94)">
-              <path class="bh-motion bh-branch-shaft" d="M0,0 L109.15,0" stroke="#50efb0" stroke-width="2.1" stroke-linecap="butt" fill="none"/>
-              <path class="bh-motion bh-radial-arrow" d="M116.15,0 L108.15,-4.2 L108.15,4.2Z" fill="#50efb0"/>
-            </g>
-          </g>
-        </g>
-        <g transform="translate(434,467.7)"><ellipse class="bh-motion bh-absorption" rx="7.5" ry="3.8" fill="none" stroke="#50efb0" stroke-width="1.1"/></g>
-      </g><g class="bh-radial-ray" data-cell="1-1" data-channel="g" data-direction="west" data-origin="460,354.5" data-branch-plane="96" data-boundary="1,1.6" data-end="408,435.5">
-        <g transform="translate(460,354.5)">
-          <g class="bh-motion bh-branch" style="--branch-start:-96.25px">
-            <g class="bh-branch-geometry" transform="rotate(122.7)">
-              <path class="bh-motion bh-branch-shaft" d="M0,0 L89.25,0" stroke="#50efb0" stroke-width="2.1" stroke-linecap="butt" fill="none"/>
-              <path class="bh-motion bh-radial-arrow" d="M96.25,0 L88.25,-4.2 L88.25,4.2Z" fill="#50efb0"/>
-            </g>
-          </g>
-        </g>
-        <g transform="translate(408,435.5)"><ellipse class="bh-motion bh-absorption" rx="7.5" ry="3.8" fill="none" stroke="#50efb0" stroke-width="1.1"/></g>
-      </g><g class="bh-radial-ray" data-cell="1-2" data-channel="r" data-direction="north" data-origin="550,381.5" data-branch-plane="96" data-boundary="2.4,1" data-end="576,449.3">
-        <g transform="translate(550,381.5)">
-          <g class="bh-motion bh-branch" style="--branch-start:-72.61px">
-            <g class="bh-branch-geometry" transform="rotate(69.02)">
-              <path class="bh-motion bh-branch-shaft" d="M0,0 L65.61,0" stroke="#ff537c" stroke-width="2.1" stroke-linecap="butt" fill="none"/>
-              <path class="bh-motion bh-radial-arrow" d="M72.61,0 L64.61,-4.2 L64.61,4.2Z" fill="#ff537c"/>
-            </g>
-          </g>
-        </g>
-        <g transform="translate(576,449.3)"><ellipse class="bh-motion bh-absorption" rx="7.5" ry="3.8" fill="none" stroke="#ff537c" stroke-width="1.1"/></g>
-      </g><g class="bh-radial-ray" data-cell="1-2" data-channel="r" data-direction="east" data-origin="550,381.5" data-branch-plane="96" data-boundary="3,1.4" data-end="602,481.5">
-        <g transform="translate(550,381.5)">
-          <g class="bh-motion bh-branch" style="--branch-start:-112.71px">
-            <g class="bh-branch-geometry" transform="rotate(62.53)">
-              <path class="bh-motion bh-branch-shaft" d="M0,0 L105.71,0" stroke="#ff537c" stroke-width="2.1" stroke-linecap="butt" fill="none"/>
-              <path class="bh-motion bh-radial-arrow" d="M112.71,0 L104.71,-4.2 L104.71,4.2Z" fill="#ff537c"/>
-            </g>
-          </g>
-        </g>
-        <g transform="translate(602,481.5)"><ellipse class="bh-motion bh-absorption" rx="7.5" ry="3.8" fill="none" stroke="#ff537c" stroke-width="1.1"/></g>
-      </g><g class="bh-radial-ray" data-cell="1-2" data-channel="r" data-direction="south" data-origin="550,381.5" data-branch-plane="96" data-boundary="2.6,2" data-end="524,494.7">
-        <g transform="translate(550,381.5)">
-          <g class="bh-motion bh-branch" style="--branch-start:-116.15px">
-            <g class="bh-branch-geometry" transform="rotate(102.94)">
-              <path class="bh-motion bh-branch-shaft" d="M0,0 L109.15,0" stroke="#ff537c" stroke-width="2.1" stroke-linecap="butt" fill="none"/>
-              <path class="bh-motion bh-radial-arrow" d="M116.15,0 L108.15,-4.2 L108.15,4.2Z" fill="#ff537c"/>
-            </g>
-          </g>
-        </g>
-        <g transform="translate(524,494.7)"><ellipse class="bh-motion bh-absorption" rx="7.5" ry="3.8" fill="none" stroke="#ff537c" stroke-width="1.1"/></g>
-      </g><g class="bh-radial-ray" data-cell="1-2" data-channel="r" data-direction="west" data-origin="550,381.5" data-branch-plane="96" data-boundary="2,1.6" data-end="498,462.5">
-        <g transform="translate(550,381.5)">
-          <g class="bh-motion bh-branch" style="--branch-start:-96.25px">
-            <g class="bh-branch-geometry" transform="rotate(122.7)">
-              <path class="bh-motion bh-branch-shaft" d="M0,0 L89.25,0" stroke="#ff537c" stroke-width="2.1" stroke-linecap="butt" fill="none"/>
-              <path class="bh-motion bh-radial-arrow" d="M96.25,0 L88.25,-4.2 L88.25,4.2Z" fill="#ff537c"/>
-            </g>
-          </g>
-        </g>
-        <g transform="translate(498,462.5)"><ellipse class="bh-motion bh-absorption" rx="7.5" ry="3.8" fill="none" stroke="#ff537c" stroke-width="1.1"/></g>
-      </g><g class="bh-radial-ray" data-cell="1-3" data-channel="b" data-direction="north" data-origin="640,408.5" data-branch-plane="96" data-boundary="3.4,1" data-end="666,476.3">
-        <g transform="translate(640,408.5)">
-          <g class="bh-motion bh-branch" style="--branch-start:-72.61px">
-            <g class="bh-branch-geometry" transform="rotate(69.02)">
-              <path class="bh-motion bh-branch-shaft" d="M0,0 L65.61,0" stroke="#639dff" stroke-width="2.1" stroke-linecap="butt" fill="none"/>
-              <path class="bh-motion bh-radial-arrow" d="M72.61,0 L64.61,-4.2 L64.61,4.2Z" fill="#639dff"/>
-            </g>
-          </g>
-        </g>
-        <g transform="translate(666,476.3)"><ellipse class="bh-motion bh-absorption" rx="7.5" ry="3.8" fill="none" stroke="#639dff" stroke-width="1.1"/></g>
-      </g><g class="bh-radial-ray" data-cell="1-3" data-channel="b" data-direction="east" data-origin="640,408.5" data-branch-plane="96" data-boundary="4,1.4" data-end="692,508.5">
-        <g transform="translate(640,408.5)">
-          <g class="bh-motion bh-branch" style="--branch-start:-112.71px">
-            <g class="bh-branch-geometry" transform="rotate(62.53)">
-              <path class="bh-motion bh-branch-shaft" d="M0,0 L105.71,0" stroke="#639dff" stroke-width="2.1" stroke-linecap="butt" fill="none"/>
-              <path class="bh-motion bh-radial-arrow" d="M112.71,0 L104.71,-4.2 L104.71,4.2Z" fill="#639dff"/>
-            </g>
-          </g>
-        </g>
-        <g transform="translate(692,508.5)"><ellipse class="bh-motion bh-absorption" rx="7.5" ry="3.8" fill="none" stroke="#639dff" stroke-width="1.1"/></g>
-      </g><g class="bh-radial-ray" data-cell="1-3" data-channel="b" data-direction="south" data-origin="640,408.5" data-branch-plane="96" data-boundary="3.6,2" data-end="614,521.7">
-        <g transform="translate(640,408.5)">
-          <g class="bh-motion bh-branch" style="--branch-start:-116.15px">
-            <g class="bh-branch-geometry" transform="rotate(102.94)">
-              <path class="bh-motion bh-branch-shaft" d="M0,0 L109.15,0" stroke="#639dff" stroke-width="2.1" stroke-linecap="butt" fill="none"/>
-              <path class="bh-motion bh-radial-arrow" d="M116.15,0 L108.15,-4.2 L108.15,4.2Z" fill="#639dff"/>
-            </g>
-          </g>
-        </g>
-        <g transform="translate(614,521.7)"><ellipse class="bh-motion bh-absorption" rx="7.5" ry="3.8" fill="none" stroke="#639dff" stroke-width="1.1"/></g>
-      </g><g class="bh-radial-ray" data-cell="1-3" data-channel="b" data-direction="west" data-origin="640,408.5" data-branch-plane="96" data-boundary="3,1.6" data-end="588,489.5">
-        <g transform="translate(640,408.5)">
-          <g class="bh-motion bh-branch" style="--branch-start:-96.25px">
-            <g class="bh-branch-geometry" transform="rotate(122.7)">
-              <path class="bh-motion bh-branch-shaft" d="M0,0 L89.25,0" stroke="#639dff" stroke-width="2.1" stroke-linecap="butt" fill="none"/>
-              <path class="bh-motion bh-radial-arrow" d="M96.25,0 L88.25,-4.2 L88.25,4.2Z" fill="#639dff"/>
-            </g>
-          </g>
-        </g>
-        <g transform="translate(588,489.5)"><ellipse class="bh-motion bh-absorption" rx="7.5" ry="3.8" fill="none" stroke="#639dff" stroke-width="1.1"/></g>
-      </g><g class="bh-radial-ray" data-cell="2-0" data-channel="g" data-direction="north" data-origin="300,367.5" data-branch-plane="96" data-boundary="0.4,2" data-end="326,435.3">
-        <g transform="translate(300,367.5)">
-          <g class="bh-motion bh-branch" style="--branch-start:-72.61px">
-            <g class="bh-branch-geometry" transform="rotate(69.02)">
-              <path class="bh-motion bh-branch-shaft" d="M0,0 L65.61,0" stroke="#50efb0" stroke-width="2.1" stroke-linecap="butt" fill="none"/>
-              <path class="bh-motion bh-radial-arrow" d="M72.61,0 L64.61,-4.2 L64.61,4.2Z" fill="#50efb0"/>
-            </g>
-          </g>
-        </g>
-        <g transform="translate(326,435.3)"><ellipse class="bh-motion bh-absorption" rx="7.5" ry="3.8" fill="none" stroke="#50efb0" stroke-width="1.1"/></g>
-      </g><g class="bh-radial-ray" data-cell="2-0" data-channel="g" data-direction="east" data-origin="300,367.5" data-branch-plane="96" data-boundary="1,2.4" data-end="352,467.5">
-        <g transform="translate(300,367.5)">
-          <g class="bh-motion bh-branch" style="--branch-start:-112.71px">
-            <g class="bh-branch-geometry" transform="rotate(62.53)">
-              <path class="bh-motion bh-branch-shaft" d="M0,0 L105.71,0" stroke="#50efb0" stroke-width="2.1" stroke-linecap="butt" fill="none"/>
-              <path class="bh-motion bh-radial-arrow" d="M112.71,0 L104.71,-4.2 L104.71,4.2Z" fill="#50efb0"/>
-            </g>
-          </g>
-        </g>
-        <g transform="translate(352,467.5)"><ellipse class="bh-motion bh-absorption" rx="7.5" ry="3.8" fill="none" stroke="#50efb0" stroke-width="1.1"/></g>
-      </g><g class="bh-radial-ray" data-cell="2-0" data-channel="g" data-direction="south" data-origin="300,367.5" data-branch-plane="96" data-boundary="0.6,3" data-end="274,480.7">
-        <g transform="translate(300,367.5)">
-          <g class="bh-motion bh-branch" style="--branch-start:-116.15px">
-            <g class="bh-branch-geometry" transform="rotate(102.94)">
-              <path class="bh-motion bh-branch-shaft" d="M0,0 L109.15,0" stroke="#50efb0" stroke-width="2.1" stroke-linecap="butt" fill="none"/>
-              <path class="bh-motion bh-radial-arrow" d="M116.15,0 L108.15,-4.2 L108.15,4.2Z" fill="#50efb0"/>
-            </g>
-          </g>
-        </g>
-        <g transform="translate(274,480.7)"><ellipse class="bh-motion bh-absorption" rx="7.5" ry="3.8" fill="none" stroke="#50efb0" stroke-width="1.1"/></g>
-      </g><g class="bh-radial-ray" data-cell="2-0" data-channel="g" data-direction="west" data-origin="300,367.5" data-branch-plane="96" data-boundary="0,2.6" data-end="248,448.5">
-        <g transform="translate(300,367.5)">
-          <g class="bh-motion bh-branch" style="--branch-start:-96.25px">
-            <g class="bh-branch-geometry" transform="rotate(122.7)">
-              <path class="bh-motion bh-branch-shaft" d="M0,0 L89.25,0" stroke="#50efb0" stroke-width="2.1" stroke-linecap="butt" fill="none"/>
-              <path class="bh-motion bh-radial-arrow" d="M96.25,0 L88.25,-4.2 L88.25,4.2Z" fill="#50efb0"/>
-            </g>
-          </g>
-        </g>
-        <g transform="translate(248,448.5)"><ellipse class="bh-motion bh-absorption" rx="7.5" ry="3.8" fill="none" stroke="#50efb0" stroke-width="1.1"/></g>
-      </g><g class="bh-radial-ray" data-cell="2-1" data-channel="r" data-direction="north" data-origin="390,394.5" data-branch-plane="96" data-boundary="1.4,2" data-end="416,462.3">
-        <g transform="translate(390,394.5)">
-          <g class="bh-motion bh-branch" style="--branch-start:-72.61px">
-            <g class="bh-branch-geometry" transform="rotate(69.02)">
-              <path class="bh-motion bh-branch-shaft" d="M0,0 L65.61,0" stroke="#ff537c" stroke-width="2.1" stroke-linecap="butt" fill="none"/>
-              <path class="bh-motion bh-radial-arrow" d="M72.61,0 L64.61,-4.2 L64.61,4.2Z" fill="#ff537c"/>
-            </g>
-          </g>
-        </g>
-        <g transform="translate(416,462.3)"><ellipse class="bh-motion bh-absorption" rx="7.5" ry="3.8" fill="none" stroke="#ff537c" stroke-width="1.1"/></g>
-      </g><g class="bh-radial-ray" data-cell="2-1" data-channel="r" data-direction="east" data-origin="390,394.5" data-branch-plane="96" data-boundary="2,2.4" data-end="442,494.5">
-        <g transform="translate(390,394.5)">
-          <g class="bh-motion bh-branch" style="--branch-start:-112.71px">
-            <g class="bh-branch-geometry" transform="rotate(62.53)">
-              <path class="bh-motion bh-branch-shaft" d="M0,0 L105.71,0" stroke="#ff537c" stroke-width="2.1" stroke-linecap="butt" fill="none"/>
-              <path class="bh-motion bh-radial-arrow" d="M112.71,0 L104.71,-4.2 L104.71,4.2Z" fill="#ff537c"/>
-            </g>
-          </g>
-        </g>
-        <g transform="translate(442,494.5)"><ellipse class="bh-motion bh-absorption" rx="7.5" ry="3.8" fill="none" stroke="#ff537c" stroke-width="1.1"/></g>
-      </g><g class="bh-radial-ray" data-cell="2-1" data-channel="r" data-direction="south" data-origin="390,394.5" data-branch-plane="96" data-boundary="1.6,3" data-end="364,507.7">
-        <g transform="translate(390,394.5)">
-          <g class="bh-motion bh-branch" style="--branch-start:-116.15px">
-            <g class="bh-branch-geometry" transform="rotate(102.94)">
-              <path class="bh-motion bh-branch-shaft" d="M0,0 L109.15,0" stroke="#ff537c" stroke-width="2.1" stroke-linecap="butt" fill="none"/>
-              <path class="bh-motion bh-radial-arrow" d="M116.15,0 L108.15,-4.2 L108.15,4.2Z" fill="#ff537c"/>
-            </g>
-          </g>
-        </g>
-        <g transform="translate(364,507.7)"><ellipse class="bh-motion bh-absorption" rx="7.5" ry="3.8" fill="none" stroke="#ff537c" stroke-width="1.1"/></g>
-      </g><g class="bh-radial-ray" data-cell="2-1" data-channel="r" data-direction="west" data-origin="390,394.5" data-branch-plane="96" data-boundary="1,2.6" data-end="338,475.5">
-        <g transform="translate(390,394.5)">
-          <g class="bh-motion bh-branch" style="--branch-start:-96.25px">
-            <g class="bh-branch-geometry" transform="rotate(122.7)">
-              <path class="bh-motion bh-branch-shaft" d="M0,0 L89.25,0" stroke="#ff537c" stroke-width="2.1" stroke-linecap="butt" fill="none"/>
-              <path class="bh-motion bh-radial-arrow" d="M96.25,0 L88.25,-4.2 L88.25,4.2Z" fill="#ff537c"/>
-            </g>
-          </g>
-        </g>
-        <g transform="translate(338,475.5)"><ellipse class="bh-motion bh-absorption" rx="7.5" ry="3.8" fill="none" stroke="#ff537c" stroke-width="1.1"/></g>
-      </g><g class="bh-radial-ray" data-cell="2-2" data-channel="g" data-direction="north" data-origin="480,421.5" data-branch-plane="96" data-boundary="2.4,2" data-end="506,489.3">
-        <g transform="translate(480,421.5)">
-          <g class="bh-motion bh-branch" style="--branch-start:-72.61px">
-            <g class="bh-branch-geometry" transform="rotate(69.02)">
-              <path class="bh-motion bh-branch-shaft" d="M0,0 L65.61,0" stroke="#50efb0" stroke-width="2.1" stroke-linecap="butt" fill="none"/>
-              <path class="bh-motion bh-radial-arrow" d="M72.61,0 L64.61,-4.2 L64.61,4.2Z" fill="#50efb0"/>
-            </g>
-          </g>
-        </g>
-        <g transform="translate(506,489.3)"><ellipse class="bh-motion bh-absorption" rx="7.5" ry="3.8" fill="none" stroke="#50efb0" stroke-width="1.1"/></g>
-      </g><g class="bh-radial-ray" data-cell="2-2" data-channel="g" data-direction="east" data-origin="480,421.5" data-branch-plane="96" data-boundary="3,2.4" data-end="532,521.5">
-        <g transform="translate(480,421.5)">
-          <g class="bh-motion bh-branch" style="--branch-start:-112.71px">
-            <g class="bh-branch-geometry" transform="rotate(62.53)">
-              <path class="bh-motion bh-branch-shaft" d="M0,0 L105.71,0" stroke="#50efb0" stroke-width="2.1" stroke-linecap="butt" fill="none"/>
-              <path class="bh-motion bh-radial-arrow" d="M112.71,0 L104.71,-4.2 L104.71,4.2Z" fill="#50efb0"/>
-            </g>
-          </g>
-        </g>
-        <g transform="translate(532,521.5)"><ellipse class="bh-motion bh-absorption" rx="7.5" ry="3.8" fill="none" stroke="#50efb0" stroke-width="1.1"/></g>
-      </g><g class="bh-radial-ray" data-cell="2-2" data-channel="g" data-direction="south" data-origin="480,421.5" data-branch-plane="96" data-boundary="2.6,3" data-end="454,534.7">
-        <g transform="translate(480,421.5)">
-          <g class="bh-motion bh-branch" style="--branch-start:-116.15px">
-            <g class="bh-branch-geometry" transform="rotate(102.94)">
-              <path class="bh-motion bh-branch-shaft" d="M0,0 L109.15,0" stroke="#50efb0" stroke-width="2.1" stroke-linecap="butt" fill="none"/>
-              <path class="bh-motion bh-radial-arrow" d="M116.15,0 L108.15,-4.2 L108.15,4.2Z" fill="#50efb0"/>
-            </g>
-          </g>
-        </g>
-        <g transform="translate(454,534.7)"><ellipse class="bh-motion bh-absorption" rx="7.5" ry="3.8" fill="none" stroke="#50efb0" stroke-width="1.1"/></g>
-      </g><g class="bh-radial-ray" data-cell="2-2" data-channel="g" data-direction="west" data-origin="480,421.5" data-branch-plane="96" data-boundary="2,2.6" data-end="428,502.5">
-        <g transform="translate(480,421.5)">
-          <g class="bh-motion bh-branch" style="--branch-start:-96.25px">
-            <g class="bh-branch-geometry" transform="rotate(122.7)">
-              <path class="bh-motion bh-branch-shaft" d="M0,0 L89.25,0" stroke="#50efb0" stroke-width="2.1" stroke-linecap="butt" fill="none"/>
-              <path class="bh-motion bh-radial-arrow" d="M96.25,0 L88.25,-4.2 L88.25,4.2Z" fill="#50efb0"/>
-            </g>
-          </g>
-        </g>
-        <g transform="translate(428,502.5)"><ellipse class="bh-motion bh-absorption" rx="7.5" ry="3.8" fill="none" stroke="#50efb0" stroke-width="1.1"/></g>
-      </g><g class="bh-radial-ray" data-cell="2-3" data-channel="b" data-direction="north" data-origin="570,448.5" data-branch-plane="96" data-boundary="3.4,2" data-end="596,516.3">
-        <g transform="translate(570,448.5)">
-          <g class="bh-motion bh-branch" style="--branch-start:-72.61px">
-            <g class="bh-branch-geometry" transform="rotate(69.02)">
-              <path class="bh-motion bh-branch-shaft" d="M0,0 L65.61,0" stroke="#639dff" stroke-width="2.1" stroke-linecap="butt" fill="none"/>
-              <path class="bh-motion bh-radial-arrow" d="M72.61,0 L64.61,-4.2 L64.61,4.2Z" fill="#639dff"/>
-            </g>
-          </g>
-        </g>
-        <g transform="translate(596,516.3)"><ellipse class="bh-motion bh-absorption" rx="7.5" ry="3.8" fill="none" stroke="#639dff" stroke-width="1.1"/></g>
-      </g><g class="bh-radial-ray" data-cell="2-3" data-channel="b" data-direction="east" data-origin="570,448.5" data-branch-plane="96" data-boundary="4,2.4" data-end="622,548.5">
-        <g transform="translate(570,448.5)">
-          <g class="bh-motion bh-branch" style="--branch-start:-112.71px">
-            <g class="bh-branch-geometry" transform="rotate(62.53)">
-              <path class="bh-motion bh-branch-shaft" d="M0,0 L105.71,0" stroke="#639dff" stroke-width="2.1" stroke-linecap="butt" fill="none"/>
-              <path class="bh-motion bh-radial-arrow" d="M112.71,0 L104.71,-4.2 L104.71,4.2Z" fill="#639dff"/>
-            </g>
-          </g>
-        </g>
-        <g transform="translate(622,548.5)"><ellipse class="bh-motion bh-absorption" rx="7.5" ry="3.8" fill="none" stroke="#639dff" stroke-width="1.1"/></g>
-      </g><g class="bh-radial-ray" data-cell="2-3" data-channel="b" data-direction="south" data-origin="570,448.5" data-branch-plane="96" data-boundary="3.6,3" data-end="544,561.7">
-        <g transform="translate(570,448.5)">
-          <g class="bh-motion bh-branch" style="--branch-start:-116.15px">
-            <g class="bh-branch-geometry" transform="rotate(102.94)">
-              <path class="bh-motion bh-branch-shaft" d="M0,0 L109.15,0" stroke="#639dff" stroke-width="2.1" stroke-linecap="butt" fill="none"/>
-              <path class="bh-motion bh-radial-arrow" d="M116.15,0 L108.15,-4.2 L108.15,4.2Z" fill="#639dff"/>
-            </g>
-          </g>
-        </g>
-        <g transform="translate(544,561.7)"><ellipse class="bh-motion bh-absorption" rx="7.5" ry="3.8" fill="none" stroke="#639dff" stroke-width="1.1"/></g>
-      </g><g class="bh-radial-ray" data-cell="2-3" data-channel="b" data-direction="west" data-origin="570,448.5" data-branch-plane="96" data-boundary="3,2.6" data-end="518,529.5">
-        <g transform="translate(570,448.5)">
-          <g class="bh-motion bh-branch" style="--branch-start:-96.25px">
-            <g class="bh-branch-geometry" transform="rotate(122.7)">
-              <path class="bh-motion bh-branch-shaft" d="M0,0 L89.25,0" stroke="#639dff" stroke-width="2.1" stroke-linecap="butt" fill="none"/>
-              <path class="bh-motion bh-radial-arrow" d="M96.25,0 L88.25,-4.2 L88.25,4.2Z" fill="#639dff"/>
-            </g>
-          </g>
-        </g>
-        <g transform="translate(518,529.5)"><ellipse class="bh-motion bh-absorption" rx="7.5" ry="3.8" fill="none" stroke="#639dff" stroke-width="1.1"/></g>
-      </g></g></svg>
+        <g class="bh-motion bh-beam-end"><ellipse class="bh-beam-cap" cy="-126" rx="20" ry="6" fill="#33f590" fill-opacity=".06" filter="url(#bh-soft-glow)"/></g>
+      </g>
+    </g></g></svg>

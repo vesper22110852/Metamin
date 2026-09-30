@@ -1,0 +1,45 @@
+/* Notes uses the existing academic site's type and blue accent. */
+.notes-header { max-width: 900px; }
+.notes-header .page-intro { word-break: keep-all; }
+.notes-topics { display: flex; flex-wrap: wrap; gap: 8px 20px; margin: 22px 0 0; padding: 0; list-style: none; color: var(--muted); font-size: 13px; }
+.notes-topics li { display: inline-flex; align-items: center; gap: 9px; }
+.notes-topics li::before { content: ""; width: 4px; height: 4px; border-radius: 50%; background: var(--accent); }
+.notes-feed { margin-top: 44px; }
+.notes-count { color: var(--muted); font-variant-numeric: tabular-nums; }
+.notes-list { display: grid; gap: 16px; }
+.notes-empty { display: flex; align-items: center; flex-direction: column; justify-content: center; min-height: 266px; padding: 44px 28px; border: 1px solid var(--line); border-radius: 18px; background: var(--surface); text-align: center; box-shadow: var(--shadow); }
+.notes-empty-mark { display: block; width: 32px; height: 3px; margin-bottom: 24px; border-radius: 2px; background: var(--accent); }
+.notes-empty h3 { margin-bottom: 12px; font-size: 19px; font-weight: 600; letter-spacing: -.4px; }
+.notes-empty p { max-width: 460px; margin: 0; color: var(--muted); font-size: 14px; word-break: keep-all; }
+.note-card { padding: 27px 30px; border: 1px solid var(--line); border-radius: 16px; background: var(--surface); }
+.note-meta { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 16px; margin-bottom: 12px; color: var(--muted); font-size: 13px; }
+.note-category { color: var(--accent); font-weight: 550; }
+.note-card h3 { margin: 0 0 10px; font-size: 22px; line-height: 1.5; word-break: keep-all; overflow-wrap: anywhere; }
+.note-card h3 a { color: var(--ink); }
+.note-card h3 a:hover { color: var(--accent); }
+.note-excerpt { max-width: 800px; margin: 0; color: var(--muted); font-size: 15px; word-break: keep-all; }
+.note-page { max-width: 800px; }
+.note-header { max-width: none; padding-bottom: 26px; border-bottom: 1px solid var(--line); }
+.note-header h1 { word-break: keep-all; }
+.note-header .note-meta { margin: 20px 0 0; }
+.note-body { padding-top: 32px; font-size: 17px; line-height: 1.95; overflow-wrap: anywhere; word-break: keep-all; }
+.note-body h2 { margin: 40px 0 18px; font-size: 25px; }
+.note-body h3 { margin: 30px 0 14px; font-size: 21px; }
+.note-body p { margin: 0 0 24px; }
+.note-body figure { margin: 32px 0; }
+.note-body figure img { width: 100%; height: auto; border-radius: 12px; }
+.note-body figcaption { margin-top: 9px; color: var(--muted); font-size: 13px; text-align: center; }
+.note-body blockquote { margin: 28px 0; padding: 4px 0 4px 22px; border-left: 3px solid var(--accent); color: var(--muted); }
+.note-body blockquote p:last-child { margin-bottom: 0; }
+.note-return { margin: 40px 0 0; padding-top: 22px; border-top: 1px solid var(--line); }
+.note-return a { display: inline-flex; align-items: center; min-height: 44px; font-size: 14px; }
+@media(max-width:640px) {
+  .notes-topics { gap: 8px 16px; font-size: 12px; }
+  .notes-feed { margin-top: 34px; }
+  .notes-empty { min-height: 245px; padding: 34px 24px; border-radius: 14px; }
+  .notes-empty h3 { font-size: 18px; }
+  .note-card { padding: 22px; }
+  .note-card h3 { font-size: 20px; }
+  .note-body { padding-top: 26px; font-size: 16px; }
+  .note-body h2 { font-size: 23px; }
+}

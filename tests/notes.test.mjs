@@ -7,21 +7,22 @@ import { fileURLToPath } from "node:url";
 const root = fileURLToPath(new URL("../", import.meta.url));
 const read = (file) => readFileSync(join(root, file), "utf8");
 
-test("Notes lists the owner-authorized first research note", () => {
+test("Notes provides an empty writing space after the owner withdraws the draft", () => {
   const html = read("notes.html");
   const main = html.match(/<main\b[\s\S]*?<\/main>/)?.[0];
   assert.ok(main, "Notes needs main content");
   assert.ok(/<html lang="ko">/.test(html) || /<main[^>]*lang="ko"/.test(main)
     || (/<p[^>]*lang="ko"[^>]*>장학금/.test(main) && /<section[^>]*lang="ko"/.test(main)),
     "Korean introductory text and writing area need the appropriate language annotation");
-  assert.doesNotMatch(html, /name="robots" content="noindex"/);
+  assert.match(html, /name="robots" content="noindex"/);
   assert.match(html, /href="assets\/notes\.css(?:\?[^"]*)?"/);
   assert.match(main, /연구와 개발 과정에서 배운 것들/);
   assert.match(main, /글 모아보기|글모아보기/);
-  assert.equal((main.match(/class="note-card"/g) || []).length, 1);
-  assert.match(main, /class="notes-count">1 post</);
-  assert.match(main, /href="notes\/meep-source-and-performance-plan\.html"/);
-  assert.doesNotMatch(main, /notes-empty|아직 작성된 글이 없습니다/);
+  assert.equal((main.match(/class="note-card"/g) || []).length, 0);
+  assert.match(main, /class="notes-count">0 posts</);
+  assert.match(main, /notes-empty|아직 공개된 글이 없습니다/);
+  assert.doesNotMatch(main, /<article\b|href="(?:\.\/)?notes\//,
+    "Unpublished drafts must not appear as public article cards or links");
   assert.doesNotMatch(main, /<button\b|role="(?:button|tab)"|href="#"|data-filter|aria-pressed/,
     "Decorative topics must not masquerade as working filters");
 });

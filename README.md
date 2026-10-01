@@ -35,7 +35,7 @@ Double-click **Metamin Preview** on the Windows desktop to open the site. `scrip
 - `assets/paper-summary.css` / `assets/summary-player.mjs`: reusable 20-second publication player. The paper summary autoplays once when first visible. This specific film has an owner-approved reduced-motion exception; the reusable player's default and other animations still respect reduced motion. Pause, restart, seeking and chapter navigation remain available; leaving the view pauses playback without automatic resumption. No looping, audio or external video host.
 - `assets/polarization-scene.mjs` / `assets/polarization-summary.js`: first paper's normal-incidence, five-layer color/polarization story. x-pol colors are sampled from published Figure 1(e); a representative cyan from Figure 1(f) summarizes y-pol. Provenance and the original small y-pol differences are recorded in `scripts/polarization-color-samples.json`. The cutaway, vertical scale and polarization transitions are schematic, not reconstructed spectra, measured footage or fabrication evidence. `node scripts/build-polarization-fallback.mjs` regenerates its static SVG fallback.
 - `research/`: project detail pages and a compatibility redirect for the former paper-summary URL.
-- `notes.html` and `notes/`: research and development notes, scholarship applications, conferences, research life, and other experiences. Notes sits between Publications and About. The first owner-authorized post records the Meep source investigation and planned performance experiments.
+- `notes.html` and `notes/`: research and development notes, scholarship applications, conferences, research life, and other experiences. Notes sits between Publications and About. The owner withdrew the first draft and will write future notes from direct experience; no posts are currently published.
 - `assets/notes.css`: responsive post-list and reading layouts; `scripts/templates/note.html` is the unpublished article template.
 - `about.html`: profile, contact information, and CV download area.
 - `assets/site.css`: shared colors, typography, panels, and responsive layout.
@@ -44,7 +44,7 @@ Double-click **Metamin Preview** on the Windows desktop to open the site. `scrip
 
 Use relative links for regular pages so local previews and the `/Metamin/` project site both work. The 404 page uses project-root links because a missing URL can be arbitrarily nested. Shared navigation and ordinary page links use `?v=9`; the shared stylesheet uses `?v=10` for the five-item mobile navigation. Feature assets and summary links have their own cache versions. Canonical URLs remain unversioned.
 
-Notes is visible in navigation. Its index and the published source-study post are in the sitemap and can be indexed. The old `notes/why-decoupling-matters.html` stays an unlisted, `noindex` placeholder with no article body. Add only owner-authorized content. Project descriptions contain only the scope supplied by the owner, without inferred results or performance claims.
+Notes is visible in navigation, but its empty index is marked `noindex` and excluded from the sitemap. Unpublished drafts must remain outside this public repository and the deployed website. The old `notes/why-decoupling-matters.html` stays an unlisted, `noindex` placeholder with no article body. Add only owner-authorized content. Project descriptions contain only the scope supplied by the owner, without inferred results or performance claims.
 
 ### Adding a Note
 
@@ -92,7 +92,7 @@ README, scripts, tests, and preview files are excluded from the Pages artifact, 
 
 ## Current copy changes
 
-- First Note (2026-10-01): the owner requested a continuing patch/research-note record and explicitly chose to publish the current code investigation and experiment plan. Added `notes/meep-source-and-performance-plan.html`, its Notes card and sitemap entry. Existing run timings are labeled as a single historical observation; no controlled Meep/Lumerical benchmark or speed improvement is claimed. Notes now includes research and development alongside personal writing. Future entries should distinguish measured results, hypotheses and planned changes.
+- Draft withdrawn (2026-10-01): at the owner's request, removed the first note from the current public repository, Notes listing, sitemap, and deployment. A local copy is kept outside the public repository. Earlier public Git commits are retained; deleting the current page does not erase publication history. Future prose should be supplied or reviewed by the owner before publication.
 
 - Summary playback: ~~user-started; no autoplay~~ → one-time autoplay when visible, including an owner-approved reduced-motion exception for this paper film only; manual controls remain available.
 

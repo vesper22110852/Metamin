@@ -95,10 +95,10 @@ test("Research contains only the two supplied ongoing projects; papers live in P
   assert.match(publications, /href="publications\/polarization-decoupled-cavity\.html\?v=16"/);
   assert.match(legacy, /http-equiv="refresh" content="0; url=\.\.\/publications\/polarization-decoupled-cavity\.html\?v=9"/);
   const sitemap = readFileSync(join(root, "sitemap.xml"), "utf8");
-  assert.doesNotMatch(sitemap, /\/notes\/|\/research\/polarization-decoupled-cavity/);
+  assert.doesNotMatch(sitemap, /\/notes\/why-decoupling-matters|\/research\/polarization-decoupled-cavity/);
   assert.match(sitemap, /https:\/\/vesper22110852\.github\.io\/Metamin\/notes\.html/);
   assert.match(sitemap, /https:\/\/vesper22110852\.github\.io\/Metamin\/research\/blackhole\.html/);
-  assert.match(readFileSync(join(root, "notes.html"), "utf8"), /name="robots" content="noindex"/);
+  assert.doesNotMatch(readFileSync(join(root, "notes.html"), "utf8"), /name="robots" content="noindex"/);
 });
 
 test("public portrait is JPEG without camera/editing metadata", () => {

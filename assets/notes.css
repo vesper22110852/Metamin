@@ -20,7 +20,7 @@
 .note-excerpt { max-width: 800px; margin: 0; color: var(--muted); font-size: 15px; word-break: keep-all; }
 .note-page { max-width: 800px; }
 .note-header { max-width: none; padding-bottom: 26px; border-bottom: 1px solid var(--line); }
-.note-header h1 { word-break: keep-all; }
+.note-header h1 { word-break: keep-all; text-wrap: balance; }
 .note-header .note-meta { margin: 20px 0 0; }
 .note-body { padding-top: 32px; font-size: 17px; line-height: 1.95; overflow-wrap: anywhere; word-break: keep-all; }
 .note-body h2 { margin: 40px 0 18px; font-size: 25px; }
@@ -31,6 +31,22 @@
 .note-body figcaption { margin-top: 9px; color: var(--muted); font-size: 13px; text-align: center; }
 .note-body blockquote { margin: 28px 0; padding: 4px 0 4px 22px; border-left: 3px solid var(--accent); color: var(--muted); }
 .note-body blockquote p:last-child { margin-bottom: 0; }
+.note-body code { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: .86em; }
+.note-body :not(pre) > code { padding: 2px 5px; border-radius: 4px; background: var(--bg); overflow-wrap: anywhere; }
+.note-body pre { margin: 24px 0; padding: 20px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); white-space: pre-wrap; overflow-wrap: anywhere; line-height: 1.75; }
+.note-body ul, .note-body ol { margin: 0 0 24px; padding-left: 24px; }
+.note-body li + li { margin-top: 10px; }
+.note-status { margin-bottom: 28px; padding: 18px 20px; border-left: 3px solid var(--accent); background: var(--surface); border-radius: 0 10px 10px 0; }
+.note-body .note-status p { margin: 0; font-size: 15px; }
+.note-body .note-status p + p { margin-top: 8px; }
+.note-table-wrap { margin: 24px 0; max-width: 100%; overflow-x: auto; }
+.note-table { width: 100%; border-collapse: collapse; font-size: 15px; line-height: 1.7; }
+.note-table caption { padding-bottom: 12px; text-align: left; color: var(--muted); }
+.note-table th, .note-table td { padding: 12px 14px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+.note-table thead th { background: var(--surface); font-weight: 600; }
+.note-table tbody th { font-weight: 500; }
+.note-table td:last-child { font-variant-numeric: tabular-nums; }
+.note-references { font-size: 15px; }
 .note-return { margin: 40px 0 0; padding-top: 22px; border-top: 1px solid var(--line); }
 .note-return a { display: inline-flex; align-items: center; min-height: 44px; font-size: 14px; }
 @media(max-width:640px) {
@@ -42,4 +58,6 @@
   .note-card h3 { font-size: 20px; }
   .note-body { padding-top: 26px; font-size: 16px; }
   .note-body h2 { font-size: 23px; }
+  .note-body pre { padding: 16px; }
+  .note-table th, .note-table td { padding: 10px 8px; }
 }

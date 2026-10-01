@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Meep 1.34.0의 계산 흐름과 MEEP Studio의 실행 방식을 조사하고, 성능 개선 전의 관찰과 비교 실험 계획을 정리한다.">
+  <meta name="theme-color" content="#f7f8fb">
+  <title>Meep 소스 읽기: 계산 흐름과 성능 검증 계획 — Metamin</title>
+  <link rel="canonical" href="https://vesper22110852.github.io/Metamin/notes/meep-source-and-performance-plan.html">
+  <link rel="icon" href="../assets/favicon.svg?v=8" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/site.css?v=10">
+  <link rel="stylesheet" href="../assets/notes.css?v=2">
+  <script src="../assets/site.js?v=2" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">본문으로 바로가기</a>
+  <header class="site-header">
+    <div class="site-shell nav-wrap">
+      <a class="brand" href="../index.html?v=9" aria-label="Metamin home">Metamin</a>
+      <nav class="site-nav" aria-label="Primary navigation" lang="en">
+        <a href="../index.html?v=9">Home</a>
+        <a href="../research.html?v=9">Research</a>
+        <a href="../publications.html?v=9">Publications</a>
+        <a href="../notes.html?v=9" aria-current="page">Notes</a>
+        <a href="../about.html?v=9">About</a>
+      </nav>
+    </div>
+  </header>
+  <main id="main" class="site-shell note-page">
+    <article>
+      <header class="page-header note-header">
+        <p class="eyebrow"><a href="../notes.html?v=9">Notes</a> / MEEP Studio · 연구 노트 01</p>
+        <h1>Meep 소스 읽기: 계산 흐름과 성능 검증 계획</h1>
+        <p class="page-intro">전자기장 계산의 실행 경로를 이해하고, 성능 개선을 검증하기 위한 출발점을 정리한다.</p>
+        <div class="note-meta">
+          <time datetime="2026-10-01">2026-10-01</time>
+          <span>Seokmin Kim</span>
+        </div>
+      </header>
+      <div class="note-body">
+        <aside class="note-status" aria-label="이번 기록의 상태">
+          <p><strong>단계: 소스 조사 · 성능 개선 전</strong></p>
+          <p>Meep 1.34.0을 기준으로 계산 흐름과 현재 실행 방식을 확인했다. 이 글에서 다루는 속도 개선 후보는 아직 통제된 비교 실험으로 검증하거나 적용하지 않았다.</p>
+        </aside>
+
+        <h2>소스를 읽기 시작하는 이유</h2>
+        <p>MEEP Studio는 Meep을 더 쉽게 사용할 수 있도록 만드는 GUI다. 구조를 배치하고 모니터를 설정하는 편의성뿐 아니라, 설정한 내용이 실제 전자기장 계산에 어떻게 전달되는지도 이해할 필요가 있다.</p>
+        <p>계산 시간을 줄이는 개발에는 물리적 적용 조건과 수치해법에 대한 판단이 필요하다. 앞으로는 소스를 직접 공부하면서 병목을 계측하고, 변경 전후의 결과와 실행 시간을 함께 비교하려 한다. 이 노트는 그 과정의 패치 기록과 연구 기록을 쌓아가는 첫 글이다.</p>
+        <p>GUI 수정, Studio의 실행 방식 변경, Meep 엔진 변경은 각각 기여 범위를 구분해서 기록한다. 이번 조사에서는 설치된 엔진이나 진행 중인 계산을 변경하지 않았다.</p>
+
+        <h2>Python에서 C++ 계산으로 이어지는 흐름</h2>
+        <p>설치 환경은 conda-forge의 <code>pymeep 1.34.0</code>, MPICH 기반 MPI 빌드다. 같은 버전의 공식 소스를 학습용으로 받아두고, <code>simulation.py</code>, <code>geom.py</code>, <code>source.py</code>, <code>adjoint/optimization_problem.py</code>가 설치된 파일과 일치하는 것을 확인했다. C++ 바이너리의 컴파일 옵션은 별도로 확인할 항목이다.</p>
+        <pre><code>Studio의 구조·소스·모니터 설정
+  → Meep의 Simulation 초기화
+  → Python 시간 반복과 종료 조건
+  → SWIG 연결부
+  → C++ fields::step()
+  → 격자 장 갱신·경계 데이터 교환·DFT 누적</code></pre>
+        <p>Python에는 실제 시간 반복문과 콜백 처리가 있다. 반복문 안의 <code>self.fields.step()</code>가 C++ 엔진을 호출하고, 격자마다 Maxwell 방정식을 갱신하는 연산은 C++에서 수행한다. 이 두 층을 구분해야 GUI의 실행 방식과 엔진의 계산 비용을 각각 살펴볼 수 있다.</p>
+        <p><a href="https://github.com/NanoComp/meep/blob/v1.34.0/src/step.cpp#L35"><code>src/step.cpp</code>의 <code>fields::step()</code></a>은 한 시간 단계의 순서를 보여준다. 기본 흐름은 E의 curl로 B를 갱신하고, 물성 관계로 H를 구한 뒤, H의 curl로 D를 갱신하고 E를 구하는 것이다. 광원, 분산 분극, 경계 교환, PML 보조장이 해당 단계에 연결되고 마지막에는 Fourier 성분을 누적한다.</p>
+        <p>실제 이웃 격자의 차분 연산은 <a href="https://github.com/NanoComp/meep/blob/v1.34.0/src/step_generic.cpp#L65"><code>step_generic.cpp</code>의 <code>step_curl()</code></a>에서 확인할 수 있다. 일반적인 시간영역 FDTD는 이웃 격자의 장 값을 읽어 현재 값을 갱신하는 명시적 계산을 반복한다. 별도의 주파수영역 <code>solve_cw</code> 경로는 구분해서 읽어야 한다.</p>
+
+        <h2>먼저 읽을 소스</h2>
+        <ol>
+          <li><a href="https://github.com/NanoComp/meep/blob/v1.34.0/python/simulation.py"><code>python/simulation.py</code></a>: <code>run()</code>, <code>init_sim()</code>, <code>_run_until()</code>에서 초기화와 시간 반복을 연결한다.</li>
+          <li><a href="https://github.com/NanoComp/meep/blob/v1.34.0/src/meep.hpp"><code>src/meep.hpp</code></a>: <code>structure</code>, <code>structure_chunk</code>, <code>fields</code>, <code>fields_chunk</code>의 물성과 장 배열을 살펴본다.</li>
+          <li><a href="https://github.com/NanoComp/meep/blob/v1.34.0/src/step.cpp"><code>src/step.cpp</code></a> → <a href="https://github.com/NanoComp/meep/blob/v1.34.0/src/step_db.cpp"><code>step_db.cpp</code></a> → <a href="https://github.com/NanoComp/meep/blob/v1.34.0/src/step_generic.cpp"><code>step_generic.cpp</code></a>: 한 단계의 호출 순서에서 실제 curl 연산까지 따라간다. 처음에는 PML과 전도도가 없는 분기부터 읽는다.</li>
+          <li><a href="https://github.com/NanoComp/meep/blob/v1.34.0/src/update_eh.cpp"><code>update_eh.cpp</code></a>, <a href="https://github.com/NanoComp/meep/blob/v1.34.0/src/update_pols.cpp"><code>update_pols.cpp</code></a>: 물성 관계와 분산 분극의 갱신을 확인한다.</li>
+          <li><a href="https://github.com/NanoComp/meep/blob/v1.34.0/src/dft.cpp"><code>dft.cpp</code></a>, <a href="https://github.com/NanoComp/meep/blob/v1.34.0/src/boundaries.cpp"><code>boundaries.cpp</code></a>: 모니터 누적, chunk 연결과 경계 데이터를 읽는다.</li>
+        </ol>
+        <p>이후 PML, subpixel averaging, MPI, 대칭으로 범위를 넓힌다. Adjoint는 일반 FDTD 흐름을 이해한 뒤 <code>DesignRegion</code> → forward 계산 → adjoint 계산 → gradient 계산 → 설계 변수 갱신 순서로 연결할 계획이다.</p>
+
+        <h2>기존 계산에서 확인한 시간</h2>
+        <p>기존 단일 메타아톰 실행 기록에서 기준 계산과 구조 계산의 시간을 확인했다. 아래 값은 한 실행의 기록이며 반복 측정한 성능 통계가 아니다.</p>
+        <div class="note-table-wrap">
+          <table class="note-table">
+            <caption>기존 3D 정상입사 계산의 기록</caption>
+            <thead><tr><th scope="col">항목</th><th scope="col">기록</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">격자 간격</th><td>10 nm</td></tr>
+              <tr><th scope="row">PML을 포함한 계산 셀</th><td>1,240 × 1,240 × 6,000 nm</td></tr>
+              <tr><th scope="row">격자 수 · 셀 크기와 간격으로 산정</th><td>9,225,600</td></tr>
+              <tr><th scope="row">MPI 프로세스</th><td>8</td></tr>
+              <tr><th scope="row">R/T 주파수 표본</th><td>311</td></tr>
+              <tr><th scope="row">전체 실행 시간</th><td>10,445.8 s · 약 174.1분</td></tr>
+              <tr><th scope="row">입사 기준 계산</th><td>3,563.1 s · 약 59.4분</td></tr>
+              <tr><th scope="row">구조 계산</th><td>6,878.3 s · 약 114.6분</td></tr>
+              <tr><th scope="row">전체 시간 중 기준 계산 비중</th><td>약 34.1%</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>이 기록은 입사 전력 정규화에 필요한 기준 계산도 상당한 시간을 사용했음을 보여준다. 기준 계산과 구조 계산의 시간 길이는 같지 않다. 두 계산의 합과 전체 시간 사이의 작은 차이를 GUI 비용으로 해석하지도 않는다.</p>
+        <p>Lumerical과 전체 격자, 시간 단계, 하드웨어, 모니터, 종료 조건을 맞춘 비교를 수행한 자료는 아니다. 따라서 이 표만으로 Meep이 몇 배 느리다거나 특정 코드가 병목이라고 결론내릴 수는 없다.</p>
+
+        <h2>현재 확인한 사실과 개선 후보</h2>
+        <ul>
+          <li><strong>복소수 장 사용.</strong> 검토한 Studio의 선형 계산 경로에서는 정상입사에서도 복소수 장을 사용하도록 설정한다. 실수 장을 사용할 수 있는 조건과 필요한 복소수 장 조건을 구분하고, 스펙트럼과 위상이 유지되는지 비교할 필요가 있다.</li>
+          <li><strong>기준 계산과 구조 계산.</strong> R/T 실행 경로는 입사 기준 계산을 먼저 수행한다. 재사용을 검토하려면 소스, 격자, 경계, 배경 물성, 모니터 위치와 측정 조건의 일치 범위를 먼저 정해야 한다. 반사 측정에는 입사 Fourier 장의 제거도 연결된다.</li>
+          <li><strong>종료 조건.</strong> 스펙트럼 안정화 실행 경로는 파장별 전력, DFT 장, 전체 에너지 감쇠를 함께 확인한다. 단순한 에너지 자동 종료와 같은 숫자의 tolerance를 사용하더라도 같은 기준은 아니다.</li>
+          <li><strong>MPI와 모니터.</strong> 격자 갱신, chunk 경계 통신, Fourier 누적의 비용을 나누어 측정한다. 현재 이들 항목이 실행 시간을 각각 얼마나 차지하는지는 아직 계측하지 않았다.</li>
+        </ul>
+        <p>Meep의 균일 해석 격자와 Lumerical의 비균일 격자도 계산량 비교에서 확인할 차이다. 구조 근처의 최소 격자 간격만 같아서는 전체 셀 수가 같다고 볼 수 없다. MaterialGrid의 설계 변수 격자와 FDTD의 Yee 격자도 따로 구분한다.</p>
+        <p>위 항목은 소스와 설정에서 확인한 관찰이다. 각각을 바꾸었을 때의 속도 향상이나 정확도 보존을 입증한 결과는 아직 없다.</p>
+
+        <h2>다음 비교 실험의 원칙</h2>
+        <p>한 번에 한 항목씩 바꾸고, 동일한 물리 문제와 목표 정확도에서 비교한다. 실수·복소수 장, 기준 계산 재사용, 종료 조건, MPI 수를 순서대로 검토할 예정이다. 적용 조건을 만족하는 사례와 만족하지 않는 사례를 함께 확인한다.</p>
+        <ol>
+          <li><strong>조건 고정.</strong> 버전과 커밋, CPU·메모리, 구조와 물성, 실제 격자 수, Courant와 시간 단계, 광원, 경계, 모니터·주파수, MPI, 종료 조건을 기록한다.</li>
+          <li><strong>시간 구분.</strong> 초기화·기준 계산·구조 계산과 native 장 갱신·Fourier 누적·통신 시간을 나누어 본다. 반복 측정과 변동 폭도 남긴다.</li>
+          <li><strong>결과 검증.</strong> 목적에 맞게 R/T 스펙트럼, 공진 위치, 위상, 장 분포를 비교하고 허용 오차를 먼저 정한다. Adjoint 변경에서는 gradient도 별도로 검증한다.</li>
+          <li><strong>적용 범위 기록.</strong> 빨라진 사례뿐 아니라 효과가 없거나 정확도를 유지하지 못한 실험도 남긴다. 물리·수치 계산에 영향을 주는 변경은 검증 후 반영 여부를 결정한다.</li>
+        </ol>
+        <p>Meep에는 <code>time_spent_on()</code>과 <code>get_timing_data()</code> 등 기존 계측 기능이 있다. 먼저 이 기능으로 어디에서 시간을 쓰는지 확인하는 것이 다음 단계다.</p>
+
+        <h2>이번 기록과 앞으로의 노트</h2>
+        <p>이번에는 공식 소스의 학습 경로와 현재 실행 방식, 기존 로그의 시간 구분을 정리했다. 실행 중인 Studio에 성능 패치를 적용하지 않았고, 새로운 비교 계산도 수행하지 않았다.</p>
+        <p>이후 노트에는 문제와 가설, 변경 내용, 실험 조건, 결과와 오차, 적용 여부를 같은 형식으로 남긴다. 패치노트에는 바뀐 동작을, 연구노트에는 그 변경을 선택한 이유와 검증 근거를 함께 기록할 계획이다.</p>
+
+        <h2>참고한 공식 자료</h2>
+        <ul class="note-references">
+          <li><a href="https://github.com/NanoComp/meep/tree/v1.34.0">NanoComp/Meep v1.34.0 원본 소스</a></li>
+          <li><a href="https://meep.readthedocs.io/en/latest/Introduction/">Meep: Maxwell 방정식, 단위계와 FDTD</a></li>
+          <li><a href="https://meep.readthedocs.io/en/latest/Chunks_and_Symmetry/">Meep: Chunks and Symmetry</a></li>
+          <li><a href="https://meep.readthedocs.io/en/latest/FAQ/">Meep FAQ: 균일 격자와 복소수 장</a></li>
+          <li><a href="https://optics.ansys.com/hc/en-us/articles/360034382534-FDTD-solver-Simulation-Object">Ansys: FDTD 격자, 복소수 장과 자동 종료 설정</a></li>
+        </ul>
+      </div>
+      <p class="note-return"><a href="../notes.html?v=9">← 모든 글 보기</a></p>
+    </article>
+  </main>
+  <footer class="site-footer">
+    <div class="site-shell footer-inner">
+      <span>© <span data-current-year>2026</span> Seokmin Kim · Metamin</span>
+      <div class="footer-links" lang="en">
+        <a href="mailto:ffnvkd1221@gmail.com">Email</a>
+        <a href="https://scholar.google.com/citations?hl=en&amp;user=9jJYjVEAAAAJ">Google Scholar</a>
+        <a href="https://www.linkedin.com/in/seokmin-kim-969104386/">LinkedIn</a>
+        <a href="https://github.com/vesper22110852">GitHub</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
